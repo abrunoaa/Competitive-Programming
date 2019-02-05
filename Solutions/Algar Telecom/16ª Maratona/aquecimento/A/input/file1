@@ -1,0 +1,72 @@
+19,0.5,segundograu,?
+3 5
+60,50,superior,ouro
+25,3,segundograu,bronze
+40,100,posgraduacao,diamante
+18,0.3,segundograu,bronze
+24,0.9,posgraduacao,ouro
+60,500,superior,?
+5 5
+60,50,superior,ouro
+25,3,posgraduacao,diamante
+18,100,posgraduacao,diamante
+18,0.3,superior,ouro
+24,0.9,posgraduacao,ouro
+60,500,superior,?
+2 10
+60,50,superior,diamante
+25,3,posgraduacao,diamante
+18,100,posgraduacao,diamante
+18,0.3,superior,diamante
+24,0.9,posgraduacao,diamante
+60,50,superior,diamante
+25,3,posgraduacao,diamante
+18,100,posgraduacao,diamante
+18,0.3,superior,diamante
+24,0.9,posgraduacao,diamante
+60,500,superior,?
+2 10
+60,50,superior,ouro
+25,3,posgraduacao,ouro
+18,100,posgraduacao,ouro
+18,0.3,superior,ouro
+24,0.9,posgraduacao,ouro
+60,50,superior,ouro
+25,3,posgraduacao,ouro
+18,100,posgraduacao,ouro
+18,0.3,superior,ouro
+24,0.9,posgraduacao,ouro
+60,50,superior,?
+3 5
+60,50,superior,ouro
+25,3,posgraduacao,ouro
+18,100,posgraduacao,ouro
+18,0.3,superior,ouro
+24,0.9,posgraduacao,ouro
+6,300,superior,?
+4 10
+60,50,superior,bronze
+25,3,posgraduacao,bronze
+18,100,posgraduacao,bronze
+18,0.3,superior,bronze
+24,0.9,posgraduacao,bronze
+60,50,superior,bronze
+25,3,posgraduacao,bronze
+18,100,posgraduacao,bronze
+18,0.3,superior,bronze
+24,0.9,posgraduacao,bronze
+30,99,superior,?
+2 5
+60,50,superior,prata
+25,3,posgraduacao,prata
+18,100,posgraduacao,prata
+18,0.3,superior,prata
+24,0.9,posgraduacao,prata
+60,500,superior,?
+3 5
+60,50,superior,bronze
+25,3,posgraduacao,bronze
+18,100,posgraduacao,bronze
+18,0.3,superior,bronze
+24,0.9,posgraduacao,bronze
+0
