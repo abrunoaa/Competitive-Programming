@@ -4,10 +4,10 @@ using namespace std;
 using namespace __gnu_pbds;
 
 #ifndef ONLINE_JUDGE
-__attribute__((destructor)) static void __destroy__() { cerr << "\nTime elapsed: " << (double)clock() / CLOCKS_PER_SEC << "s.\n"; }
+__attribute__((destructor)) static void __destroy__(){ cerr << "\nTime elapsed: " << (double)clock() / CLOCKS_PER_SEC << "s.\n"; }
 
 void debug(){}
-template<class t, class... u> void debug(t x, u ...y){ cerr << ' ' << x, debug(y...); }
+template<class t, class... u> void debug(const t& x, const u& ...y){ cerr << ' ' << x, debug(y...); }
 #define debug(x...) cerr << "\x1b[91m[" #x "] =", debug(x), cerr << "\x1b[0m\n"
 #else
 #define assert(x) void(0)
@@ -27,9 +27,8 @@ template<class t, class... u> void debug(t x, u ...y){ cerr << ' ' << x, debug(y
 
 #define popcnt __builtin_popcountll
 #define ctz __builtin_ctzll
-int clz(int x){ return __builtin_clz(x); }
-int clz(long x){ return __builtin_clzl(x); }
-int clz(long long x){ return __builtin_clzll(x); }
+#define clz __builtin_clzll
+#define lg(x) (63 - clz(x))
 
 #define y0 asdf1
 #define y1 asdf2
