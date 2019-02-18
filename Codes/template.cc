@@ -3,7 +3,7 @@ using namespace std;
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-#ifndef ONLINE_JUDGE
+#ifdef BALLOONFIELD
 __attribute__((destructor)) static void __destroy__(){ cerr << "\nTime elapsed: " << (double)clock() / CLOCKS_PER_SEC << "s.\n"; }
 
 void debug(){}
