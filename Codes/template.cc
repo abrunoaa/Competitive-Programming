@@ -2,6 +2,7 @@
 using namespace std;
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
+template<class t> using tset = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
 
 #ifdef BALLOONFIELD
 __attribute__((destructor))static void __destroy__(){ cerr<<"\nElapsed: "<<(double)clock()/CLOCKS_PER_SEC<<"s.\n"; }
@@ -18,7 +19,7 @@ template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,
 #define st first
 #define nd second
 #define pb push_back
-#define zero(x) (abs(x) < eps)
+#define zero(x) (abs(x)<eps)
 #define pi acos(-1.0l)
 #define inf 0x3f3f3f3f
 #define infl 0x3f3f3f3f3f3f3f3f
@@ -26,32 +27,19 @@ template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,
 #define popcnt __builtin_popcountll
 #define ctz __builtin_ctzll
 #define clz __builtin_clzll
-#define lg(x) (63 - clz(x))
+#define lg(x) (63-clz(x))
 
-#define y0 asdf1
-#define y1 asdf2
-#define yn asdf3
-#define j1 asdf4
-#define tm asdf5
-#define lr asdf6
-#define div asdf7
+template<class t1,class t2>ostream&operator<<(ostream&out,const pair<t1,t2>&x){return out<<'('<<x.st<<", "<<x.nd<<')';}
 
-template<class t> using tset = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u> using tmap = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u = greater<t>> using pqueue = priority_queue<t,vector<t>,u>;
-
-template<class t1,class t2> ostream& operator<<(ostream& out,const pair<t1,t2>& x){ return out<<'('<<x.st<<", "<< x.nd<<')'; }
-
-#define PRINT_DS bool flag=0; out<<'['; for(auto& x : ds){ if(flag) out<<", "; else flag=1; out<<x; } return out<<']'
-template<class t> ostream& operator<<(ostream& out,const vector<t>& ds){ PRINT_DS; }
-template<class t> ostream& operator<<(ostream& out,const set<t>& ds){ PRINT_DS; }
-template<class t> ostream& operator<<(ostream& out,const tset<t>& ds){ PRINT_DS; }
-template<class t1,class t2> ostream& operator<<(ostream& out,const map<t1,t2>& ds){ PRINT_DS; }
-template<class t1,class t2> ostream& operator<<(ostream& out,const tmap<t1,t2>& ds){ PRINT_DS; }
+#define PRINT_DS bool flag=0;out<<'[';for(auto&x:ds){if(flag)out<<", ";else flag=1;out<<x;}return out<<']'
+template<class t>ostream&operator<<(ostream&out,const vector<t>&ds){PRINT_DS;}
+template<class t>ostream&operator<<(ostream&out,const set<t>&ds){PRINT_DS;}
+template<class t>ostream&operator<<(ostream&out,const tset<t>&ds){PRINT_DS;}
+template<class t1,class t2>ostream&operator<<(ostream&out,const map<t1,t2>&ds){PRINT_DS;}
 
 typedef long long ll;
 typedef unsigned long long ull;
-typedef long double lf;
+typedef double lf;
 typedef pair<int,int> ii;
 typedef vector<int> vi;
 typedef vector<ii> vii;
