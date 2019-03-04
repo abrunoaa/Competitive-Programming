@@ -13,6 +13,7 @@ template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,
 #define freopen(...) void(0)
 #endif
 
+#define null nullptr
 #define st first
 #define nd second
 #define mod 1000000007
