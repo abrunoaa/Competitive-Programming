@@ -19,11 +19,22 @@ struct LinkCutTree{
   struct Node{
     Node *left, *right, *parent, *pathParent;
     int size, label;
-    Node() : left(0), right(0), parent(0), pathParent(0) {}
+    bool flip;  // por algum motivo fica mais rápido
+    Node() : left(0), right(0), parent(0), pathParent(0), size(0), label(-1), flip(0) {}
+
     void update(){
       size = 1;
       if(left) size += left->size;
       if(right) size += right->size;
+    }
+
+    void prop(){
+      if(flip){
+        flip = 0;
+        swap(left, right);
+        if(left) left->flip ^= 1;
+        if(right) right->flip ^= 1;
+      }
     }
   };
 
@@ -38,7 +49,8 @@ struct LinkCutTree{
   if(z) y == z->left ? z->left = x : z->right = x;                                         \
   x->pathParent = y->pathParent;                                                           \
   y->pathParent = null;                                                                    \
-  y->update();
+  y->update();                                                                             \
+  x->update();
 
   void rotl(Node* x){ rot(left, right); }
   void rotr(Node* x){ rot(right, left); }
@@ -46,38 +58,54 @@ struct LinkCutTree{
 #undef rot
 
   void splay(Node* x){
+    x->prop();
     while(x->parent){
       Node* y = x->parent;
       Node* z = y->parent;
+      if(z) z->prop();
+      y->prop();
+      x->prop();
       if(!z) x == y->left ? rotr(x) : rotl(x);
       else if(y == z->left) x == y->left ? (rotr(y), rotr(x)) : (rotl(x), rotr(x));
       else                 x == y->right ? (rotl(y), rotl(x)) : (rotr(x), rotl(x));
     }
   }
 
-  Node* access(Node* v){
-    splay(v);
-    if(v->right){
-      v->right->pathParent = v;
-      v->right->parent = null;
-      v->right = null;
-      v->update();
+  Node* access(Node* x){
+    splay(x);
+    if(x->right){
+      x->right->pathParent = x;
+      x->right->parent = null;
+      x->right = null;
+      x->update();
     }
-    Node* w = v;
-    while(v->pathParent){
-      w = v->pathParent;
-      splay(w);
-      if(w->right){
-        w->right->pathParent = w;
-        w->right->parent = null;
+    Node* y = x;
+    while(x->pathParent){
+      y = x->pathParent;
+      splay(y);
+      if(y->right){
+        y->right->pathParent = y;
+        y->right->parent = null;
       }
-      w->right = v;
-      v->parent = w;
-      v->pathParent = null;
-      w->update();
-      splay(v); // rotl
+      y->right = x;
+      x->parent = y;
+      x->pathParent = null;
+      y->update();
+      rotl(x);
     }
-    return w;
+    return y;
+  }
+
+  void makeRoot(Node* x){
+    access(x);
+    splay(x);
+    if(x->left){
+      x->left->flip ^= 1;
+      x->left->parent = null;
+      x->left->pathParent = x;
+      x->left = null;
+      x->size = 1;
+    }
   }
 
   Node* root;
@@ -90,24 +118,37 @@ struct LinkCutTree{
   }
   ~LinkCutTree(){ delete[] root; }
 
-  void link(int u, int v){    // transforma v em filho de u
-    Node* x = root + u;
+  inline void link(int u, int v){
+    Node* x = root + u; // root + u == &root[u]
     Node* y = root + v;
-    access(x);
-    access(y);
-    x->right = y;
-    y->parent = x;
-    x->update();
+    makeRoot(y);
+    y->pathParent = x;
   }
 
-  void cut(int u){            // remove a aresta entre u e u->parent
+  inline void cut(int u){
     Node* x = root + u;
     access(x);
     x->left->parent = null;
     x->left = null;
+    x->size = 1;
   }
 
-  int top(int u){             // ?
+  inline void cut(int u, int v){
+    Node* x = root + u;
+    Node* y = root + v;
+    makeRoot(x);
+    splay(y);
+    if(y->pathParent){
+      y->pathParent = null;
+    }
+    else{
+      y->left->parent = null;
+      y->left = null;
+      y->update();
+    }
+  }
+
+  inline int findRoot(int u){
     Node* x = root + u;
     access(x);
     while(x->left) x = x->left;
@@ -115,14 +156,14 @@ struct LinkCutTree{
     return x->label;
   }
 
-  int lca(int u, int v){      // retorna o lca entre u e v
+  inline int lca(int u, int v){
     Node* x = root + u;
     Node* y = root + v;
     access(x);
     return access(y)->label;
   }
 
-  int depth(int u){           // retorna a profundidade de u (na sua árvore)
+  inline int depth(int u){
     Node* x = root + u;
     access(x);
     return x->size - 1;
