@@ -100,27 +100,27 @@ template<class T> T rho(T n){
   T r = isqrt(n);
   if(r * r == n) return r;
 
-  int m;
-  T x, y, ys, q, g;
   do{
-    m = rand() % 341531 + 1;
-    y = abs((T)rand() * rand() * rand()) % (n - 1) + 1;
+    T x, y, ys, m, c, q, g;
+    y = (T)rand() % (n - 1) + 1;
+    m = (T)rand() % (n - 1) + 1;
+    c = (T)rand() % (n - 1) + 1;
     q = g = 1;
     for(int r = 1; g == 1; r *= 2){
       x = y;
       for(int i = 0; i < r; ++i)
-        y = (mul(y, y, n) + 1) % n;
+        y = (mul(y, y, n) + c) % n;
       for(int k = 0; k < r && g == 1; k += m){
         ys = y;
         for(int i = min(m, r - k); i; --i){
-          y = (mul(y, y, n) + 1) % n;
+          y = (mul(y, y, n) + c) % n;
           q = mul(q, abs(x - y), n);
         }
         g = gcd(q, n);
       }
     }
     if(g == n) do{
-      ys = (mul(ys, ys, n) + 1) % n;
+      ys = (mul(ys, ys, n) + c) % n;
       g = gcd(n, abs(x - ys));
     } while(g == 1);
   } while(g == n);
