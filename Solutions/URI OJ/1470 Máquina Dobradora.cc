@@ -1,63 +1,35 @@
-// backtracking
-
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef vector < int > vi;
+typedef vector<int> vi;
 
-int n, m, val, i;
 vi v, w1, w2;
 
-// transforma v de todas as formas possíveis
-bool transforma (vi& v)
-{
-  if (v == w1 || v == w2)     // checa se é a solução
-    return 1;
-  if (v.size() < w1.size())   // impossível chegar à solução:
-    return 0;                 // sempre vai diminuir de tamanho
-
-  int i, j, size = v.size();
-  for (i = 1; i < size; ++i)  // dobraduras
-  {
+bool f(vi& v){
+  if(v == w1 || v == w2) return 1;
+  if(v.size() < w1.size()) return 0;
+  for(int i = 1; i < (int)v.size(); ++i){
     vi u;
-
-    // "dobra"
-    for (j = 0; j < i; ++j) u.push_back(v[2 * i - j - 1] + v[j]);
-
-    // append os outros valores que não são modificados
-    for (j = 2 * i; j < size; ++j) u.push_back(v[j]);
-
-    // checa se a partir deste chega à solução
-    if (transforma(u)) return 1;
+    for(int j = 0; j < i; ++j) u.push_back((2 * i - j - 1 >= (int)v.size() ? 0 : v[2 * i - j - 1]) + v[j]);
+    for(int j = 2 * i; j < (int)v.size(); ++j) u.push_back(v[j]);
+    if(f(u)) return 1;
   }
-
   return 0;
 }
 
-int main()
-{
-  while (scanf("%d", &n) == 1)
-  {
-    // reseta
-    v.clear();
-    w1.clear();
+int main(){
+  // freopen("in", "r", stdin);
+  cin.sync_with_stdio(0), cin.tie(0);
 
-    while (n--)
-    {
-      scanf("%d", &val);
-      v.push_back(val);
-    }
-
-    scanf("%d", &m);
-    while (m--)
-    {
-      scanf("%d", &val);
-      w1.push_back(val);                // w1 = vetor normal
-    }
-
-    w2.assign(w1.rbegin(), w1.rend());  // w2 = vetor invertido
-
-    puts(transforma(v) ? "S" : "N");
+  int n, m;
+  while(cin >> n){
+    v.resize(n);
+    for(int& x : v) cin >> x;
+    cin >> m;
+    w1.resize(m);
+    for(int& x : w1) cin >> x;
+    w2.assign(w1.rbegin(), w1.rend());
+    cout << (f(v) ? 'S' : 'N') << '\n';
   }
 
   return 0;
