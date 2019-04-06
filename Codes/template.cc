@@ -16,12 +16,17 @@ template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,
 #define null nullptr
 #define st first
 #define nd second
+#define inf 0x3f3f3f3f
+#define infl 0x3f3f3f3f3f3f3f3f
 #define mod 1000000007
 #define maxn "abacate"
 
 typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
+
+mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+mt19937_64 rngll(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main(){
   freopen("in","r",stdin);
