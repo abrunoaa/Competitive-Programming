@@ -1,2 +1,1 @@
-# Maratona
-Maratona de programação
+# Competitive Programming Codes for ICPC
