@@ -13,6 +13,20 @@ template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,
 #define freopen(...) void(0)
 #endif
 
+template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return f<<'('<<x.first<<", "<<x.second<<')';}
+
+#define PRINT int b=0;f<<'[';for(auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';
+template<class T>ostream&operator<<(ostream&f,const vector<T>&x){PRINT;}
+template<class T,class C>ostream&operator<<(ostream&f,const set<T,C>&x){PRINT;}
+template<class T,class C>ostream&operator<<(ostream&f,const multiset<T,C>&x){PRINT;}
+template<class K,class T,class C>ostream&operator<<(ostream&f,const map<K,T,C>&x){PRINT;}
+template<class K,class T,class C>ostream&operator<<(ostream&f,const multimap<K,T,C>&x){PRINT;}
+
+#define PRINT2(funcGet,funcPop) int b=0;f<<'[';while(!x.empty()){if(b++)f<<", ";f<<x.funcGet();x.funcPop();}return f<<']';
+template<class T>ostream&operator<<(ostream&f,queue<T>x){PRINT2(front,pop)}
+template<class T>ostream&operator<<(ostream&f,stack<T>x){PRINT2(top,pop)}
+template<class T,class V,class C>ostream&operator<<(ostream&f,priority_queue<T,V,C>x){PRINT2(top,pop)}
+
 #define null nullptr
 #define st first
 #define nd second
