@@ -81,6 +81,9 @@ struct IO{
   }
 
   template<class T> inline IO& operator << (T x){ return *this << toString(x); }
+
+  inline void sync_with_stdio(bool){}
+  inline void tie(void*){}
 };
 
 static IO __io__;
@@ -110,14 +113,14 @@ template<class T,class V,class C>ostream&operator<<(ostream&f,priority_queue<T,V
 #define infl 0x3f3f3f3f3f3f3f3f
 #define mod 1000000007
 #define maxn 100003
-#define maxl 16
+#define maxl 17
 
 typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
 
-// mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
-// mt19937_64 rngll(chrono::high_resolution_clock::now().time_since_epoch().count());
+mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
+mt19937_64 rngll(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 bool white[maxn];
 int n, ans[maxn];
@@ -265,7 +268,7 @@ inline void change(int node){
 
 int main(){
   freopen("in","r",stdin);
-  // cin.sync_with_stdio(0), cin.tie(0);
+  cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
   for(int i = 1; i < n; ++i){
