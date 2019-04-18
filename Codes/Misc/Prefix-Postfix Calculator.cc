@@ -1,3 +1,5 @@
+/// codigo com erro
+
 char prec[128];     // nível de preferência
 
 void build(){
