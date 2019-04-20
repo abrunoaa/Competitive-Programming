@@ -2,30 +2,23 @@
 using namespace std;
 
 #ifdef BALLOONFIELD
-__attribute__((destructor))static void __destroy__(){ cerr<<"\nElapsed: "<<(double)clock()/CLOCKS_PER_SEC<<"s.\n"; }
+__attribute__((destructor))static void __destroy__(){cerr<<"\nElapsed: "<<(double)clock()/CLOCKS_PER_SEC<<"s.\n";}
 
 void debug(){}
-template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,debug(y...); }
-#define debug(x...) cerr<<"\x1b[91m[" #x "] =",debug(x),cerr<<"\x1b[0m\n"
+template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,debug(y...);}
+# define debug(x...) cerr<<"\x1b[91m"<<__LINE__<<" ["#x"] =",debug(x),cerr<<"\x1b[0m\n"
 #else
-#define assert(x) void(0)
-#define debug(...) void(0)
-#define freopen(...) void(0)
+# define assert(x) void(0)
+# define debug(...) void(0)
+# define freopen(...) void(0)
 #endif
 
 template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return f<<'('<<x.first<<", "<<x.second<<')';}
 
-#define PRINT int b=0;f<<'[';for(auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';
-template<class T>ostream&operator<<(ostream&f,const vector<T>&x){PRINT;}
-template<class T,class C>ostream&operator<<(ostream&f,const set<T,C>&x){PRINT;}
-template<class T,class C>ostream&operator<<(ostream&f,const multiset<T,C>&x){PRINT;}
-template<class K,class T,class C>ostream&operator<<(ostream&f,const map<K,T,C>&x){PRINT;}
-template<class K,class T,class C>ostream&operator<<(ostream&f,const multimap<K,T,C>&x){PRINT;}
-
-#define PRINT2(funcGet,funcPop) int b=0;f<<'[';while(!x.empty()){if(b++)f<<", ";f<<x.funcGet();x.funcPop();}return f<<']';
-template<class T>ostream&operator<<(ostream&f,queue<T>x){PRINT2(front,pop)}
-template<class T>ostream&operator<<(ostream&f,stack<T>x){PRINT2(top,pop)}
-template<class T,class V,class C>ostream&operator<<(ostream&f,priority_queue<T,V,C>x){PRINT2(top,pop)}
+#define DEF1(_class...) ostream&operator<<(ostream&f,const _class&x){int b=0;f<<'[';for(auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';}
+#define DEF2(get,pop,_class...) ostream&operator<<(ostream&f,_class x){int b=0;f<<'[';while(x.size()){if(b++)f<<", ";f<<x.get();x.pop();}return f<<']';}
+template<class T> DEF1(vector<T>) template<class T,class C> DEF1(set<T,C>) template<class T,class C> DEF1(multiset<T,C>) template<class K,class T,class C> DEF1(map<K,T,C>) template<class K,class T,class C> DEF1(multimap<K,T,C>)
+template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<T>) template<class T,class V,class C> DEF2(top,pop,priority_queue<T,V,C>)
 
 #define null nullptr
 #define st first
