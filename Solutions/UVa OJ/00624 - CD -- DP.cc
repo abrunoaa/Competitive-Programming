@@ -15,12 +15,18 @@ template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,deb
 # define sleep(x) void(0)
 #endif
 
+char memo[23][10000];
 int n, t, cd[23];
 
 bool f(int i, int s){
   if(s == 0) return 1;
   if(i == t || s > n) return 0;
-  return (f(i + 1, s) || f(i + 1, s - cd[i]));
+
+  auto &pd = memo[i][s];
+  if(pd != -1) return pd;
+  pd = f(i + 1, s) || f(i + 1, s - cd[i]);
+
+  return pd;
 }
 
 void rec(int i, int s){
@@ -37,6 +43,7 @@ int main(){
 
   while(cin >> n >> t){
     for(int i = 0; i < t; ++i) cin >> cd[i];
+    memset(memo, -1, sizeof(memo));
     for(int s = n; ; --s){
       if(f(0, s)){
         rec(0, s);

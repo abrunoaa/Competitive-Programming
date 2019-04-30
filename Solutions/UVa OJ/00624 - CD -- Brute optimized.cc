@@ -15,20 +15,23 @@ template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,deb
 # define sleep(x) void(0)
 #endif
 
-int n, t, cd[23];
+bool usado[21], resp[21];
+int n, t, numUsado, fita, numFita, cd[21];
 
-bool f(int i, int s){
-  if(s == 0) return 1;
-  if(i == t || s > n) return 0;
-  return (f(i + 1, s) || f(i + 1, s - cd[i]));
-}
+void f(int i, int total, int numUsado){
+  if(i == t){
+    if(total <= n && (total > fita || (total == fita && numUsado > numFita))){
+      numFita = numUsado;
+      fita = total;
+      memcpy(resp, usado, sizeof(usado));
+    }
+    return;
+  }
 
-void rec(int i, int s){
-  if(s == 0) return;
-  if(cd[i] > s) return rec(i + 1, s);
-  for(; !f(i + 1, s - cd[i]); ++i);
-  cout << cd[i] << ' ';
-  rec(i + 1, s - cd[i]);
+  f(i + 1, total, numUsado);
+  usado[i] = 1;
+  f(i + 1, total + cd[i], numUsado + 1);
+  usado[i] = 0;
 }
 
 int main(){
@@ -37,13 +40,16 @@ int main(){
 
   while(cin >> n >> t){
     for(int i = 0; i < t; ++i) cin >> cd[i];
-    for(int s = n; ; --s){
-      if(f(0, s)){
-        rec(0, s);
-        cout << "sum:" << s << '\n';
-        break;
-      }
-    }
+
+    numUsado = 0;
+    numFita = 0;
+    fita = 0;
+    f(0, 0, 0);
+
+    for(int i = 0; i < t; ++i)
+      if(resp[i])
+        cout << cd[i] << ' ';
+    cout << "sum:" << fita << '\n';
   }
 
   return 0;
