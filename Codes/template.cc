@@ -7,10 +7,12 @@ __attribute__((destructor))static void __destroy__(){cerr<<"\nElapsed: "<<(doubl
 void debug(){}
 template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,debug(y...);}
 # define debug(x...) cerr<<"\x1b[91m"<<__LINE__<<" ["#x"] =",debug(x),cerr<<"\x1b[0m\n"
+# define sleep(x) this_thread::sleep_for(chrono::milliseconds(x))
 #else
 # define assert(x) void(0)
 # define debug(...) void(0)
 # define freopen(...) void(0)
+# define sleep(x) void(0)
 #endif
 
 template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return f<<'('<<x.first<<", "<<x.second<<')';}
