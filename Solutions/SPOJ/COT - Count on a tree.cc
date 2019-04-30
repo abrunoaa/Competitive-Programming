@@ -48,7 +48,7 @@ struct Node{
   Node(Node *l, Node* r, int s) : left(l), right(r), sum(s) {}
 };
 
-int n, m, w[maxn], value[maxn], arseq[maxn];
+int n, m, w[maxn], value[maxn];
 int depth[maxn], p[maxl][maxn];
 vector<int> g[maxn];
 Node *root[maxn];
@@ -70,12 +70,6 @@ int upd(int i, Node* &t, int l = 1, int r = n){
   if(l == r) return ++t->sum;
   if(i <= M) return t->sum = upd(i, t->left, l, M) + t->right->sum;
   return t->sum = t->left->sum + upd(i, t->right, M+1, r);
-}
-
-int qry(int i, Node* t, int l = 1, int r = n){
-  if(i < l) return 0;
-  if(r <= i) return t->sum;
-  return qry(i, t->left, l, M) + qry(i, t->right, M+1, r);
 }
 
 int qry(int k, Node *u, Node *v, Node *w, Node *p, int l = 1, int r = n){
