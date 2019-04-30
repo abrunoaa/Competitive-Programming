@@ -30,12 +30,13 @@ template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<
 #define mod 1000000007
 #define maxn "abacate"
 
+#define rand() uid(rng)
+mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count()); // ll = mt19937_64
+uniform_int_distribution<int> uid(0, numeric_limits<int>::max());             // range for random
+
 typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
-
-mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count());
-mt19937_64 rngll(chrono::high_resolution_clock::now().time_since_epoch().count());
 
 int main(){
   freopen("in","r",stdin);
