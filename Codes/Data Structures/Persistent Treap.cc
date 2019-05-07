@@ -1,26 +1,14 @@
-/// ****************************** SEM TESTE!!! ****************************************
-
-#include <bits/stdc++.h>
-using namespace std;
+/// ****************************** SEM TESTE!!! *************************************
 
 #define maxn 100003
-#define maxa maxn // máximo de nós alocados entre init's
+#define maxa 100*maxn   // máximo de nós alocados entre init's (gasta MUITA memória)
 
 struct Node{
-  Node* left;
-  Node* right;
-  int size;
-  int priority;
-  int key;
+  Node *left, *right;
+  int size, priority, key;
 
   Node(){}
-  Node(int k) :
-    left(0),
-    right(0),
-    size(1),
-    priority(rand()),
-    key(k)
-  {}
+  Node(int k) : left(0), right(0), size(1), priority(rand()), key(k) {}
 
   void update(){
     size = 1;
@@ -39,7 +27,7 @@ struct Treap{
   int nv;           // nº de versões
   Node* root[maxn]; // raízes
 
-  Treap(){
+  Treap() : nv(0) {
     root[0] = 0;    // versão 0 é a inicial
     Node::init();   // várias treaps: por init no main
   }
@@ -71,7 +59,3 @@ struct Treap{
 
   // fazer as operações como uma treap normal, sem esquecer de incrementar nv
 };
-
-int main(){
-  return 0;
-}

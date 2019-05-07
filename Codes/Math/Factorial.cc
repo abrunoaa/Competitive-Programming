@@ -3,7 +3,7 @@ typedef pair<int,int> ii;
 typedef vector<ii> vii;
 
 // retorna quantos zeros a direita tem em n!
-int ctzFact(int n){           // O(log5(n))
+int ctzFact(int n){           // O(log_5(n))
   int z = 0;
   for(int k = 5; k <= n; k *= 5) z += n / k;
   return z;
@@ -14,18 +14,12 @@ int ctzFact(int n){           // O(log5(n))
 // z = min((n/p1 + n/p1^2 + ...)/e1, (n/p2 + n/p2^2 + ...)/e2, ...)
 int ctzFact(int n, int b){    // O(b) ==> pode otimizar percorrendo apenas primos
   int z = 1e9;
-  for(int p = 2; p <= b; ++p) // p é primo!
-    if(b % p == 0){
-      int e = 0;
-      for(; b % p == 0; b /= p)
-        ++e;
-
-      int s = 0;
-      for(int k = n; k / p != 0; k /= p)
-        s += k / p;
-      z = min(z, s / e);
-    }
-
+  for(int p = 2; p <= b; ++p) if(b % p == 0){
+    int e = 0, s = 0;
+    for(; b % p == 0; b /= p) ++e;
+    for(int k = n; k / p; k /= p) s += k / p;
+    z = min(z, s / e);
+  }
   return z;
 }
 
@@ -34,9 +28,7 @@ int ctzFact(int n, int b){    // O(b) ==> pode otimizar percorrendo apenas primo
 // n! ≃ sqrt(2pi * n) * (n/e)^n
 int digitsFact(int n, int b){
   double d = 0.0;
-  for(int i = 2; i <= n; ++i)
-    d += log(i);
-
+  for(int i = 2; i <= n; ++i) d += log(i);
   return 1 + (int)(d / log(b) + 1e-9);
 
   // aproximação (bom para b = 10):
@@ -53,7 +45,6 @@ int lastDigit(int n){
     ans = ans * y[n / 5 % 4] * x[n % 5] % 10;
     n /= 5;
   }
-
   return ans * x[n] % 10;
 }
 
@@ -78,20 +69,17 @@ vii factorialFactors(int n){            // Legendre's Theorem
 
 int fat[maxn], finv[maxn];
 
-void build
-
 // combinação
 int nCr(int n, int r){
   return (ll)fat[n] * finv[r] % mod * finv[n - r] % mod;
-  return fat[n] / fat[r] / fat[n - r];  // se n! não estourar
+  return fat[n] / (fat[r] * fat[n - r]);  // se n! não estourar
 }
 
 // combinação: versão iterativa
 int nCr_iterative(int n, int r){
   int c = 1;
   r = min(r, n - r);
-  for(int i = 0; i < r; ++i)
-    c = c * (n - i) / (i + 1);          // tem que garantir que não vai estourar
+  for(int i = 0; i < r; ++i) c = c * (n - i) / (i + 1);
   return c;
 }
 
@@ -106,7 +94,6 @@ void pascal(){
   for(int i = 1; i < maxn; ++i){
     C[i].resize(i + 1);
     C[i][0] = C[i][i] = 1;
-    for(int j = 1; j < i; ++j)
-      C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % mod;
+    for(int j = 1; j < i; ++j) C[i][j] = (C[i - 1][j - 1] + C[i - 1][j]) % mod;
   }
 }

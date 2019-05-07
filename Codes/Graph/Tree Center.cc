@@ -1,3 +1,5 @@
+/// Centro de uma árvore
+
 #define maxn 100010
 typedef pair<int,int> ii;
 typedef vector<int> vi;

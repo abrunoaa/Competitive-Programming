@@ -1,3 +1,5 @@
+/// Z Function
+
 void zfunc(const string& s, int* z){
   int n = s.size();
   // z[0] = 0 ou n;

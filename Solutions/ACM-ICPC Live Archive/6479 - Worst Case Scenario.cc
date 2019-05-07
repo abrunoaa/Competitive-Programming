@@ -33,7 +33,7 @@ template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<
 #define inf 0x3f3f3f3f
 #define infl 0x3f3f3f3f3f3f3f3f
 #define mod 1000000007
-#define maxn "abacate"
+#define maxn 103
 
 #define rand() uid(rng)
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count()); // ll = mt19937_64
@@ -43,9 +43,67 @@ typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
 
+char mat[maxn][maxn];
+bool vis[maxn][maxn];
+int w, h;
+const int X[] = {-1,1,0,0}, Y[] = {0,0,1,-1};
+
+inline bool valida(int x, int y){
+  return !(x < 0 || x >= h || y < 0 || y >= w);
+}
+
+void event(int x, int y){
+  if(mat[x][y] == 'X') return;
+  vis[x][y] = 1;
+  for(int i = 0; i < 4; ++i){
+    int a = x + X[i];
+    int b = y + Y[i];
+    if(!vis[a][b] && valida(a, b) && mat[a][b] != 'X'){
+      if(mat[a][b] == 'D'){
+        event(a, b);
+      }
+      else{
+        ++mat[a][b];
+      }
+    }
+  }
+}
+
 int main(){
   freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
+
+  int n;
+  cin >> n;
+  while(n--){
+    cin >> w >> h;
+    for(int i = 0; i < h; ++i){
+      for(int j = 0; j < w; ++j){
+        cin >> mat[i][j];
+      }
+    }
+    int q;
+    cin >> q;
+    while(q--){
+      int x, y;
+      cin >> y >> x;
+      if(mat[x][y] != 'X'){
+        if(mat[x][y] == 'D'){
+          memset(vis, 0, sizeof vis);
+          event(x, y);
+        }
+        else{
+          ++mat[x][y];
+        }
+      }
+    }
+    for(int i = 0; i < h; ++i){
+      for(int j = 0; j < w; ++j){
+        cout << mat[i][j];
+      }
+      cout << '\n';
+    }
+  }
 
   return 0;
 }

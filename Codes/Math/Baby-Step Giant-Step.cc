@@ -1,3 +1,5 @@
+/// Baby-step Giant-step
+
 typedef long long ll;
 
 int mpow(int b, int e, int m){

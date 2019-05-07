@@ -45,7 +45,29 @@ typedef pair<int,int> ii;
 
 int main(){
   freopen("in","r",stdin);
-  cin.sync_with_stdio(0), cin.tie(0);
+
+  int n;
+  scanf("%d", &n);
+  while(n--){
+    char c;
+    string s;
+    int timestamp = 0;
+    while(scanf("%c", &c) && c != 'E'){
+      // debug(c, isblank(c));
+      if(c == '\n'){
+        ++timestamp;
+      }
+      else{
+        s.push_back(c);
+      }
+      if(c == ';'){
+        // debug(s);
+        cout << timestamp << ": " << s << '\n';
+        s.clear();
+      }
+    }
+    scanf("%*[^\n]");
+  }
 
   return 0;
 }

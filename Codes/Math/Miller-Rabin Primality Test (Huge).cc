@@ -8,7 +8,7 @@ typedef __int128 big;
 inline big abs(big x){ return (x < 0 ? -x : x); }
 
 inline int ctz(int x){ return __builtin_ctz((unsigned)x); }
-inline int ctz(ll x){ return __builtin_ctzll((unsigned long long)x); }
+inline int ctz(ll x){ return __builtin_ctzll((ull)x); }
 inline int ctz(big x){ return (x & ~0ll ? ctz((ll)x) : 64 + ctz((ll)(x >> 64))); }
 
 inline int mul(int a, int b, int m){ return (int)((ll)a * b % m); }

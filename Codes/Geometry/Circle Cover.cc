@@ -2,7 +2,7 @@
 
 pt p[maxn], b[3];
 
-// retorna o menor círculo que todos os pontos de p estão dentro, ou não existe
+// retorna o menor círculo que todos os pontos de p estão dentro
 circle cover(int np, int nb){
   if(nb == 3) return circle(b[0], b[1], b[2]);
   if(np < 0){

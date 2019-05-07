@@ -1,5 +1,4 @@
-#include <bits/stdc++.h>
-using namespace std;
+// Matriz
 
 typedef vector<vector<int>> matrix;
 
@@ -8,7 +7,6 @@ matrix operator * (const matrix& a, const matrix& b){
   int n = a.size();
   int m = b.size();
   int p = b[0].size();
-
   matrix c;
   c.resize(n);
   for(int i = 0; i < n; ++i){
@@ -17,23 +15,16 @@ matrix operator * (const matrix& a, const matrix& b){
       for(int k = 0; k < m; ++k)
         c[i][j] += a[i][k] * b[k][j];       // tirar mod aqui!
   }
-
   return c;
 }
 
-// constrói matriz identidade I[n,n]
-matrix identity(int n){
+// retorna b[n,n] ** e
+matrix pow(matrix b, int e){
   matrix x(n);
   for(int i = 0; i < n; ++i){
     x[i].assign(n, 0);
     x[i][i] = 1;
   }
-  return x;
-}
-
-// retorna b[n,n] ** e
-matrix pow(matrix b, int e){
-  matrix x = identity(b.size());
   while(1){                   // fastExp normal
     if(e % 2) x = x * b;
     if(!(e /= 2)) return x;
@@ -68,13 +59,4 @@ void print(const matrix& a){
     }
     cout << '\n';
   }
-}
-
-int main(){
-  matrix a = {{1, 2, 3}, {4, 5, 6}};
-  matrix b = transpose(a);
-
-  print(b);
-
-  return 0;
 }

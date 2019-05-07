@@ -1,15 +1,13 @@
 /// Algoritmo de Mo
 
 #define maxn 100010
-#define maxq 100010
+#define maxm 100010
 
-struct qry_t{
-  int l, r, id;
-};
+struct Qry{ int l, r, id; };
 
-int cur;
-int n, q, v[maxn], ans[maxq];
-qry_t qry[maxq];
+int cur, ans[maxm];
+int n, m, v[maxn];
+Qry q[maxm];
 
 /* adiciona/remove um elemento e atualiza a resposta */
 void add(int){}
@@ -17,17 +15,17 @@ void rem(int){}
 
 void mo(){
   int bs = sqrt(n);
-  sort(qry, qry + q, [bs](const qry_t& x, const qry_t& y){
+  sort(q, q + m, [bs](const Qry& x, const Qry& y){
     int bx = x.l / bs, by = y.l / bs;
     if(bx != by) return bx < by;
     return bx % 2 == 0 ? x.r < y.r : x.r > y.r;
   });
 
   int mol = 0, mor = -1;
-  for(int i = 0; i < q; ++i){
-    int l = qry[i].l;
-    int r = qry[i].r;
-    int id = qry[i].id;
+  for(int i = 0; i < m; ++i){
+    int l = q[i].l;
+    int r = q[i].r;
+    int id = q[i].id;
 
     while(mor < r) add(++mor);
     while(mor > r) rem(mor--);

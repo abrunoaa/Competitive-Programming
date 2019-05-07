@@ -8,7 +8,8 @@ struct cpx{
   cpx(lf a = 0, lf b = 0) : real(a), imag(b) {}
   cpx operator + (cpx a) const{ return cpx(real + a.real, imag + a.imag); }
   cpx operator - (cpx a) const{ return cpx(real - a.real, imag - a.imag); }
-  cpx operator * (cpx a) const{ return cpx(real * a.real - imag * a.imag, real * a.imag + imag * a.real); }
+  cpx operator * (cpx a) const{ return cpx(real * a.real - imag * a.imag,
+                                           real * a.imag + imag * a.real); }
   cpx operator / (lf k){ return cpx(real / k, imag / k); }
 };
 
@@ -34,7 +35,7 @@ void fft(cpx* a, int n, int s){
   }
 }
 
-void convolution(cpx* a, int n, cpx* b, int m, cpx* c){
+void conv(cpx* a, int n, cpx* b, int m, cpx* c){
   int k = 2 << (32 - clz(max(n, m) - 1));
   fft(a, k, 1);
   fft(b, k, 1);
@@ -43,8 +44,8 @@ void convolution(cpx* a, int n, cpx* b, int m, cpx* c){
   for(int i = 0; i < k; ++i) c[i] = c[i] / k;
 }
 
-void circularconvolution(cpx* a, int n, cpx* b, int m, cpx* c){
+void circularConv(cpx* a, int n, cpx* b, int m, cpx* c){
   memcpy(b + m, b, m * sizeof(cpx));
-  convolution(a, n, b, 2 * m, c);
+  conv(a, n, b, 2 * m, c);
   memcpy(c, c + n, n * sizeof(cpx));
 }

@@ -43,9 +43,56 @@ typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
 
+int freq[10], f[10];
+
+bool vulnerable(){
+  memset(freq,0,sizeof freq);
+  for(int i = 0; i < 14; ++i){
+    int x;
+    cin >> x;
+    ++freq[x];
+  }
+  for(int i = 1; i <= 9; ++i){
+    if(freq[i] >= 2){
+      // debug(i);
+      memcpy(f, freq, sizeof(freq));
+      f[i] -= 2;
+      for(int j = 1; j <= 7; ++j){
+        if(f[j] == 3 && f[j + 1] && f[j + 2] && f[j + 3]){
+          f[j] = 0;
+        }
+        while(f[j] && f[j + 1] && f[j + 2]){
+          --f[j];
+          --f[j + 1];
+          --f[j + 2];
+        }
+      }
+      bool imune = 0;
+      for(int j = 1; j <= 9; ++j){
+        if(f[j] == 3){
+          f[j] = 0;
+        }
+        if(f[j] > 0){
+          // debug(j, f[j]);
+          imune = 1;
+          break;
+        }
+      }
+      if(!imune){
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
 int main(){
   freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
+
+  int n;
+  cin >> n;
+  while(n--) cout << (vulnerable() ? "Vulnerable" : "Immune") << '\n';
 
   return 0;
 }

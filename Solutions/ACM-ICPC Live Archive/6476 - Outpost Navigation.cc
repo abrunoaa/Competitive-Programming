@@ -33,7 +33,7 @@ template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<
 #define inf 0x3f3f3f3f
 #define infl 0x3f3f3f3f3f3f3f3f
 #define mod 1000000007
-#define maxn "abacate"
+#define maxn 103
 
 #define rand() uid(rng)
 mt19937 rng(chrono::high_resolution_clock::now().time_since_epoch().count()); // ll = mt19937_64
@@ -43,9 +43,83 @@ typedef long long ll;
 typedef double lf;
 typedef pair<int,int> ii;
 
+bool y[maxn];
+int n, r, a[maxn], dis[maxn];
+vector<ii> g[maxn];
+
+void dijkstra(int s){
+  memset(dis, inf, sizeof(dis));
+  dis[s] = 0;
+  priority_queue<ii,vector<ii>,greater<ii>> pq;
+  pq.push(ii(0, s));
+  while(!pq.empty()){
+    int u = pq.top().nd;
+    int d = pq.top().st;
+    pq.pop();
+    if(d > dis[u]) continue;
+    for(ii v : g[u]){
+      if(d + v.nd < dis[v.st]){
+        dis[v.st] = d + v.nd;
+        pq.push(ii(dis[v.st], v.st));
+      }
+    }
+  }
+}
+
 int main(){
   freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
+
+  int t;
+  cin >> t;
+  while(t--){
+    cin >> n >> r;
+    map<string,int> mp;
+    for(auto &x : g) x.clear();
+    for(int i = 0; i < n; ++i){
+      string s, t;
+      cin >> s >> a[i] >> t;
+      mp[s] = i;
+      y[i] = t[0] == 'y';
+    }
+    while(r--){
+      string s, t;
+      int c;
+      cin >> s >> t >> c;
+      int u = mp[s];
+      int v = mp[t];
+      g[u].push_back(ii(v, c));
+      g[v].push_back(ii(u, c));
+    }
+    dijkstra(0);
+    int ans = inf;
+    for(int i = 0; i < n; ++i){
+      if(y[i] && dis[i] <= a[0]){
+        ans = min(ans, dis[i]);
+      }
+    }
+    if(ans == inf){
+      for(int i = 1; i < n; ++i){
+        if(a[i] && dis[i] <= a[0]){
+          int prev = dis[i];
+          int ammo = a[i] + a[0] - dis[i];
+          dijkstra(i);
+          for(int j = 0; j < n; ++j){
+            if(y[j] && dis[j] <= ammo){
+              ans = min(ans, prev + dis[j]);
+            }
+          }
+          break;
+        }
+      }
+    }
+    if(ans == inf){
+      cout << "No safe path\n";
+    }
+    else{
+      cout << ans << '\n';
+    }
+  }
 
   return 0;
 }

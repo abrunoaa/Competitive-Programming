@@ -47,5 +47,22 @@ int main(){
   freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
+  int n;
+  cin >> n;
+  int v[25], ans[25];
+  while(n--){
+    for(int i = 0; i < 20; ++i) cin >> v[i];
+    for(int i = 19; i > 0; --i){
+      ans[i] = v[i] % 2;
+      v[i - 1] += v[i] / 2;
+    }
+    ans[0] = v[0];
+    for(int i = 0; i < 20; ++i){
+      if(i) cout << ' ';
+      cout << ans[i];
+    }
+    cout << '\n';
+  }
+
   return 0;
 }

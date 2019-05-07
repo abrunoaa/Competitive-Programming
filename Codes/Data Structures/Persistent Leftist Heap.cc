@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 /************************ Key é sempre passado por cópia! ************************/
 template<class Key> struct PersistentLeftistHeap {
   struct Node {
@@ -54,7 +51,3 @@ template<class Key> struct PersistentLeftistHeap {
   }
   void print(int v){ cerr << " > T ="; print(root[v]); cerr << endl; }
 };
-
-int main(){
-  return 0;
-}

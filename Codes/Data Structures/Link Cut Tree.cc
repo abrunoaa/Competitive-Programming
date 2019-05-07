@@ -1,3 +1,5 @@
+/// Link Cut Tree
+
 #define null nullptr
 
 struct LinkCutTree{
@@ -23,18 +25,18 @@ struct LinkCutTree{
     }
   };
 
-#define rot(L, R)                                                                          \
-  Node* y = x->parent;                                                                     \
-  Node* z = y->parent;                                                                     \
-  if(x->L) x->L->parent = y;                                                               \
-  y->R = x->L;                                                                             \
-  x->L = y;                                                                                \
-  y->parent = x;                                                                           \
-  x->parent = z;                                                                           \
-  if(z) y == z->left ? z->left = x : z->right = x;                                         \
-  x->pathParent = y->pathParent;                                                           \
-  y->pathParent = null;                                                                    \
-  y->update();                                                                             \
+#define rot(L, R)                                                                   \
+  Node* y = x->parent;                                                              \
+  Node* z = y->parent;                                                              \
+  if(x->L) x->L->parent = y;                                                        \
+  y->R = x->L;                                                                      \
+  x->L = y;                                                                         \
+  y->parent = x;                                                                    \
+  x->parent = z;                                                                    \
+  if(z) y == z->left ? z->left = x : z->right = x;                                  \
+  x->pathParent = y->pathParent;                                                    \
+  y->pathParent = null;                                                             \
+  y->update();                                                                      \
   x->update();
 
   void rotl(Node* x){ rot(left, right); }
