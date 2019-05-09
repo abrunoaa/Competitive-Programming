@@ -1,32 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define pi M_PIl
+#define pi acos(-1.0)
 #define eps 1e-9
-#define sq(x) ((x) * (x))
 #define torad(x) ((x) * pi / 180.0)
 #define todeg(x) ((x) * 180.0 / pi)
-#define zero(x) (abs(x) < eps)
 
 typedef long double lf;
 
+inline int cmp(lf x, lf y = 0.0){ return (abs(x - y) < eps ? 0 : x < y ? -1 : 1); }
+
 struct pt{
   lf x, y;
-
-  pt() {}
-  pt(lf x, lf y) : x(x), y(y) {}
+  pt(lf x = 0.0, lf y = 0.0) : x(x), y(y) {}
   pt(pt p, pt q) : x(q.x - p.x), y(q.y - p.y) {}  // cria vetor
 
   lf dist(pt p) { return hypot(x - p.x, y - p.y); }
 
-  bool operator == (pt p) const { return zero(x - p.x) && zero(y - p.y); }
-  bool operator < (pt p) const { return zero(x - p.x) ? y <= p.y - eps : x < p.x; }
+  bool operator == (pt p) const { return !cmp(x, p.x) && !cmp(y, p.y); }
+  bool operator < (pt p) const { return !cmp(x, p.x) ? cmp(y, p.y) < 0 : cmp(x, p.x) < 0; }
 
   // roda este ponto r° (radianos) anti-horário em torno da origem
   pt rotate(lf r) { return pt(x * cos(r) - y * sin(r), x * sin(r) + y * cos(r)); }
 
-  pt operator * (lf s) { return pt(x * s, y * s); } // redimensionar vetor
-  pt operator + (pt p) { return pt(x + p.x, y + p.y); } // somar vetores
+  pt operator * (lf s) { return pt(x * s, y * s); }
+  pt operator / (lf s) { return pt(x / s, y / s); }
+  pt operator + (pt p) { return pt(x + p.x, y + p.y); }
+  pt operator - (pt p) { return pt(x - p.x, y - p.y); }
   lf operator * (pt v) { return x * v.x + y * v.y; }  // produto escalar
   lf cross(pt v) { return x * v.y - y * v.x; }  // produto vetorial
   lf operator ~ () { return x * x + y * y; }  // norma^2 deste vetor
@@ -51,27 +51,25 @@ lf angle(pt a, pt o, pt b){
   return acos(oa * ob / sqrt(~oa * ~ob));
 }
 
-bool ccw(pt p, pt q, pt r) { return pt(p, q).cross(pt(p, r)) > 0.0; }
-bool collinear(pt p, pt q, pt r) { return zero(pt(p, q).cross(pt(p, r))); }
+bool ccw(pt p, pt q, pt r) { return cmp(pt(p, q).cross(pt(p, r))) > 0; }
+bool collinear(pt p, pt q, pt r) { return cmp(pt(p, q).cross(pt(p, r))) == 0; }
 
-struct circle{      // (x - a)² + (y - b)² = r²
-  lf a, b, r;
-
-  circle() : r(-1.0) {}
-  circle(lf a, lf b, lf r) : a(a), b(b), r(r) {}
-  circle(pt p) : a(p.x), b(p.y), r(0.0) {}
-  circle(pt p, pt q){
-    a = (p.x + q.x) / 2.0;
-    b = (p.y + q.y) / 2.0;
-    r = hypot(a - p.x, b - p.y);
+struct Circle{      // (x - a)² + (y - b)² = r²
+  lf x, y, r;
+  Circle(lf x = 0.0, lf y = 0.0, lf r = -1.0) : x(x), y(y), r(r) {}
+  Circle(pt p) : x(p.x), y(p.y), r(0.0) {}
+  Circle(pt p, pt q){
+    x = (p.x + q.x) / 2.0;
+    y = (p.y + q.y) / 2.0;
+    r = hypot(x - p.x, y - p.y);
   }
-  circle(pt p, pt q, pt s) : r(-1.0) {
+  Circle(pt p, pt q, pt s) : r(-1.0) {
     lf d = 2.0 * ((p.x - q.x) * (q.y - s.y) - (p.y - q.y) * (q.x - s.x));
-    if(!zero(d)){
+    if(cmp(d) != 0){
       lf bc = ~p - ~q, cd = ~q - ~s;
-      a = (bc * (q.y - s.y) - cd * (p.y - q.y)) / d;
-      b = (cd * (p.x - q.x) - bc * (q.x - s.x)) / d;
-      r = hypot(a - q.x, b - q.y);
+      x = (bc * (q.y - s.y) - cd * (p.y - q.y)) / d;
+      y = (cd * (p.x - q.x) - bc * (q.x - s.x)) / d;
+      r = hypot(x - q.x, y - q.y);
     }
   }
 
@@ -82,8 +80,29 @@ struct circle{      // (x - a)² + (y - b)² = r²
   lf sector(lf ang) { return ang * area() / 360.0; }
 
   int inside(pt p){
-    lf k = hypot(p.x - a, p.y - b);
-    return zero(k - r) ? 2 : k < r;     // borda = 2, dentro = 1, fora = 0
+    int t = cmp(hypot(p.x - x, p.y - y), r);
+    return t == 0 ? 2 : t < 0;     // 2 = borda, 1 = dentro, 0 = fora
+  }
+
+  // interseção de círculos com raio diferente
+  int intersection(Circle c, pt& i1, pt& i2){
+    lf d = hypot(x - c.x, y - c.y);
+    if(cmp(d, r + c.r) > 0) return 0;  // separados
+    if(cmp(d, abs(r - c.r)) < 0) return 0; // um contem o outro
+    if(cmp(d) == 0 && cmp(r, c.r) == 0) return 0;  // coincidentes (iguais)
+
+    lf a = (r * r - c.r * c.r + d * d) / (2.0 * d);
+    lf x2 = x + a * (c.x - x) / d;
+    lf y2 = y + a * (c.y - y) / d;
+    lf h = sqrt(r * r - a * a);
+    if(cmp(h) == 0){
+      i1 = i2 = pt(x2, y2);
+      return 1;
+    }
+
+    i1 = pt(x2 + h * (c.y - y) / d, y2 - h * (c.x - x) / d);
+    i2 = pt(x2 - h * (c.y - y) / d, y2 + h * (c.x - x) / d);
+    return 2;
   }
 };
 
@@ -92,16 +111,16 @@ struct circle{      // (x - a)² + (y - b)² = r²
 pt p[maxn], b[3];
 
 // retorna o menor círculo que todos os pontos de p estão dentro, ou não existe
-circle cover(int np, int nb){
-  if(nb == 3) return circle(b[0], b[1], b[2]);
+Circle cover(int np, int nb){
+  if(nb == 3) return Circle(b[0], b[1], b[2]);
   if(np < 0){
-    if(nb == 1) return circle(b[0]);
-    if(nb == 2) return circle(b[0], b[1]);
-    return circle();                    // retorna raio = -1
+    if(nb == 1) return Circle(b[0]);
+    if(nb == 2) return Circle(b[0], b[1]);
+    return Circle();                    // retorna raio = -1
   }
 
-  circle c = cover(np - 1, nb);
-  if(hypot(p[np].x - c.a, p[np].y - c.b) < c.r + eps)
+  Circle c = cover(np - 1, nb);
+  if(cmp(hypot(p[np].x - c.x, p[np].y - c.y), c.r) <= 0)
     return c;
 
   b[nb] = p[np];
