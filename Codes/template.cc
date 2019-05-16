@@ -1,4 +1,4 @@
-// g++ -std=c++11 -o "%e" "%f" -fsanitize=address -fno-omit-frame-pointer -DBALLOONFIELD -Wall -Wextra -Wfloat-equal -Wconversion -Winline -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wrestrict -Wnull-dereference
+// g++ -std=c++11 -o "%e" "%f" -fsanitize=address -fno-omit-frame-pointer -DBALLOONFIELD -Wall -Wextra -Wfloat-equal -Wconversion -Winline -Wlogical-op
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -29,7 +29,6 @@ template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return 
 template<class T> DEF1(vector<T>) template<class T,class C> DEF1(set<T,C>) template<class T,class C> DEF1(multiset<T,C>) template<class K,class T,class C> DEF1(map<K,T,C>) template<class K,class T,class C> DEF1(multimap<K,T,C>)
 template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<T>) template<class T,class V,class C> DEF2(top,pop,priority_queue<T,V,C>)
 
-#define null nullptr
 #define st first
 #define nd second
 #define inf 0x3f3f3f3f
@@ -48,6 +47,5 @@ typedef pair<int,int> ii;
 int main(){
   freopen("in","r",stdin);
   ios_base::sync_with_stdio(0), cin.tie(0);
-
   return 0;
 }
