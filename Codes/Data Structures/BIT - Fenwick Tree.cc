@@ -1,5 +1,3 @@
-/// BIT - Fenwick Tree
-
 #define maxn 100010
 
 int ft[maxn];
