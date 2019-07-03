@@ -9,6 +9,27 @@ public class Main{
 
   void main(){
     // freopen("in");
+    int T = nextInt();
+    for(int t = 0; t < T; ++t){
+      int x = nextInt();
+      int n = nextInt();
+      int[] dp = new int[x + 1];
+      for(int i = 1; i <= x; ++i){
+        dp[i] = inf;
+      }
+      for(int i = 0; i < n; ++i){
+        int a = nextInt();
+        for(int j = a; j <= x; ++j){
+          dp[j] = Math.min(dp[j], dp[j - a] + 1);
+        }
+      }
+      if(dp[x] == inf){
+        printf("No solution\n");
+      }
+      else{
+        printf("%d\n", dp[x]);
+      }
+    }
   }
 
   final double pi = Math.acos(-1.0);

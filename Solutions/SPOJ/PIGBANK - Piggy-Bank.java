@@ -9,6 +9,30 @@ public class Main{
 
   void main(){
     // freopen("in");
+    int T = nextInt();
+    for(int t = 0; t < T; ++t){
+      int e = nextInt();
+      int f = nextInt();
+      int m = f - e;
+      int n = nextInt();
+      int[] dp = new int[m + 1];
+      for(int j = 1; j <= m; ++j){
+        dp[j] = inf;
+      }
+      for(int i = 0; i < n; ++i){
+        int p = nextInt();
+        int w = nextInt();
+        for(int j = w; j <= m; ++j){
+          dp[j] = Math.min(dp[j], dp[j - w] + p);
+        }
+      }
+      if(dp[m] == inf){
+        printf("This is impossible.\n");
+      }
+      else{
+        printf("The minimum amount of money in the piggy-bank is %d.\n", dp[m]);
+      }
+    }
   }
 
   final double pi = Math.acos(-1.0);

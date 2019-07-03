@@ -7,8 +7,26 @@ public class Main{
   final int maxn = -1;
   final double eps = 1e-9;
 
+  Map<Integer,Long> memo = new TreeMap<Integer,Long>();
+  {
+    memo.put(0, 0l);
+  }
+
+  long dollars(int n){
+    if(!memo.containsKey(n)){
+      memo.put(n, (long)Math.max(n, dollars(n / 2) + dollars(n / 3) + dollars(n / 4)));
+    }
+    return memo.get(n);
+  }
+
   void main(){
     // freopen("in");
+    while(true){
+      int n;
+      // EOF
+      try{ n = nextInt(); } catch(Exception e){ break; }
+      printf("%d\n", dollars(n));
+    }
   }
 
   final double pi = Math.acos(-1.0);

@@ -9,6 +9,19 @@ public class Main{
 
   void main(){
     // freopen("in");
+    int m = nextInt();
+    int n = nextInt();
+    int[] dp = new int[m + 1];
+    for(int i = 1; i <= m; ++i){
+      dp[i] = inf;
+    }
+    for(int i = 0; i < n; ++i){
+      int c = nextInt();
+      for(int j = c; j <= m; ++j){
+        dp[j] = Math.min(dp[j], dp[j - c] + 1);
+      }
+    }
+    printf("%d\n", dp[m]);
   }
 
   final double pi = Math.acos(-1.0);
