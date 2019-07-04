@@ -1,5 +1,3 @@
-/// Sparse Table
-
 #define eps 1e-9
 #define maxn 100010
 

@@ -14,7 +14,7 @@ void build(){
   }
 }
 
-ll permutationIndex_2(int* p, int n){ // O(n²)
+ll permutationIndex_2(int* p, int n){ // O(n^2)
   ll idx = 0;
   for(int i = n - 1; i >= 0; --i){
     int k = 0;

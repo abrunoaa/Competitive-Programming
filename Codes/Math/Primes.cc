@@ -37,7 +37,7 @@ bool isprime(int n){              // O(sqrt(n) / ln(sqrt(n)))
 }
 
 // checa se n é primo
-// O(k * log²(n)) ou se usar modMul O(k * log³(n)), k = qtd de primos testados
+// O(k * log^2(n)) ou se usar modMul O(k * log^3(n)), k = qtd de primos testados
 bool millerRabin(ll n){
   // n <  4e9: bases[] = {2, 7, 61}
   // n < 3e23: bases[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37}
@@ -83,7 +83,7 @@ vii factors(int n){           // O(sqrt(n) / ln(sqrt(n)))
   return f;
 }
 
-// nº de fatores primos -- 12 = 2² * 3¹ ==> npf = 3
+// nº de fatores primos -- 12 = 2 * 2 * 3 ==> npf = 3
 int npf(int n){               // O(sqrt(n) / ln(sqrt(n)))
   int ans = 0;
   for(int p : primes){

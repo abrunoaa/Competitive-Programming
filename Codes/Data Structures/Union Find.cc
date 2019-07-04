@@ -1,5 +1,3 @@
-/// Union Find
-
 #define maxn 100010
 
 int n;        // nº de elementos

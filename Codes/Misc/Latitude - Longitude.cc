@@ -1,6 +1,5 @@
 typedef long double lf;
 
-// retorna x²
 inline lf sq(lf x){ return x * x; }
 
 /** Converte latitude-longitude em coordenadas polares **/
@@ -22,7 +21,7 @@ pt convert(latlon l){
 
 /** Encontra distância entre dois pontos na terra **/
 // fórmula de Haversine =====> LAT-LON EM RADIANOS!!!
-lf dist1(lf r, lf lat1, lf lon1, lf lat2, lf lon2){         // lenta e tem menos precisão
+lf dist1(lf r, lf lat1, lf lon1, lf lat2, lf lon2){       // lenta e tem menos precisão
   lf dlon = lon1 - lon2;
   return r * acos(sin(lat1) * sin(lat2) + cos(lat1) * cos(lat2) * cos(dlon));
 }

@@ -1,5 +1,3 @@
-/// Algoritmo de Mo
-
 #define maxn 100010
 #define maxm 100010
 

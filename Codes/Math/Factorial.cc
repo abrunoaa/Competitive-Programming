@@ -25,7 +25,7 @@ int ctzFact(int n, int b){    // O(b) ==> pode otimizar percorrendo apenas primo
 
 // retorna qtos dígitos tem em n! na base b
 // ans = 1 + log(n!) / log(b) = 1 + (log(2) + log(3) + ... + log(n)) / log(b)
-// n! ≃ sqrt(2pi * n) * (n/e)^n
+// n! = sqrt(2pi * n) * (n/e)^n
 int digitsFact(int n, int b){
   double d = 0.0;
   for(int i = 2; i <= n; ++i) d += log(i);
@@ -83,7 +83,7 @@ int nCr_iterative(int n, int r){
   return c;
 }
 
-// triângulo de pascal tem complexidade O(n²)
+// triângulo de pascal tem complexidade O(n^2)
 #define maxn 10010
 
 vector<int> C[maxn];

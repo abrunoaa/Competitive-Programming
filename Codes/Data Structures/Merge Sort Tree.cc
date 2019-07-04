@@ -1,5 +1,3 @@
-/// Merge Sort Tree
-
 #define maxn 100010
 #define L (2 * t)
 #define R (L + 1)
@@ -38,10 +36,8 @@ int numLess(int i, int j, int x, int t = 1, int l = 0, int r = n - 1){
   return numLess(i, j, x, L, l, M) + numLess(i, j, x, R, M+1, r);
 }
 
-/*
- * >> k-ésimo de uma sequência:
- *      cria o par ii(valor, posição), ordena por valor e cria a posição
- */
+// >> k-ésimo de uma sequência:
+//   > cria o par ii(valor, posição), ordena por valor e cria a posição
 int qry(int i, int j, int k, int t = 1, int l = 0, int r = n - 1){
   if(l == r) return st[t][0];
   int nl = ub(st[R], i) - lb(st[L], i);

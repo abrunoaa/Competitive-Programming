@@ -54,7 +54,7 @@ lf angle(pt a, pt o, pt b){
 bool ccw(pt p, pt q, pt r) { return cmp(pt(p, q).cross(pt(p, r))) > 0; }
 bool collinear(pt p, pt q, pt r) { return cmp(pt(p, q).cross(pt(p, r))) == 0; }
 
-struct Circle{      // (x - a)² + (y - b)² = r²
+struct Circle{      // (x - a)^2 + (y - b)^2 = r^2
   lf x, y, r;
   Circle(lf x = 0.0, lf y = 0.0, lf r = -1.0) : x(x), y(y), r(r) {}
   Circle(pt p) : x(p.x), y(p.y), r(0.0) {}

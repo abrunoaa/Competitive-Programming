@@ -1,5 +1,3 @@
-/// Persistent Segment Tree
-
 #define maxn 100010
 #define maxq 100010
 #define maxs (2 * maxn + maxq * ((int)log2(maxn) + 1))  // 2n + q*lg n

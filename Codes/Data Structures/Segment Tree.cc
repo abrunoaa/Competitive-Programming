@@ -1,5 +1,3 @@
-/// Segment Tree
-
 #define L (2 * k)
 #define R (L + 1)
 #define M ((l + r) / 2)

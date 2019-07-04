@@ -1,10 +1,7 @@
-/// MAXQUEUE
-
 #define st first
 #define nd second
 
-template<class T>
-struct MaxQueue{
+template<class T> struct MaxQueue{
   int n;
   deque<pair<T,int>> q;
 

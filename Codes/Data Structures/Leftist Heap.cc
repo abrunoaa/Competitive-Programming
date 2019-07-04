@@ -1,8 +1,3 @@
-/// Leftist Heap
-
-#include <bits/stdc++.h>
-using namespace std;
-
 #define maxa 10000003  // máximo de nós alocados antes de um init
 
 /************************ Key é sempre passado por cópia! ************************/
@@ -64,42 +59,3 @@ template<class Key> struct LeftistHeap {
   }
   void print() { cerr << " > T ="; print(root); cerr << endl; }
 };
-
-/// TESTES
-template<class t> ostream& operator<<(ostream& out,const vector<t>& ds)
-{ bool flag=0; out<<'['; for(auto& x : ds){ if(flag) out<<", "; else flag=1; out<<x; } return out<<']'; }
-
-void debug(){}
-template<class t,class... u> void debug(const t& x,const u& ...y){ cerr<<' '<<x,debug(y...); }
-#define debug(x...) cerr<<"\x1b[91m[" #x "] =",debug(x),cerr<<"\x1b[0m\n"
-
-int main(){
-  srand((unsigned)time(0));
-
-  int O = 10000000;
-  LeftistHeap<int> heap;
-  priority_queue<int,vector<int>,greater<int>> pq;
-  for(int o = 1; o <= O; ++o){
-    int op = rand() % 7;
-    // debug(o, op);
-    if(op == 0){
-      while(!pq.empty()) pq.pop();
-      heap.clear();
-    }
-    else if(op <= 3 && !pq.empty()){
-      pq.pop();
-      heap.pop();
-    }
-    else{
-      int x = rand();
-      // debug(x);
-      pq.push(x);
-      heap.push(x);
-    }
-    if(!pq.empty()) assert(pq.top() == heap.top());
-    else assert(heap.empty());
-  }
-
-  cout << "Elapsed: " << (double)clock() / CLOCKS_PER_SEC << "s." << endl;
-  return 0;
-}

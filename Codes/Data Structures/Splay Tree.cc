@@ -1,11 +1,8 @@
-/** Splay Tree **/
-
-template<class key_t, class value_t>
-struct SplayTree{
+template<class Key, class Value> struct SplayTree{
   struct no{
     no *p, *l, *r;
-    key_t k;
-    value_t v;
+    Key k;
+    Value v;
   };
 
   no* root = 0;
@@ -48,14 +45,14 @@ struct SplayTree{
     root = x;
   }
 
-  no* find(key_t k){
+  no* find(Key k){
     no* r = root;
     while(r && k != r->k) r = k < r->k ? r->l : r->r;
     if(r) splay(r);
     return r;
   }
 
-  void insert(key_t k, value_t v){
+  void insert(Key k, Value v){
     no *p = 0, **r = &root;
     while(*r){
       p = *r;
@@ -66,8 +63,8 @@ struct SplayTree{
     splay(*r);
   }
 
-  void erase(key_t k){
-    no* r = find(k);  // move a chave para a raíz
+  void erase(Key k){
+    no* r = find(k);  // move key to root
     assert(r == root && r->k == k);  // must find it!
     if(!root->l) root = root->r;
     else{

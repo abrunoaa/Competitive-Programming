@@ -4,12 +4,7 @@ using namespace std;
 int n, n2, n4, ans, bml[10], bmc[10], bmb[10][10], mat[10][10];
 
 bool solve(int pos){
-  if(pos == n4){
-    // for(int i = 0; i < n2; ++i)
-      // if(bml[i] != ans)
-        // return 0;
-    return 1;
-  }
+  if(pos == n4) return 1;
 
   int l = pos / n2, c = pos % n2;
   if(mat[l][c] != 0) return solve(pos + 1);       // já tá preenchido
@@ -33,7 +28,7 @@ bool solve(int pos){
 }
 
 int main(){
-  while(cin >> n){            // sudoku n² x n² (1 a n²)
+  while(cin >> n){            // sudoku n^2 x n^2 (1 a n^2)
     n2 = n * n;
     n4 = n2 * n2;
     ans = (1 << n2) - 1;
