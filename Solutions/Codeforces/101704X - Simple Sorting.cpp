@@ -5,8 +5,7 @@ typedef long long ll;
 
 vector<ll> x;
 
-int main()
-{
+int main() {
   //~ freopen("xin", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
@@ -14,21 +13,22 @@ int main()
 
   cin >> n;
   x.reserve(n + 10);
-  for (int i = 0, v; i < n; ++i)
-  {
+  for (int i = 0, v; i < n; ++i) {
     cin >> v;
     x.push_back(v);
   }
 
-  if (n % 2 == 0)
+  if (n % 2 == 0) {
     sort(x.rbegin(), x.rend());
-  else
+  } else {
     sort(x.begin(), x.end());
+  }
 
   x.erase(unique(x.begin(), x.end()), x.end());
 
-  for (int i = 0; i < (int)x.size(); ++i)
+  for (int i = 0; i < (int)x.size(); ++i) {
     cout << x[i] << '\n';
+  }
 
   return 0;
 }

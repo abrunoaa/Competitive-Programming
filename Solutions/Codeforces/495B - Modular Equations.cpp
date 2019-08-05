@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -47,21 +47,19 @@ __attribute__((destructor)) static void destroy()
 #define db(...) 42
 #endif
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   int a, b;
   cin >> a >> b;
-  if(a < b){
+  if (a < b) {
     cout << "0\n";
-  }
-  else if(a == b){
+  } else if (a == b) {
     cout << "infinity\n";
-  }
-  else{
+  } else {
     int ans = 0, n = a - b, up = sqrt(n);
-    for(int d = 1; d <= up; ++d){
-      if(n % d == 0){
+    for (int d = 1; d <= up; ++d) {
+      if (n % d == 0) {
         ans += (d > b) + (n / d > b) - (d == n / d && d > b);
       }
     }

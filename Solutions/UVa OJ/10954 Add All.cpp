@@ -23,46 +23,38 @@
 #include <map>
 using namespace std;
 
-int main()
-{
+int main() {
   register int i, j, k, n;
   unsigned long long cost;
   map<unsigned int, int> m;
   map<unsigned int, int>::iterator iter, end, del;
 
-  while (scanf("%d", &n), n)
-  {
+  while (scanf("%d", &n), n) {
     i = -1;
     cost = 0;
-    while (++i < n)
-    {
+    while (++i < n) {
       scanf("%d", &j);
       m[j]++;
     }
     iter = m.begin();
     end = m.end();
-    while (true)
-    {
+    while (true) {
       j = iter->second;
       k = iter->first;
-      if (j > 1)
-      {
+      if (j > 1) {
         cost += k *= 2;
         m[k]++;
         iter->second -= 2;
-      }
-      else if (j == 1)
-      {
+      } else if (j == 1) {
         del = iter++;
-        if (iter == end)
+        if (iter == end) {
           break;
+        }
         m.erase(del);
         cost += k += iter->first;
         m[k]++;
         iter->second--;
-      }
-      else
-      {
+      } else {
         del = iter++;
         m.erase(del);
       }

@@ -9,42 +9,42 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    int n, q;
-    int k, m;
-    string s;
-    int idx, c;
+  int n, q;
+  int k, m;
+  string s;
+  int idx, c;
 
-    while (cin >> n >> q && n && q) {
+  while (cin >> n >> q && n && q) {
 
-        cin >> s;
+    cin >> s;
 
-        while (q--) {
-            cin >> k >> m;
-            idx = 0;
+    while (q--) {
+      cin >> k >> m;
+      idx = 0;
 
-            string temp = s;
-            c = 0;
-            while (m--) {
-                temp[idx] = (temp[idx] == 'o'? 'x' : 'o');
-                idx = (idx + k) % n;
-                c++;
-                if (temp == s) break;
-            }
-            if (m > 0) {
-                m %= c;
+      string temp = s;
+      c = 0;
+      while (m--) {
+        temp[idx] = (temp[idx] == 'o' ? 'x' : 'o');
+        idx = (idx + k) % n;
+        c++;
+        if (temp == s) { break; }
+      }
+      if (m > 0) {
+        m %= c;
 
-                while (m-- > 0) {
-                    temp[idx] = (temp[idx] == 'o'? 'x' : 'o');
-                    idx = (idx + k) % n;
-                }
-            }
-
-            cout << temp << endl;
+        while (m-- > 0) {
+          temp[idx] = (temp[idx] == 'o' ? 'x' : 'o');
+          idx = (idx + k) % n;
         }
-    }
+      }
 
-    return 0;
+      cout << temp << endl;
+    }
+  }
+
+  return 0;
 }

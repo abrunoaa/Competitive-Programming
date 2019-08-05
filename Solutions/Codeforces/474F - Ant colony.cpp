@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -56,43 +56,43 @@ template<class t> t sq(t x) { return x * x; }
 #define R (L + 1)
 #define M ((l + r) / 2)
 
-struct ant{
+struct ant {
   int g, m, n;
 };
 
 int n, s[maxn];
 ant st[4 * maxn];
 
-ant merge(ant x, ant y){
-  if(x.n == -1) return y;
-  if(y.n == -1) return x;
+ant merge(ant x, ant y) {
+  if (x.n == -1) { return y; }
+  if (y.n == -1) { return x; }
   return ant{ gcd(x.g, y.g), min(x.m, y.m), (x.m == y.m ? x.n + y.n : x.m < y.m ? x.n : y.n) };
 }
 
-ant build(int k = 1, int l = 0, int r = n - 1){
-  if(l == r) return st[k] = ant{ s[l], s[l], 1 };
-  return st[k] = merge(build(L, l, M), build(R, M+1, r));
+ant build(int k = 1, int l = 0, int r = n - 1) {
+  if (l == r) return st[k] = ant{ s[l], s[l], 1 };
+  return st[k] = merge(build(L, l, M), build(R, M + 1, r));
 }
 
-ant qry(int i, int j, int k = 1, int l = 0, int r = n - 1){
-  if(r < i || j < l) return ant{ -1, -1, -1 };
-  if(i <= l && r <= j) return st[k];
-  return merge(qry(i, j, L, l, M), qry(i, j, R, M+1, r));
+ant qry(int i, int j, int k = 1, int l = 0, int r = n - 1) {
+  if (r < i || j < l) return ant{ -1, -1, -1 };
+  if (i <= l && r <= j) { return st[k]; }
+  return merge(qry(i, j, L, l, M), qry(i, j, R, M + 1, r));
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> s[i];
   }
   build();
 
   int m;
   cin >> m;
-  while(m--){
+  while (m--) {
     int l, r;
     cin >> l >> r, --l, --r;
     ant q = qry(l, r);

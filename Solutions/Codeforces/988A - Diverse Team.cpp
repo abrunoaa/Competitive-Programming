@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -50,23 +50,22 @@ __attribute__((destructor)) static void destroy()
 int n, k, a[110], f[110];
 vi cand;
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> k;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> a[i];
-    if(++f[a[i]] == 1){
+    if (++f[a[i]] == 1) {
       cand.pb(i + 1);
     }
   }
-  if((int)cand.size() < k){
+  if ((int)cand.size() < k) {
     cout << "NO\n";
-  }
-  else{
+  } else {
     cout << "YES\n";
-    for(int i = 0; i < k; ++i){
-      if(i) cout << ' ';
+    for (int i = 0; i < k; ++i) {
+      if (i) { cout << ' '; }
       cout << cand[i];
     }
     cout << endl;

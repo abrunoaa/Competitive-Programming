@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -58,60 +58,60 @@ int n, m, p[maxn], idx[maxn];
 ll ans[maxn], ft[maxn];
 tri q[maxn];
 
-void upd(int i){
-  for(; i < maxn; i += i & -i){
+void upd(int i) {
+  for (; i < maxn; i += i & -i) {
     ++ft[i];
   }
 }
 
-ll qry(int i){
+ll qry(int i) {
   ll s = 0;
-  for(; i; i -= i & -i){
+  for (; i; i -= i & -i) {
     s += ft[i];
   }
   return s;
 }
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   memset(ans, -1, sizeof ans);
 
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cin >> p[i];
     idx[p[i]] = i;
   }
-  for(int i = 0; i < m; ++i){
+  for (int i = 0; i < m; ++i) {
     cin >> q[i].st.st >> q[i].st.nd;
     q[i].nd = i;
   }
   sort(q, q + m, greater<tri>());
 
-  for(int i = n, j = 0; i; --i){
+  for (int i = n, j = 0; i; --i) {
     int x = p[i];
     included[x] = 1;
-    for(int k = 2 * x; k <= n; k += x){
-      if(included[k]){
+    for (int k = 2 * x; k <= n; k += x) {
+      if (included[k]) {
         upd(idx[k]);
       }
     }
-    for(int k = 1, sq = sqrt(x); k <= sq; ++k){
-      if(x % k == 0){
-        if(included[k]){
+    for (int k = 1, sq = sqrt(x); k <= sq; ++k) {
+      if (x % k == 0) {
+        if (included[k]) {
           upd(idx[k]);
         }
-        if(k != x / k && included[x / k]){
+        if (k != x / k && included[x / k]) {
           upd(idx[x / k]);
         }
       }
     }
-    for(; i == q[j].st.st; ++j){
+    for (; i == q[j].st.st; ++j) {
       ans[q[j].nd] = qry(q[j].st.nd);
     }
   }
-  for(int i = 0; i < m; ++i){
+  for (int i = 0; i < m; ++i) {
     cout << ans[i] << endl;
   }
 

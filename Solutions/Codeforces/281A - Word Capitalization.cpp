@@ -4,12 +4,11 @@ using namespace std;
 
 #define endl '\n'
 
-int main()
-{
+int main() {
   ios::sync_with_stdio(0), cin.tie(0);
 
   string s;
-  while (cin >> s) cout << char(toupper(s[0])) << s.data() + 1 << endl;
+  while (cin >> s) { cout << char(toupper(s[0])) << s.data() + 1 << endl; }
 
   return 0;
 }

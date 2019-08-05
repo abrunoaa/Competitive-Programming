@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -55,37 +55,37 @@ template<class t> t sq(t x) { return x * x; }
 int n, k, a[maxn];
 ll ft[12][maxn];
 
-void upd(ll *ft, int i, ll x){
-  for(; i; i -= i & -i){
+void upd(ll* ft, int i, ll x) {
+  for (; i; i -= i & -i) {
     ft[i] += x;
   }
 }
 
-ll qry(ll *ft, int i){
+ll qry(ll* ft, int i) {
   ll s = 0;
-  for(; i < maxn; i += i & -i){
+  for (; i < maxn; i += i & -i) {
     s += ft[i];
   }
   return s;
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> k;
-  if(k == 0){
+  if (k == 0) {
     cout << n << endl;
     return 0;
   }
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cin >> a[i];
   }
 
   ll ans = 0;
-  for(int i = n; i; --i){
+  for (int i = n; i; --i) {
     upd(ft[1], a[i], +1);
-    for(int j = 2; j <= k; ++j){
+    for (int j = 2; j <= k; ++j) {
       upd(ft[j], a[i], qry(ft[j - 1], a[i] + 1));
     }
     ans += qry(ft[k], a[i] + 1);

@@ -26,42 +26,44 @@ char m[10][10];
 bool stop;
 int nl, nc, i, j, s, c1, l1, loop;
 
-int move (int l, int c)
-{
-  if (l < 0 || l >= nl || c < 0 || c >= nc)
+int move (int l, int c) {
+  if (l < 0 || l >= nl || c < 0 || c >= nc) {
     return i;
+  }
 
-  if (!pass[l][c])
-  {
+  if (!pass[l][c]) {
     pass[l][c] = 1;
 
     i++;
-    switch (m[l][c])
-    {
-      case 'N': j = move(l -1, c);
+    switch (m[l][c]) {
+    case 'N':
+      j = move(l - 1, c);
       break;
 
-      case 'E': j = move(l, c +1);
+    case 'E':
+      j = move(l, c + 1);
       break;
 
-      case 'S': j = move(l +1, c);
+    case 'S':
+      j = move(l + 1, c);
       break;
 
-      default: j = move(l, c -1);
+    default:
+      j = move(l, c - 1);
     }
-    if (!loop)
+    if (!loop) {
       return j;
+    }
   }
 
-  if (c1 == c && l1 == l)
-  {
+  if (c1 == c && l1 == l) {
     stop = 1;
     return i;
   }
-  if (stop)
+  if (stop) {
     return i;
-  if (c1 == -1 && l1 == -1)
-  {
+  }
+  if (c1 == -1 && l1 == -1) {
     c1 = c;
     l1 = l;
   }
@@ -70,13 +72,10 @@ int move (int l, int c)
   return --i;
 }
 
-int main()
-{
-  while (scanf("%d%d%d", &nl, &nc, &s), nl || nc || s)
-  {
+int main() {
+  while (scanf("%d%d%d", &nl, &nc, &s), nl || nc || s) {
     for (i = 0; i < nl; i++)
-      for (j = 0; j < nc; j++)
-      {
+      for (j = 0; j < nc; j++) {
         scanf(" %c", &m[i][j]);
         pass[i][j] = 0;
       }
@@ -86,9 +85,10 @@ int main()
     c1 = l1 = -1;
     i = 0;
     j = move(0, s - 1);
-    if (loop)
+    if (loop) {
       printf("%d step(s) before a loop of %d step(s)\n", j, loop);
-    else
+    } else {
       printf("%d step(s) to exit\n", j);
+    }
   }
 }

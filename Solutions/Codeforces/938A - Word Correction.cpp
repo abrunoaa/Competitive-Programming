@@ -20,8 +20,8 @@ void db(t x, u... y)
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<int,ii> tri;
+typedef pair<int, int> ii;
+typedef pair<int, ii> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -31,25 +31,24 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 #ifdef LOCAL
-struct _S { _S() { assert(freopen("in","r",stdin)); } } _S;
+struct _S { _S() { assert(freopen("in", "r", stdin)); } } _S;
 #else
 struct _S { _S() { cin.sync_with_stdio(0), cin.tie(0); } } _S;
 #define db(x...)
 #endif
 
-bool ev(int c)
-{
+bool ev(int c) {
   return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y';
 }
 
-int main(){
+int main() {
   int n;
   string s;
 
   cin >> n >> s;
-  for (int i = 0; i < (int)s.size(); ++i){
+  for (int i = 0; i < (int)s.size(); ++i) {
     // db(s[i - 1], s[i], ev(s[i-1]), ev(s[i]));
-    if (i && ev(s[i]) && ev(s[i - 1])) continue;
+    if (i && ev(s[i]) && ev(s[i - 1])) { continue; }
     cout << s[i];
   }
   cout << '\n';

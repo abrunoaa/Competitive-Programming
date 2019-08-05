@@ -1,24 +1,22 @@
 
- #include <bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
+int main() {
   // freopen("jin", "r", stdin);
 
   char s[20];
   int n, i, ans;
-  map<string,int> jud;
+  map<string, int> jud;
 
   scanf("%d", &n);
 
-  for (i = 0; i < n; ++i)
+  for (i = 0; i < n; ++i) {
     scanf(" %s", s), ++jud[s];
-  for (i = ans = 0; i < n; ++i)
-  {
+  }
+  for (i = ans = 0; i < n; ++i) {
     scanf(" %s", s);
-    if (jud[s])
-    {
+    if (jud[s]) {
       ++ans;
       --jud[s];
     }

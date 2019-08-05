@@ -27,33 +27,32 @@ using namespace std;
 
 //#define T
 
-int main()
-{
+int main() {
   bool adj[30][30] = {0};
   char s[300], ord[30][30];
   int mino, thes, cand, len[30] = {0};
   register int i, p, mov, lim;
 
-  while (scanf(" %[^\n]s", s), *s != '#')
-  {
+  while (scanf(" %[^\n]s", s), *s != '#') {
     i = -1;
     lim = -1; // only  necessary
-    while (1)
-    {
+    while (1) {
       p = s[++i] - 65;
 #ifdef T
       printf("--%c %d\n", p + 65, i);
 #endif
-      if (p > lim)
+      if (p > lim) {
         lim = p;
-      for (i += 2; s[i] != ';' && s[i] != '.'; i++)
-      {
-        ord[p][len[p]++] = (s[i] -= 65);
-        if (p != s[i])  // need?
-          adj[p][(int)s[i]] = 1;
       }
-      if (s[i] == '.')
+      for (i += 2; s[i] != ';' && s[i] != '.'; i++) {
+        ord[p][len[p]++] = (s[i] -= 65);
+        if (p != s[i]) { // need?
+          adj[p][(int)s[i]] = 1;
+        }
+      }
+      if (s[i] == '.') {
         break;
+      }
     }
     lim++;
     mino = s[i + 2] - 65;
@@ -62,39 +61,40 @@ int main()
 
     /// pursuit
     mov = 0;
-    while (1)
-    {
+    while (1) {
 #ifdef T
       printf("m %c | t %c | c %d\n", mino + 65, thes + 65, cand);
       printf("    ");
-      for (i = 0; i < lim; i++)
+      for (i = 0; i < lim; i++) {
         printf("%c ", i + 65);
+      }
       printf("| len > ord\n");
-      for (int i = 0, j; i < lim; i++)
-      {
+      for (int i = 0, j; i < lim; i++) {
         printf("%c : ", i + 65);
-        for (j = 0; j < lim; j++)
+        for (j = 0; j < lim; j++) {
           printf("%d ", adj[i][j]);
+        }
         printf("|  %d  > ", len[i]);
-        for (j = 0; j < len[i]; j++)
+        for (j = 0; j < len[i]; j++) {
           printf("%c ", ord[i][j] + 65);
+        }
         printf("\n");
       }
       //sleep(5);
 #endif
       for (i = -1;
 #ifdef T
-      printf(" -- %d < %d[%c] && (!%d || %c == %c)\n", i, len[mino], mino +65,
-      adj[mino][(int)ord[mino][i]] ? 1 : 0,thes +65, ord[mino][i] +65),
+           printf(" -- %d < %d[%c] && (!%d || %c == %c)\n", i, len[mino], mino + 65,
+                  adj[mino][(int)ord[mino][i]] ? 1 : 0, thes + 65, ord[mino][i] + 65),
 #endif
-                  ++i < len[mino] && (!adj[mino][(int)ord[mino][i]] || thes == ord[mino][i]); );
-      if (i == len[mino])   // trapped
+           ++i < len[mino] && (!adj[mino][(int)ord[mino][i]] || thes == ord[mino][i]); );
+      if (i == len[mino]) { // trapped
         break;
+      }
       thes = mino;          // follow
       mino = ord[mino][i];  // run
 
-      if (++mov == cand)
-      {
+      if (++mov == cand) {
         mov = 0;
         printf("%c ", thes + 65);
         for (i = lim; i--; adj[i][thes] = 0); // indegree = 0

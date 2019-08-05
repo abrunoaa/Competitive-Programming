@@ -6,8 +6,8 @@ using namespace __gnu_pbds;
 #ifndef ONLINE_JUDGE
 __attribute__((destructor)) static void destroy() { cerr << "\nTime elapsed: " << (double)clock() / CLOCKS_PER_SEC << "s.\n"; }
 
-void db(){ cerr << '\n'; }
-template<class t, class... u> void db(t x, u... y){ cerr << ' ' << x, db(y...); }
+void db() { cerr << '\n'; }
+template<class t, class... u> void db(t x, u... y) { cerr << ' ' << x, db(y...); }
 #define db(x...) cerr << "\x1b[91m >> [" #x "] =", db(x), cerr << "\x1b[0m"
 #else
 #warning "JUDGE"
@@ -39,80 +39,82 @@ template<class t, class... u> void db(t x, u... y){ cerr << ' ' << x, db(y...); 
 #define tm asdf5
 #define lr asdf6
 
-template<class t1, class t2, class t3> struct triple{
-  t1 st; t2 nd; t3 rd;
+template<class t1, class t2, class t3> struct triple {
+  t1 st;
+  t2 nd;
+  t3 rd;
 
   triple() : st(), nd(), rd() {}
-  triple(const t1& a, const t2& b, const t3& c) : st(a), nd(b), rd(c) {}
+  triple(const t1 &a, const t2 &b, const t3 &c) : st(a), nd(b), rd(c) {}
 
-  bool operator == (const triple& t) const { return st == t.st && nd == t.nd && rd == t.rd; }
-  bool operator != (const triple& t) const { return !(*this == t); }
-  bool operator <  (const triple& t) const { return st != t.st ? st < t.st : nd != t.nd ? nd < t.nd : rd < t.rd; }
-  bool operator <= (const triple& t) const { return !(t < *this); }
-  bool operator >  (const triple& t) const { return t < *this; }
-  bool operator >= (const triple& t) const { return !(*this < t); }
+  bool operator == (const triple &t) const { return st == t.st && nd == t.nd && rd == t.rd; }
+  bool operator != (const triple &t) const { return !(*this == t); }
+  bool operator <  (const triple &t) const { return st != t.st ? st < t.st : nd != t.nd ? nd < t.nd : rd < t.rd; }
+  bool operator <= (const triple &t) const { return !(t < *this); }
+  bool operator >  (const triple &t) const { return t < *this; }
+  bool operator >= (const triple &t) const { return !(*this < t); }
 };
 
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef triple<int,int,int> tri;
+typedef pair<int, int> ii;
+typedef triple<int, int, int> tri;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ii> vii;
 
-template<class t> using tset = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u> using tmap = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u = greater<t>> using pqueue = priority_queue<t,vector<t>,u>;
+template<class t> using tset = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u> using tmap = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u = greater<t>> using pqueue = priority_queue<t, vector<t>, u>;
 
-template<class t1, class t2> ostream& operator << (ostream& out, const pair<t1,t2>& x){ return out << '(' << x.st << ", " << x.nd << ')'; }
-template<class t1, class t2, class t3> ostream& operator << (ostream& out, const triple<t1,t2,t3>& x){ return out << '(' << x.st << ", " << x.nd << ", " << x.rd << ')'; }
+template<class t1, class t2> ostream &operator << (ostream &out, const pair<t1, t2> &x) { return out << '(' << x.st << ", " << x.nd << ')'; }
+template<class t1, class t2, class t3> ostream &operator << (ostream &out, const triple<t1, t2, t3> &x) { return out << '(' << x.st << ", " << x.nd << ", " << x.rd << ')'; }
 
 #define PRINT_DS bool flag = 0; out << '['; for(auto& x : ds){ if(flag) out << ", "; else flag = 1; out << x; } return out << ']'
-template<class t> ostream& operator << (ostream& out, const vector<t>& ds){ PRINT_DS; }
-template<class t> ostream& operator << (ostream& out, const set<t>& ds){ PRINT_DS; }
-template<class t> ostream& operator << (ostream& out, const tset<t>& ds){ PRINT_DS; }
-template<class t1, class t2> ostream& operator << (ostream& out, const map<t1,t2>& ds){ PRINT_DS; }
-template<class t1, class t2> ostream& operator << (ostream& out, const tmap<t1,t2>& ds){ PRINT_DS; }
+template<class t> ostream &operator << (ostream &out, const vector<t> &ds) { PRINT_DS; }
+template<class t> ostream &operator << (ostream &out, const set<t> &ds) { PRINT_DS; }
+template<class t> ostream &operator << (ostream &out, const tset<t> &ds) { PRINT_DS; }
+template<class t1, class t2> ostream &operator << (ostream &out, const map<t1, t2> &ds) { PRINT_DS; }
+template<class t1, class t2> ostream &operator << (ostream &out, const tmap<t1, t2> &ds) { PRINT_DS; }
 
 #define maxp 3162300  // sqrt(maxn)
 
 bitset<maxp> isp;
 vi primes;
-map<ll,bool> memo;
+map<ll, bool> memo;
 
-void sieve(){
+void sieve() {
   isp.set();
-  for(int i = 2; i < maxp; ++i){
-    if(isp[i]){
+  for (int i = 2; i < maxp; ++i) {
+    if (isp[i]) {
       primes.pb(i);
-      for(int j = 2 * i; j < maxp; j += i){
+      for (int j = 2 * i; j < maxp; j += i) {
         isp[j] = 0;
       }
     }
   }
 }
 
-bool isprime(ll x){
-  if(x < maxp) return isp[x];
-  for(int p : primes){
-    if((ll)p * p > x){
+bool isprime(ll x) {
+  if (x < maxp) { return isp[x]; }
+  for (int p : primes) {
+    if ((ll)p * p > x) {
       break;
     }
-    if(x % p == 0){
+    if (x % p == 0) {
       return 0;
     }
   }
   return 1;
 }
 
-vll divisors(ll x){
+vll divisors(ll x) {
   vll d;
-  for(ll i = 2; i * i <= x; ++i){
-    if(x % i == 0){
+  for (ll i = 2; i * i <= x; ++i) {
+    if (x % i == 0) {
       d.pb(i);
-      if(i != x / i){
+      if (i != x / i) {
         d.pb(x / i);
       }
     }
@@ -120,43 +122,41 @@ vll divisors(ll x){
   return d;
 }
 
-bool game(ll q){
-  if(isprime(q)){
+bool game(ll q) {
+  if (isprime(q)) {
     return 1;
   }
 
-  if(memo.count(q)) return memo[q];
+  if (memo.count(q)) { return memo[q]; }
   bool &pd = memo[q];
 
-  for(ll d : divisors(q)){
-    if(!game(d)){
+  for (ll d : divisors(q)) {
+    if (!game(d)) {
       return pd = 1;
     }
   }
   return pd = 0;
 }
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   sieve();
 
   ll q;
-  while(cin >> q){
-    if(isprime(q)){
+  while (cin >> q) {
+    if (isprime(q)) {
       cout << "1\n0\n";
-    }
-    else if(game(q)){
+    } else if (game(q)) {
       cout << "1\n";
-      for(ll d : divisors(q)){
-        if(!game(d)){
+      for (ll d : divisors(q)) {
+        if (!game(d)) {
           cout << d << endl;
           break;
         }
       }
-    }
-    else{
+    } else {
       cout << "2\n";
     }
   }

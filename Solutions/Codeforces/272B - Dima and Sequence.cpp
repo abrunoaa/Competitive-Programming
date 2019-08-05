@@ -5,13 +5,13 @@ using namespace std;
 
 int n, a[maxn];
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
   long long ans = 0;
-  map<int,int> f;
+  map<int, int> f;
 
   cin >> n;
-  while(n--){
+  while (n--) {
     int a;
     cin >> a;
     int &k = f[__builtin_popcount(a)];

@@ -24,15 +24,15 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    int a, b, c;
+  int a, b, c;
 
-    while (scanf("%d %d %d", &a, &b, &c) == 3) {
-        long long r = (a * c * b) / (c - a);
-        cout << r << " pagina";
-        if (r > 1) printf("s");
-        printf("\n");
-    }
+  while (scanf("%d %d %d", &a, &b, &c) == 3) {
+    long long r = (a * c * b) / (c - a);
+    cout << r << " pagina";
+    if (r > 1) { printf("s"); }
+    printf("\n");
+  }
 }

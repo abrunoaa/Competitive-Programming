@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -49,64 +49,64 @@ __attribute__((destructor)) static void destroy()
 
 int n, v[maxn], cant[32];
 vi u, ans;
-map<int,bool> tried;
+map<int, bool> tried;
 
-int cnt(){
+int cnt() {
   int n = u.size();
   memset(cant, 0, sizeof cant);
-  for(int i = 0; i < n; ++i){
-    for(int j = i + 1; j < n; ++j){
+  for (int i = 0; i < n; ++i) {
+    for (int j = i + 1; j < n; ++j) {
       int d = abs(v[i] - v[j]);
       db(v[i], v[j], d);
-      if((d & -d) != 0){
+      if ((d & -d) != 0) {
         ++cant[v[i]];
         ++cant[v[j]];
       }
     }
   }
   int ans = 0;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     ans = max(ans, n - cant[i]);
   }
   return ans;
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> v[i];
   }
   sort(v, v + n);
 
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     u.clear();
     u.pb(v[i]);
-    for(ll d = 1; d <= (1ll << 30); d *= 2){
+    for (ll d = 1; d <= (1ll << 30); d *= 2) {
       int p = upper_bound(v, v + n, v[i] + d) - v - 1;
-      if(v[i] + d == v[p]){
+      if (v[i] + d == v[p]) {
         bool flag = 1;
-        for(int x : u){
+        for (int x : u) {
           int dis = abs(x - v[p]);
-          if(dis & (dis - 1)){
+          if (dis & (dis - 1)) {
             flag = 0;
             break;
           }
         }
-        if(flag){
+        if (flag) {
           u.pb(v[p]);
         }
       }
     }
-    if(u.size() > ans.size()){
+    if (u.size() > ans.size()) {
       ans = u;
     }
   }
 
   cout << ans.size() << endl;
-  for(int x : ans){
+  for (int x : ans) {
     cout << x << ' ';
   }
   cout << endl;

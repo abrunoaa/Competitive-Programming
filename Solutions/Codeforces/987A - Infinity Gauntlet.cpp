@@ -15,15 +15,15 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -33,7 +33,7 @@ void db(t x, u... y)
 
 #ifdef LOCAL
 __attribute__((destructor))
-static void destroy(){
+static void destroy() {
   cerr << "\nTime elapsed: " << (lf)clock() / CLOCKS_PER_SEC << "s.\n";
 }
 
@@ -43,21 +43,21 @@ static void destroy(){
 #define db(...) 42
 #endif
 
-string c[] = {"purple","green","blue","orange","red","yellow"};
-string gem[] = {"Power","Time","Space","Soul","Reality","Mind"};
+string c[] = {"purple", "green", "blue", "orange", "red", "yellow"};
+string gem[] = {"Power", "Time", "Space", "Soul", "Reality", "Mind"};
 
-int main(){
+int main() {
   int n;
   cin >> n;
-  map<string,int> appear;
-  for(int i = 0; i < n; ++i){
+  map<string, int> appear;
+  for (int i = 0; i < n; ++i) {
     string s;
     cin >> s;
     appear[s] = 1;
   }
   cout << 6 - n << '\n';
-  for(int i = 0; i < 6; ++i){
-    if(!appear[c[i]]){
+  for (int i = 0; i < 6; ++i) {
+    if (!appear[c[i]]) {
       cout << gem[i] << '\n';
     }
   }

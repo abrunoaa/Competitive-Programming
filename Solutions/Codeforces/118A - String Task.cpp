@@ -4,17 +4,16 @@ using namespace std;
 
 #define endl '\n'
 
-int main()
-{
+int main() {
   ios::sync_with_stdio(0), cin.tie(0);
 
   string vowels = "AEIOUYaeiouy", s, t;
-  while (cin >> s)
-  {
+  while (cin >> s) {
     t.clear();
     for (auto c : s)
-      if ((int)vowels.find(c) == -1)
+      if ((int)vowels.find(c) == -1) {
         t.push_back('.'), t.push_back(tolower(c));
+      }
 
     cout << t << endl;
   }

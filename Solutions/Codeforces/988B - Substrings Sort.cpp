@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -50,34 +50,34 @@ __attribute__((destructor)) static void destroy()
 int n;
 string s[110];
 
-bool cmp(const string& s, const string& t){
+bool cmp(const string &s, const string &t) {
   // db(&s, &t);
   return s.size() <= t.size() && t.find(s) != string::npos;
 }
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
   // n = 100;
   vector<string> s(n, "");
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> s[i];
     // s[i] = "abacate";
   }
 
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     int m = i;
-    for(int j = i + 1; j < n; ++j){
-      if(cmp(s[j], s[m])){
+    for (int j = i + 1; j < n; ++j) {
+      if (cmp(s[j], s[m])) {
         m = j;
       }
     }
     swap(s[i], s[m]);
   }
-  for(int i = 0; i < n; ++i){
-    for(int j = i + 1; j < n; ++j){
-      if((int)s[j].find(s[i]) == -1){
+  for (int i = 0; i < n; ++i) {
+    for (int j = i + 1; j < n; ++j) {
+      if ((int)s[j].find(s[i]) == -1) {
         cout << "NO\n";
         return 0;
       }
@@ -85,7 +85,7 @@ int main(){
   }
 
   cout << "YES\n";
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cout << s[i] << endl;
   }
 

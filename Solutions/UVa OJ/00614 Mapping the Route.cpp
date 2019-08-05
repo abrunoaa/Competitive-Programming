@@ -10,20 +10,18 @@ using namespace std;
 int i, j, qtde, mat[30][30], nc, nl, ls, cs, lg, cg, d, maze = 0;
 int L[] = { 0, -1, 0, 1}, C[] = { -1, 0, 1, 0};
 
-bool move (int l, int c)
-{
-  if (mat[l][c] == GOAL)                // chegou ao fim
-  {
+bool move (int l, int c) {
+  if (mat[l][c] == GOAL) {              // chegou ao fim
     mat[l][c] = ++qtde;                 // qtde até ele
     return 1;                           // flag
   }
 
-  if (!mat[l][c])                       // ainda não tentou
-  {
+  if (!mat[l][c]) {                     // ainda não tentou
     mat[l][c] = ++qtde;                 // qtde até ele
     for (int i = 0; i < 4; ++i)         // esq, cima, dir, baixo
-      if (move(l + L[i], c + C[i]))     // checa se chega ao fim por aqui
-        return 1;                       // flag
+      if (move(l + L[i], c + C[i])) {   // checa se chega ao fim por aqui
+        return 1;  // flag
+      }
 
     mat[l][c] = FAIL;                   // tentou ir mas não conseguiu
     --qtde;                             // diminui qtde percorrida
@@ -32,11 +30,9 @@ bool move (int l, int c)
   return 0;
 }
 
-int main()
-{
+int main() {
   while (scanf("%d%d%d%d%d%d", &nl, &nc, &ls, &cs, &lg, &cg),
-                                                    nl || nc || ls || cs || lg || cg)
-  {
+         nl || nc || ls || cs || lg || cg) {
     // converte todas as dimensões para ter espaço entre as células
     ls = (ls - 1) * 2 + 1;
     cs = (cs - 1) * 2 + 1;
@@ -48,25 +44,27 @@ int main()
     // reseta matriz
     memset(mat, 0, sizeof mat);
     for (i = 0; i < nl; i += 2)
-      for (j = 0; j < nc; j += 2)
-        mat[i][j] = WALL;               // flag para parede (entre linhas e colunas)
+      for (j = 0; j < nc; j += 2) {
+        mat[i][j] = WALL;  // flag para parede (entre linhas e colunas)
+      }
 
     // entrada da matriz
     for (i = 1; i < nl; i += 2)
-      for (j = 1; j < nc; j += 2)
-      {
+      for (j = 1; j < nc; j += 2) {
         scanf("%d", &d);
-        if (d == 1 || d == 3)           // muro a direita
+        if (d == 1 || d == 3) {         // muro a direita
           mat[i][j + 1] = WALL;
-        if (d == 2 || d == 3)           // muro em baixo
+        }
+        if (d == 2 || d == 3) {         // muro em baixo
           mat[i + 1][j] = WALL;
+        }
       }
 
     // cerca a matriz com parede
-    for (i = 1; i < nl; i += 2) mat[i][0] = WALL;
-    for (j = 1; j < nc; j += 2) mat[0][j] = WALL;
-    for (i = nl - 1, j = 0; j < nc; ++j) mat[i][j] = WALL;
-    for (i = 0, j = nc - 1; i < nl; ++i) mat[i][j] = WALL;
+    for (i = 1; i < nl; i += 2) { mat[i][0] = WALL; }
+    for (j = 1; j < nc; j += 2) { mat[0][j] = WALL; }
+    for (i = nl - 1, j = 0; j < nc; ++j) { mat[i][j] = WALL; }
+    for (i = 0, j = nc - 1; i < nl; ++i) { mat[i][j] = WALL; }
 
     mat[ls][cs] = 0;                    // início
     mat[lg][cg] = GOAL;                 // fim
@@ -75,24 +73,23 @@ int main()
 
     // formata saida
     printf("Maze %d\n\n", ++maze);
-    for (i = 0; i < nl; ++i)
-    {
+    for (i = 0; i < nl; ++i) {
       if (i & 1)                        // linha ímpar: caminho/muro dir/esq
         for (j = 0; j < nc; ++j)
-          if (mat[i][j] == WALL)        // muro
+          if (mat[i][j] == WALL) {      // muro
             printf("|");
-          else if (mat[i][j] == FAIL)   // tentou ir e nao conseguiu
-            if (j & 1) printf("???");   // é caminho
-            else       printf(" ");     // inter. linha/coluna
+          } else if (mat[i][j] == FAIL) // tentou ir e nao conseguiu
+            if (j & 1) { printf("???"); }   // é caminho
+            else { printf(" "); }    // inter. linha/coluna
           else if (j & 1)               // é caminho
-            if (mat[i][j] > 0) printf("%3d", mat[i][j] / 2 + 1);  // passou por i,j
-            else               printf("   ");
-          else                          // intersec linha/coluna
+            if (mat[i][j] > 0) { printf("%3d", mat[i][j] / 2 + 1); }  // passou por i,j
+            else { printf("   "); }
+          else {                        // intersec linha/coluna
             printf(" ");
-      else                              // linha par: caminho/muro cima/baixo
+          } else                            // linha par: caminho/muro cima/baixo
         for (j = 0; j < nc; ++j)
-          if (j & 1) printf(mat[i][j] == WALL ? "---" : "   ");
-          else       printf("+");       // intersec linha/coluna
+          if (j & 1) { printf(mat[i][j] == WALL ? "---" : "   "); }
+          else { printf("+"); }      // intersec linha/coluna
 
       printf("\n");
     }

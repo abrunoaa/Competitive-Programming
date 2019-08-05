@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -48,25 +48,25 @@ __attribute__((destructor)) static void destroy()
 #endif
 
 int v[maxn];
-map<int,ii> mp;
+map<int, ii> mp;
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   int k;
   cin >> k;
-  for(int i = 1; i <= k; ++i){
+  for (int i = 1; i <= k; ++i) {
     int n;
     cin >> n;
     int s = 0;
-    for(int j = 1; j <= n; ++j){
+    for (int j = 1; j <= n; ++j) {
       cin >> v[j];
       s += v[j];
     }
-    for(int j = 1; j <= n; ++j){
+    for (int j = 1; j <= n; ++j) {
       int s2 = s - v[j];
-      if(i != mp[s2].st && mp[s2].st){
+      if (i != mp[s2].st && mp[s2].st) {
         cout << "YES\n";
         cout << i << ' ' << j << endl;
         cout << mp[s2].st << ' ' << mp[s2].nd << endl;

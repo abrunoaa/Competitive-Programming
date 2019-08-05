@@ -24,20 +24,17 @@
 #include <map>
 using namespace std;
 
-int main()
-{
+int main() {
   register int test, tot;
   char str[31];
   map<string, int> m;
   typename map<string, int>::iterator iter, end;
 
   scanf("%d%*[\n]", &test);
-  while (test--)
-  {
+  while (test--) {
     tot = 0;
     *str = 0;
-    while (scanf("%1[\n]", str), *str != '\n')
-    {
+    while (scanf("%1[\n]", str), *str != '\n') {
       scanf("%[^\n]%*c", str);
       m[str]++;
       tot++;
@@ -45,8 +42,7 @@ int main()
 
     iter = m.begin();
     end = m.end();
-    while (iter != end)
-    {
+    while (iter != end) {
       printf("%s %.4lf\n", iter->first.data(), (double)iter->second / tot * 100);
       iter++;
     }

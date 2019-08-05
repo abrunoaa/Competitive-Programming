@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -59,37 +59,36 @@ template<class t> t sq(t x) { return x * x; }
 int n, a, b;
 ii st[4 * maxn];
 
-ii operator + (ii x, ii y){
+ii operator + (ii x, ii y) {
   return ii(x.st + y.st, x.nd + y.nd);
 }
 
-ii upd(int i, int x, int k = 1, int l = 1, int r = n){
-  if(r < i || i < l) return st[k];
-  if(l == r && l == i) return st[k] = ii(min(b, st[k].st + x), min(a, st[k].nd + x));
-  return st[k] = upd(i, x, L, l, M) + upd(i, x, R, M+1, r);
+ii upd(int i, int x, int k = 1, int l = 1, int r = n) {
+  if (r < i || i < l) { return st[k]; }
+  if (l == r && l == i) { return st[k] = ii(min(b, st[k].st + x), min(a, st[k].nd + x)); }
+  return st[k] = upd(i, x, L, l, M) + upd(i, x, R, M + 1, r);
 }
 
-ii qry(int i, int j, int k = 1, int l = 1, int r = n){
-  if(r < i || j < l) return ii(0, 0);
-  if(i <= l && r <= j) return st[k];
-  return qry(i, j, L, l, M) + qry(i, j, R, M+1, r);
+ii qry(int i, int j, int k = 1, int l = 1, int r = n) {
+  if (r < i || j < l) { return ii(0, 0); }
+  if (i <= l && r <= j) { return st[k]; }
+  return qry(i, j, L, l, M) + qry(i, j, R, M + 1, r);
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   int q, k;
   cin >> n >> k >> a >> b >> q;
-  while(q--){
+  while (q--) {
     int t;
     cin >> t;
-    if(t == 1){
+    if (t == 1) {
       int d, x;
       cin >> d >> x;
       upd(d, x);
-    }
-    else{
+    } else {
       int d;
       cin >> d;
       cout << (d == 1 ? 0 : qry(1, d - 1).st)  + (d + k > n ? 0 : qry(d + k, n).nd) << endl;

@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -47,16 +47,15 @@ __attribute__((destructor)) static void destroy()
 #define db(...) 42
 #endif
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   int n, k;
   cin >> n >> k;
-  if(k >= n * (n - 1) / 2){
+  if (k >= n * (n - 1) / 2) {
     cout << "no solution\n";
-  }
-  else{
-    for(int y = 0; y < n; ++y){
+  } else {
+    for (int y = 0; y < n; ++y) {
       cout << "0 " << y << endl;
     }
   }

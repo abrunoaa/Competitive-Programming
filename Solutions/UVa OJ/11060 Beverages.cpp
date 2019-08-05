@@ -18,8 +18,7 @@ void dfs(int u)
 }
 */
 
-int main()
-{
+int main() {
   register int i, u;
   int m, n, c = 0;
   char name[105], name2[105], names[105][105];
@@ -28,40 +27,38 @@ int main()
 
   queue < int > q;
 
-  while (scanf("%d", &n) > 0)
-  {
+  while (scanf("%d", &n) > 0) {
     vis.assign(105, 0);
     ind.assign(105, 0);
     adj.assign(105, vector < int >());
 
-    for (i = -1; ++i < n; )
-    {
+    for (i = -1; ++i < n; ) {
       scanf(" %s", name);
       mp[name] = i;
       strcpy(names[i], name);
     }
 
     scanf("%d", &m);
-    for (i = m; i--; )
-    {
+    for (i = m; i--; ) {
       scanf(" %s %s", name, name2);
       adj[mp[name]].push_back((m = mp[name2]));
       ++ind[m];
     }
 
     for (i = -1; ++i < n; )
-      if (!ind[i])
+      if (!ind[i]) {
         q.push(i);
+      }
 
-    while (!q.empty())
-    {
+    while (!q.empty()) {
       u = q.front();
       q.pop();
 
       ts.push_back(u);
       for (i = adj[u].size(); i--; )
-        if (!vis[adj[u][i]] && !--ind[adj[u][i]])
+        if (!vis[adj[u][i]] && !--ind[adj[u][i]]) {
           q.push(adj[u][i]);
+        }
       vis[u] = 1;
     }
 
@@ -71,8 +68,9 @@ int main()
         dfs(i);
     */
     printf("Case #%d: Dilbert should drink beverages in this order:", ++c);
-    for (i = -1; ++i < n; )
+    for (i = -1; ++i < n; ) {
       printf(" %s", names[ts[i]]);
+    }
     printf("\n");
 
     mp.clear();

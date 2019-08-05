@@ -4,23 +4,22 @@ using namespace std;
 
 #define endl '\n'
 
-bool hello (const string& s)
-{
+bool hello (const string &s) {
   string t = "olleh";
 
   for (char c : s)
-    if (c == t.back())
+    if (c == t.back()) {
       t.pop_back();
+    }
 
   return t.empty();
 }
 
-int main()
-{
+int main() {
   ios::sync_with_stdio(0), cin.tie(0);
 
   string s;
-  while (cin >> s) cout << (hello(s) ? "YES" : "NO") << endl;
+  while (cin >> s) { cout << (hello(s) ? "YES" : "NO") << endl; }
 
   return 0;
 }

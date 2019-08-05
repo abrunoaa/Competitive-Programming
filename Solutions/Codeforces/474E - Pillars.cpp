@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -56,59 +56,59 @@ int p[maxn];
 ll h[maxn];
 ii gft[maxn], lft[maxn];
 
-void gupd(int i, ii x){
-  for(; i; i -= i & -i){
+void gupd(int i, ii x) {
+  for (; i; i -= i & -i) {
     gft[i] = max(gft[i], x);
   }
 }
 
-ii gqry(int i){
+ii gqry(int i) {
   ii s(0, inf);
-  for(; i < maxn; i += i & -i){
+  for (; i < maxn; i += i & -i) {
     s = max(s, gft[i]);
   }
   return s;
 }
 
-void lupd(int i, ii x){
-  for(; i < maxn; i += i & -i){
+void lupd(int i, ii x) {
+  for (; i < maxn; i += i & -i) {
     lft[i] = max(lft[i], x);
   }
 }
 
-ii lqry(int i){
+ii lqry(int i) {
   ii s(0, inf);
-  for(; i; i -= i & -i){
+  for (; i; i -= i & -i) {
     s = max(s, lft[i]);
   }
   return s;
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
-  for(int i = 0; i < maxn; ++i){
+  for (int i = 0; i < maxn; ++i) {
     lft[i] = gft[i] = ii(0, inf);
   }
 
   int n, d;
   cin >> n >> d;
 
-  map<ll,int> mp;
-  for(int i = 1; i <= n; ++i){
+  map<ll, int> mp;
+  for (int i = 1; i <= n; ++i) {
     cin >> h[i];
     mp[h[i]];
   }
   mp[infl];
 
   int m = 0;
-  for(auto &p : mp){
+  for (auto &p : mp) {
     p.nd = ++m;
   }
 
   int ans = 0, ansbeg = inf;
-  for(int i = n; i; --i){
+  for (int i = n; i; --i) {
     auto it = mp.upper_bound(h[i] - d);
     ii g = gqry(mp.lower_bound(h[i] + d)->nd);
     ii l = (it == mp.begin() ? ii(-1, -1) : lqry((--it)->nd));
@@ -120,14 +120,14 @@ int main(){
     gupd(mp[h[i]], k);
     lupd(mp[h[i]], k);
 
-    if(k.st > ans){
+    if (k.st > ans) {
       ans = k.st;
       ansbeg = i;
     }
   }
 
   cout << ans << endl;
-  for(int i = ansbeg; i <= n; i = p[i]){
+  for (int i = ansbeg; i <= n; i = p[i]) {
     cout << i << ' ';
   }
   cout << endl;

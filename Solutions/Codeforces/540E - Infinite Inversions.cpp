@@ -27,9 +27,9 @@ using namespace std;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -37,9 +37,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -64,50 +64,50 @@ template<class t> t sq(t x) { return x * x; }
 int n, a[maxn], b[maxn], s[2 * maxn], gap[2 * maxn];
 ll ft[2 * maxn];
 
-void upd(int i, ll x){
-  for(; i < 2 * maxn; i += i & -i){
+void upd(int i, ll x) {
+  for (; i < 2 * maxn; i += i & -i) {
     ft[i] += x;
   }
 }
 
-ll qry(int i){
+ll qry(int i) {
   ll s = 0;
-  for(; i; i -= i & -i){
+  for (; i; i -= i & -i) {
     s += ft[i];
   }
   return s;
 }
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
-  map<int,int> mp;
+  map<int, int> mp;
 
   cin >> n;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> a[i] >> b[i];
     mp[a[i]];
     mp[b[i]];
   }
   int last = 0, m = 0;
-  for(auto &p : mp){
+  for (auto &p : mp) {
     p.nd = ++m;
     gap[m] = p.st - (last + 1);
     last = p.st;
   }
-  for(int i = 1; i <= m; ++i){
+  for (int i = 1; i <= m; ++i) {
     s[i] = i;
   }
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     swap(s[mp[a[i]]], s[mp[b[i]]]);
   }
 
   ll ans = 0;
-  for(int i = m; i; --i){
+  for (int i = m; i; --i) {
     ans += qry(s[i]);
     upd(s[i], +1);
-    if(gap[i]){
+    if (gap[i]) {
       ans += gap[i] * qry(i - 1);;
       upd(i, gap[i]);
     }

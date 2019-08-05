@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -48,18 +48,18 @@ __attribute__((destructor)) static void destroy()
 
 int n, v[maxn], p[maxn];
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cin >> v[i];
     p[v[i]] = i;
   }
 
   bool petr = (n % 2 == 0);
-  for(int i = 1; i <= n; ++i){
-    if(i != p[i]){
+  for (int i = 1; i <= n; ++i) {
+    if (i != p[i]) {
       petr ^= 1;
       p[v[i]] = p[i];
       swap(v[i], v[p[i]]);

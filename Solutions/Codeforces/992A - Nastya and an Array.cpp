@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -53,18 +53,18 @@ __attribute__((destructor)) static void destroy()
 
 template<class t> t sq(t x) { return x * x; }
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   int n;
   cin >> n;
   int ans = 0;
   set<int> s;
-  for(int i = 0, y = 0, x; i < n; ++i){
+  for (int i = 0, y = 0, x; i < n; ++i) {
     cin >> x;
     s.insert(y);
-    if(s.count(-x)){
+    if (s.count(-x)) {
       continue;
     }
     ++ans;

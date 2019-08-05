@@ -5,19 +5,19 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    int n, a, b;
+  int n, a, b;
 
-    cin >> n;
+  cin >> n;
 
-    while (n--) {
+  while (n--) {
 
-        cin >> a >> b;
-        cout << int(((a + b) * (b - a + 1)) / 2) << endl;
+    cin >> a >> b;
+    cout << int(((a + b) * (b - a + 1)) / 2) << endl;
 
-    }
+  }
 
-    return 0;
+  return 0;
 }

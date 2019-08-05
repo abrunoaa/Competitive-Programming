@@ -1,21 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main()
-{
+int main() {
   //freopen("in597A", "r", stdin);
 
   long long a, b, k;
 
-  while (cin >> k >> a >> b)
-  {
-    if (a % k) a += (a < 0 ?  0 : k) - a % k;
-    if (b % k) b += (b < 0 ? -k : 0) - b % k;
+  while (cin >> k >> a >> b) {
+    if (a % k) { a += (a < 0 ?  0 : k) - a % k; }
+    if (b % k) { b += (b < 0 ? -k : 0) - b % k; }
 //cout << " >> " << a << ' ' << b << " :: ";
-    if (a > b)
+    if (a > b) {
       puts("0");
-    else
+    } else {
       cout << (b - a + k) / k << '\n';
+    }
   }
 
   return 0;

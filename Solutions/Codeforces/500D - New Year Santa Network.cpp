@@ -7,21 +7,21 @@ using namespace std;
 
 typedef long long ll;
 typedef double lf;
-typedef pair<int,int> ii;
+typedef pair<int, int> ii;
 
 int n;
 ll cost;
 vector<ii> g[maxn], e;
 
-ll cross(int nf){
+ll cross(int nf) {
   return 2ll * nf * (n - nf);
 }
 
-int dfs(int u, int p){
+int dfs(int u, int p) {
   int c = 1;
 
-  for(ii v : g[u]){
-    if(v.st != p){
+  for (ii v : g[u]) {
+    if (v.st != p) {
       int nf = dfs(v.st, u);
       c += nf;
       e[v.nd].st = nf;
@@ -32,13 +32,13 @@ int dfs(int u, int p){
   return c;
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
   cout << fixed << setprecision(9);
 
   cin >> n;
-  for(int i = 0, u, v, w; i < n - 1; ++i){
+  for (int i = 0, u, v, w; i < n - 1; ++i) {
     cin >> u >> v >> w, --u, --v;
     e.push_back(ii(0, w));
     g[u].push_back(ii(v, i));
@@ -51,7 +51,7 @@ int main(){
 
   int q;
   cin >> q;
-  while(q--){
+  while (q--) {
     int r, w;
     cin >> r >> w, --r;
     cost -= 3 * cross(e[r].st) * (e[r].nd - w);

@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -56,7 +56,7 @@ template<class t> t sq(t x) { return x * x; }
 #define R (L + 1)
 #define M ((l + r) / 2)
 
-struct no{
+struct no {
   int lazy, n[26];
 };
 
@@ -64,61 +64,61 @@ int n, q;
 string s;
 no st[4 * maxn];
 
-no merge(const no& x, const no& y){
+no merge(const no &x, const no &y) {
   no z;
   z.lazy = 0;
-  for(int i = 0; i < 26; ++i){
+  for (int i = 0; i < 26; ++i) {
     z.n[i] = x.n[i] + y.n[i];
   }
   return z;
 }
 
-no build(int k = 1, int l = 0, int r = n - 1){
-  if(l == r){
+no build(int k = 1, int l = 0, int r = n - 1) {
+  if (l == r) {
     st[k].n[s[l] - 'a'] = 1;
     return st[k];
   }
-  return st[k] = merge(build(L, l, M), build(R, M+1, r));
+  return st[k] = merge(build(L, l, M), build(R, M + 1, r));
 }
 
-void prop(int k, int len){
+void prop(int k, int len) {
   no &s = st[k];
-  if(s.lazy){
+  if (s.lazy) {
     memset(s.n, 0, sizeof s.n);
     s.n[s.lazy - 'a'] = len;
 
-    if(len > 1){
+    if (len > 1) {
       st[L].lazy = st[R].lazy = s.lazy;
     }
     s.lazy = 0;
   }
 }
 
-no upd(int i, int j, int x, int k = 1, int l = 0, int r = n - 1){
-  if(i <= l && r <= j){
+no upd(int i, int j, int x, int k = 1, int l = 0, int r = n - 1) {
+  if (i <= l && r <= j) {
     st[k].lazy = x;
     prop(k, r - l + 1);
     return st[k];
   }
   prop(k, r - l + 1);
-  if(r < i || j < l) return st[k];
-  return st[k] = merge(upd(i, j, x, L, l, M), upd(i, j, x, R, M+1, r));
+  if (r < i || j < l) { return st[k]; }
+  return st[k] = merge(upd(i, j, x, L, l, M), upd(i, j, x, R, M + 1, r));
 }
 
-no qry(int i, int j, int k = 1, int l = 0, int r = n - 1){
-  if(r < i || j < l) return no{ 0, {} };
+no qry(int i, int j, int k = 1, int l = 0, int r = n - 1) {
+  if (r < i || j < l) return no{ 0, {} };
   prop(k, r - l + 1);
-  if(i <= l && r <= j) return st[k];
-  return merge(qry(i, j, L, l, M), qry(i, j, R, M+1, r));
+  if (i <= l && r <= j) { return st[k]; }
+  return merge(qry(i, j, L, l, M), qry(i, j, R, M + 1, r));
 }
 
-void print(int k = 1, int l = 0, int r = n - 1){
+void print(int k = 1, int l = 0, int r = n - 1) {
   prop(k, r - l + 1);
-  if(l == r){
-    for(int i = 0; i < 26; ++i){
-      if(st[k].n[i]){
+  if (l == r) {
+    for (int i = 0; i < 26; ++i) {
+      if (st[k].n[i]) {
         cout << char(i + 'a');
-        while(++i < 26){
+        while (++i < 26) {
           assert(st[k].n[i] == 0);
         }
         return;
@@ -128,31 +128,30 @@ void print(int k = 1, int l = 0, int r = n - 1){
     assert(0);
   }
   print(L, l, M);
-  print(R, M+1, r);
+  print(R, M + 1, r);
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> q >> s;
   build();
-  while(q--){
+  while (q--) {
     int l, r, t;
     cin >> l >> r >> t, --l, --r;
 
     no x = qry(l, r);
-    if(t == 1){
-      for(int i = 'a', k = l; i <= 'z'; ++i){
-        if(x.n[i - 'a']){
+    if (t == 1) {
+      for (int i = 'a', k = l; i <= 'z'; ++i) {
+        if (x.n[i - 'a']) {
           upd(k, k + x.n[i - 'a'] - 1, i);
           k += x.n[i - 'a'];
         }
       }
-    }
-    else{
-      for(int i = 'z', k = l; i >= 'a'; --i){
-        if(x.n[i - 'a']){
+    } else {
+      for (int i = 'z', k = l; i >= 'a'; --i) {
+        if (x.n[i - 'a']) {
           upd(k, k + x.n[i - 'a'] - 1, i);
           k += x.n[i - 'a'];
         }

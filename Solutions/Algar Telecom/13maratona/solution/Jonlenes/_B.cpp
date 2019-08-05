@@ -12,26 +12,26 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    int n, v;
+  int n, v;
 
-    while (cin >> n && n) {
+  while (cin >> n && n) {
 
-        vector< pair<int, int> > vet;
+    vector< pair<int, int> > vet;
 
-        for (int i = 0; i < n; ++i) {
-            cin >> v;
-            vet.push_back( make_pair(v, i) );
-        }
-
-        sort(vet.begin(), vet.end());
-
-        cout << vet[ vet.size() - 2].second + 1 << endl;
-
+    for (int i = 0; i < n; ++i) {
+      cin >> v;
+      vet.push_back( make_pair(v, i) );
     }
 
-    return 0;
+    sort(vet.begin(), vet.end());
+
+    cout << vet[ vet.size() - 2].second + 1 << endl;
+
+  }
+
+  return 0;
 }
 

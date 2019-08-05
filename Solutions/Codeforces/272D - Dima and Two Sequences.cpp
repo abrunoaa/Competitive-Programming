@@ -15,15 +15,15 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -33,7 +33,7 @@ void db(t x, u... y)
 
 #ifdef LOCAL
 __attribute__((destructor))
-static void destroy(){
+static void destroy() {
   cerr << "\nTime elapsed: " << (lf)clock() / CLOCKS_PER_SEC << "s.\n";
 }
 
@@ -45,24 +45,24 @@ static void destroy(){
 
 int a[maxn];
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   int n;
   cin >> n;
 
-  map<int,int> f;
-  for(int i = 0; i < n; ++i){
+  map<int, int> f;
+  for (int i = 0; i < n; ++i) {
     cin >> a[i];
     ++f[a[i]];
   }
 
   int rep = 0;
-  for(int i = 0, x; i < n; ++i){
+  for (int i = 0, x; i < n; ++i) {
     cin >> x;
     ++f[x];
-    if(x == a[i]){
+    if (x == a[i]) {
       ++rep;
     }
   }
@@ -71,8 +71,8 @@ int main(){
   cin >> m;
 
   int ans = 1;
-  for(auto it : f){
-    for(int i = 2; i <= it.nd; ++i){
+  for (auto it : f) {
+    for (int i = 2; i <= it.nd; ++i) {
       int x = i;
       int z = min(rep, __builtin_ctz(x));
       x >>= z;

@@ -29,40 +29,26 @@
       stick++; \
     }
 
-int main()
-{
+int main() {
   char com, st[105][105];
   register int i, j;
   int n, m, s, face, stick, l, c;
-  while (scanf("%d%d%d", &n, &m, &s), n || m || s)
-  {
+  while (scanf("%d%d%d", &n, &m, &s), n || m || s) {
     stick = 0;
     face = 99999;
-    for (i = 0; i < n; i++)
-    {
-      for (j = 0; j < m; j++)
-      {
+    for (i = 0; i < n; i++) {
+      for (j = 0; j < m; j++) {
         scanf(" %c", &st[i][j]);
-        if (face == 99999 && st[i][j] >= 'A' && st[i][j] <= 'Z')
-        {
-          if (st[i][j] == 'N')
-          {
+        if (face == 99999 && st[i][j] >= 'A' && st[i][j] <= 'Z') {
+          if (st[i][j] == 'N') {
             face = 0;
+          } else if (st[i][j] == 'L') {
+            face = 1;
+          } else if (st[i][j] == 'S') {
+            face = 2;
+          } else {
+            face = 3;
           }
-          else
-            if (st[i][j] == 'L')
-            {
-              face = 1;
-            }
-            else
-              if (st[i][j] == 'S')
-              {
-                face = 2;
-              }
-              else
-              {
-                face = 3;
-              }
           st[i][j] = '.';
           l = i;
           c = j;
@@ -76,51 +62,42 @@ int main()
         printf("%c ", st[i][j]);
       printf("\n");
     }
-//*/
-    while (s--)
-    {
+    //*/
+    while (s--) {
       scanf(" %c", &com);
-      if (com == 'F')
-      {
-        if (face == 0)
-        {
-          if ((--l < 0) || st[l][c] == '#')
+      if (com == 'F') {
+        if (face == 0) {
+          if ((--l < 0) || st[l][c] == '#') {
             ++l;
+          }
+          ELSE
+        } else if (face == 1) {
+          if ((++c >= m) || st[l][c] == '#') {
+            c--;
+          }
+          ELSE
+        } else if (face == 2) {
+          if ((++l >= n) || st[l][c] == '#') {
+            l--;
+          }
+          ELSE
+        } else {
+          if ((--c < 0) || st[l][c] == '#') {
+            c++;
+          }
           ELSE
         }
-        else
-          if (face == 1)
-          {
-            if ((++c >= m) || st[l][c] == '#')
-              c--;
-            ELSE
-          }
-          else
-            if (face == 2)
-            {
-              if ((++l >= n) || st[l][c] == '#')
-                l--;
-              ELSE
-            }
-            else
-            {
-              if ((--c < 0) || st[l][c] == '#')
-                c++;
-              ELSE
-            }
-      }
-      else
-      {
+      } else {
         if (com == 'D')
-          if (face == 3)
+          if (face == 3) {
             face = 0;
-          else
+          } else {
             face++;
-        else
-          if (face)
-            face--;
-          else
-            face = 3;
+          } else if (face) {
+          face--;
+        } else {
+          face = 3;
+        }
       }
     } // fim while comando
 

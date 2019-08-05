@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -54,32 +54,32 @@ __attribute__((destructor)) static void destroy()
 int n, m, v[maxn];
 ii st[4 * maxn];
 
-ii merge(ii x, ii y){
+ii merge(ii x, ii y) {
   assert(x.nd == y.nd);
-  return ii(x.nd ? x.st ^ y.st : x.st | y.st, !x.nd);
+  return ii(x.nd ? x.st^ y.st : x.st | y.st, !x.nd);
 }
 
-ii build(int k = 1, int l = 0, int r = (1 << n) - 1){
-  if(l == r) return st[k] = ii(v[l], 0);
-  return st[k] = merge(build(L, l, M), build(R, M+1, r));
+ii build(int k = 1, int l = 0, int r = (1 << n) - 1) {
+  if (l == r) { return st[k] = ii(v[l], 0); }
+  return st[k] = merge(build(L, l, M), build(R, M + 1, r));
 }
 
-ii upd(int p, int x, int k = 1, int l = 0, int r = (1 << n) - 1){
-  if(p < l || r < p) return st[k];
-  if(l == r) return st[k] = ii(x, 0);
-  return st[k] = merge(upd(p, x, L, l, M), upd(p, x, R, M+1, r));
+ii upd(int p, int x, int k = 1, int l = 0, int r = (1 << n) - 1) {
+  if (p < l || r < p) { return st[k]; }
+  if (l == r) { return st[k] = ii(x, 0); }
+  return st[k] = merge(upd(p, x, L, l, M), upd(p, x, R, M + 1, r));
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> m;
-  for(int i = 0; i < (1 << n); ++i){
+  for (int i = 0; i < (1 << n); ++i) {
     cin >> v[i];
   }
   build();
-  while(m--){
+  while (m--) {
     int p, b;
     cin >> p >> b, --p;
     upd(p, b);

@@ -15,15 +15,15 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -33,7 +33,7 @@ void db(t x, u... y)
 
 #ifdef LOCAL
 __attribute__((destructor))
-static void destroy(){
+static void destroy() {
   cerr << "\nTime elapsed: " << (lf)clock() / CLOCKS_PER_SEC << "s.\n";
 }
 
@@ -46,38 +46,38 @@ static void destroy(){
 int n, m, k, s, dis[maxn][102];
 vi g[maxn], prod[102];
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   memset(dis, inf, sizeof dis);
 
   cin >> n >> m >> k >> s;
-  for(int i = 0, a; i < n; ++i){
+  for (int i = 0, a; i < n; ++i) {
     cin >> a, --a;
     prod[a].pb(i);
   }
-  while(m--){
+  while (m--) {
     int u, v;
     cin >> u >> v, --u, --v;
     g[u].pb(v);
     g[v].pb(u);
   }
 
-  for(int p = 0; p < k; ++p){
+  for (int p = 0; p < k; ++p) {
     // bfs
     queue<int> q;
-    for(int u : prod[p]){
+    for (int u : prod[p]) {
       dis[u][p] = 0;
       q.push(u);
     }
 
-    while(!q.empty()){
+    while (!q.empty()) {
       int u = q.front();
       q.pop();
 
-      for(int v : g[u]){
-        if(dis[v][p] == inf){
+      for (int v : g[u]) {
+        if (dis[v][p] == inf) {
           dis[v][p] = dis[u][p] + 1;
           q.push(v);
         }
@@ -85,13 +85,13 @@ int main(){
     }
   }
 
-  for(int u = 0; u < n; ++u){
+  for (int u = 0; u < n; ++u) {
     sort(dis[u], dis[u] + k);
     int ans = 0;
-    for(int i = 0; i < s; ++i){
+    for (int i = 0; i < s; ++i) {
       ans += dis[u][i];
     }
-    if(u) cout << ' ';
+    if (u) { cout << ' '; }
     cout << ans;
   }
   cout << '\n';

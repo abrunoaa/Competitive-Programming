@@ -40,59 +40,61 @@ template<class t, class... u> void db(t x, u... y) { cerr << ' ' << x, db(y...);
 #define tm asdf5
 #define lr asdf6
 
-template<class t1, class t2, class t3> struct triple{
-  t1 st; t2 nd; t3 rd;
+template<class t1, class t2, class t3> struct triple {
+  t1 st;
+  t2 nd;
+  t3 rd;
 
   triple() : st(), nd(), rd() {}
-  triple(const t1& a, const t2& b, const t3& c) : st(a), nd(b), rd(c) {}
+  triple(const t1 &a, const t2 &b, const t3 &c) : st(a), nd(b), rd(c) {}
 
-  bool operator == (const triple& t) const { return st == t.st && nd == t.nd && rd == t.rd; }
-  bool operator != (const triple& t) const { return !(*this == t); }
-  bool operator <  (const triple& t) const { return st != t.st ? st < t.st : nd != t.nd ? nd < t.nd : rd < t.rd; }
-  bool operator <= (const triple& t) const { return !(t < *this); }
-  bool operator >  (const triple& t) const { return t < *this; }
-  bool operator >= (const triple& t) const { return !(*this < t); }
+  bool operator == (const triple &t) const { return st == t.st && nd == t.nd && rd == t.rd; }
+  bool operator != (const triple &t) const { return !(*this == t); }
+  bool operator <  (const triple &t) const { return st != t.st ? st < t.st : nd != t.nd ? nd < t.nd : rd < t.rd; }
+  bool operator <= (const triple &t) const { return !(t < *this); }
+  bool operator >  (const triple &t) const { return t < *this; }
+  bool operator >= (const triple &t) const { return !(*this < t); }
 };
 
 typedef long long ll;
 typedef unsigned long long ull;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef triple<int,int,int> tri;
+typedef pair<int, int> ii;
+typedef triple<int, int, int> tri;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
-template<class t> using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u> using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+template<class t> using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u> using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
-template<class t1, class t2> ostream& operator << (ostream& out, const pair<t1,t2>& x){ return out << '(' << x.st << ", " << x.nd << ')'; }
-template<class t1, class t2, class t3> ostream& operator << (ostream& out, const triple<t1,t2,t3>& x){ return out << '(' << x.st << ", " << x.nd << ", " << x.rd << ')'; }
+template<class t1, class t2> ostream &operator << (ostream &out, const pair<t1, t2> &x) { return out << '(' << x.st << ", " << x.nd << ')'; }
+template<class t1, class t2, class t3> ostream &operator << (ostream &out, const triple<t1, t2, t3> &x) { return out << '(' << x.st << ", " << x.nd << ", " << x.rd << ')'; }
 
 #define PRINT_DS bool flag = 0; out << '['; for(auto& x : ds){ if(flag) out << ", "; else flag = 1; out << x; } return out << ']'
-template<class t> ostream& operator << (ostream& out, const vector<t>& ds){ PRINT_DS; }
-template<class t> ostream& operator << (ostream& out, const set<t>& ds){ PRINT_DS; }
-template<class t1, class t2> ostream& operator << (ostream& out, const map<t1,t2>& ds){ PRINT_DS; }
+template<class t> ostream &operator << (ostream &out, const vector<t> &ds) { PRINT_DS; }
+template<class t> ostream &operator << (ostream &out, const set<t> &ds) { PRINT_DS; }
+template<class t1, class t2> ostream &operator << (ostream &out, const map<t1, t2> &ds) { PRINT_DS; }
 
-template<class t> void print_arr(const t* arr, int n) { cout << '['; for(int i = 0; i < n; ++i){ if(i) cout <<", "; cout << arr[i]; } cout << ']'; }
+template<class t> void print_arr(const t* arr, int n) { cout << '['; for (int i = 0; i < n; ++i) { if (i) cout << ", "; cout << arr[i]; } cout << ']'; }
 
 int n, k, a[200];
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> k;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> a[i];
   }
   int i;
-  for(i = 0; i < n && a[i] <= k; ++i);
-  if(i == n){
+  for (i = 0; i < n && a[i] <= k; ++i);
+  if (i == n) {
     cout << n << endl;
     return 0;
   }
   int j;
-  for(j = n - 1; j >= 0 && a[j] <= k; --j);
+  for (j = n - 1; j >= 0 && a[j] <= k; --j);
   cout << (n - j - 1) + i << endl;
 
   return 0;

@@ -23,24 +23,24 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt", "r", stdin);
-    //freopen("../out.txt", "w", stdout);
+  //freopen("../input.txt", "r", stdin);
+  //freopen("../out.txt", "w", stdout);
 
-    int n;
-    int v1, v2, m, t;
+  int n;
+  int v1, v2, m, t;
 
-    while (cin >> n && n) {
-        cin >> v1;
-        m = v2 = v1;
-        n--;
-        t = 0;
-        while (n--) {
-            cin >> v2;
-            if (v2 - m > 10) t += v2 - m - 10;
-            m = v2;
-        }
-        printf("%d\n", v2 + 10 - v1 - t);
+  while (cin >> n && n) {
+    cin >> v1;
+    m = v2 = v1;
+    n--;
+    t = 0;
+    while (n--) {
+      cin >> v2;
+      if (v2 - m > 10) { t += v2 - m - 10; }
+      m = v2;
     }
+    printf("%d\n", v2 + 10 - v1 - t);
+  }
 
-    return 0;
+  return 0;
 }

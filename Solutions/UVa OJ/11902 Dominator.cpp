@@ -34,59 +34,57 @@ using namespace std;
 bool see[MAX], see1[MAX], dom[MAX][MAX];
 int adj[MAX][MAX], off, n, count = 0;
 
-void dfs(int u)
-{
+void dfs(int u) {
 //printf("call %d : cont %d\n", u, u == off ? 0 : 1);
-  if (u == off)
+  if (u == off) {
     return;
+  }
 
   see[u] = 1;
   for (register int i = -1; ++i < n; )
-    if (adj[u][i] && !see[i])
+    if (adj[u][i] && !see[i]) {
       dfs(i);
+    }
 }
 
-int main()
-{
+int main() {
   register int i, j;
   int teste, x;
 
   scanf("%d", &teste);
-  while (teste--)
-  {
+  while (teste--) {
     scanf("%d", &n);
-    for (i = -1; ++i < n; )
-    {
-      for (j = -1; ++j < n; )
-      {
+    for (i = -1; ++i < n; ) {
+      for (j = -1; ++j < n; ) {
         scanf("%d", &adj[i][j]);
         dom[i][j] = 0;
       }
       see[i] = 0;
     }
-/*
-for(i = -1; ++i < n; )
-{
-  for (j = -1; ++j < n; )
-    printf("%d ", adj[i][j] ? 1 : 0);
-  printf("\n");
-}
-//*/
+    /*
+    for(i = -1; ++i < n; )
+    {
+      for (j = -1; ++j < n; )
+        printf("%d ", adj[i][j] ? 1 : 0);
+      printf("\n");
+    }
+    //*/
     off = -1;
     dfs(0);
-    for (i = -1; ++i < n; )
+    for (i = -1; ++i < n; ) {
       see1[i] = see[i];
-    for (j = -1; ++j < n; )
+    }
+    for (j = -1; ++j < n; ) {
       see[j] = 0;
-    for (i = -1; ++i < n; )
-    {
+    }
+    for (i = -1; ++i < n; ) {
       off = i;
 //printf(" >>> %d calling...\n", off);
       dfs(0);
-      for (j = -1; ++j < n; )
-      {
-        if (see1[j] != see[j])
+      for (j = -1; ++j < n; ) {
+        if (see1[j] != see[j]) {
           dom[i][j] = 1;
+        }
         see[j] = 0;
       }
     }
@@ -94,10 +92,10 @@ for(i = -1; ++i < n; )
     printf("Case %d:\n", ++count);
     x = n * 2 - 1;
     GAY
-    for (i = -1; ++i < n; )
-    {
-      for (j = -1; ++j < n; )
+    for (i = -1; ++i < n; ) {
+      for (j = -1; ++j < n; ) {
         printf("|%c", dom[i][j] ? 'Y' : 'N');
+      }
       printf("|\n");
       GAY
     }

@@ -5,19 +5,16 @@ int n;
 
 set<string> ans;
 
-bool vld(string str){
+bool vld(string str) {
   stack<char> P;
 
-  for(int i = 0 ; i < n ; ++i){
+  for (int i = 0 ; i < n ; ++i) {
 
-    if(str[i] == ')')
-    {
-      if(P.size() == 0) return false;
-      if(P.top() == ')') return false;
+    if (str[i] == ')') {
+      if (P.size() == 0) { return false; }
+      if (P.top() == ')') { return false; }
       P.pop();
-    }
-    else
-    {
+    } else {
       P.push('(');
     }
   }
@@ -25,29 +22,29 @@ bool vld(string str){
   return (P.size() == 0);
 }
 
-void F(int idx,string str){
+void F(int idx, string str) {
 
-  if(idx == n) {
+  if (idx == n) {
     //~ cout << str << endl;
-    if(vld(str))  ans.insert(str);
+    if (vld(str)) { ans.insert(str); }
     return;
   }
   string aux = str + '(';
-  F(idx+1,aux);
+  F(idx + 1, aux);
   aux = str + ')';
-  F(idx+1,aux);
+  F(idx + 1, aux);
 }
 
 
 
-int main(){
+int main() {
 
   cin >> n;
-  n*=2;
+  n *= 2;
 
-  F(0,"");
+  F(0, "");
 
-  for(set<string>::iterator it = ans.begin() ; it != ans.end() ; ++it){
+  for (set<string>::iterator it = ans.begin() ; it != ans.end() ; ++it) {
     cout << *it << '\n';
   }
 

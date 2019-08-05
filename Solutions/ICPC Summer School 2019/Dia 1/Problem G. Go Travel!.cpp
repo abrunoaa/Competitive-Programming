@@ -9,7 +9,7 @@ typedef int Int;
 #define nd second
 #define int long long
 
-typedef pair<int,int> ii;
+typedef pair<int, int> ii;
 typedef vector<int> vi;
 
 bool sc[maxn];
@@ -17,52 +17,51 @@ int N, M, K, P;
 int dis[maxn], dsu[maxn], par[maxn], parb[maxn], reach[maxn];
 vector<ii> g[maxn];
 vi ans, g2[maxn];
-map<int,ii> path[maxn];
+map<int, ii> path[maxn];
 
-int find(int u){ return (u == dsu[u] ? u : dsu[u] = find(dsu[u])); }
-void unite(int u, int v){ dsu[find(u)] = find(v); }
+int find(int u) { return (u == dsu[u] ? u : dsu[u] = find(dsu[u])); }
+void unite(int u, int v) { dsu[find(u)] = find(v); }
 
-vi buildPath(int u, int v){ // constrói o caminho: u -> v
+vi buildPath(int u, int v) { // constrói o caminho: u -> v
   vi P;
-  while(P.push_back(u), !sc[u]) u = par[u];
+  while (P.push_back(u), !sc[u]) { u = par[u]; }
   reverse(P.begin(), P.end());
-  while(P.push_back(v), !sc[v]) v = par[v];
+  while (P.push_back(v), !sc[v]) { v = par[v]; }
   return P;
 }
 
-bool dijkstra(){
-  priority_queue<ii,vector<ii>,greater<ii>> pq;
+bool dijkstra() {
+  priority_queue<ii, vector<ii>, greater<ii>> pq;
   memset(dis, inf, sizeof dis);
   sc[1] = sc[N] = 1;
-  for(int u = 1; u <= N; ++u){
+  for (int u = 1; u <= N; ++u) {
     dsu[u] = u;
-    if(sc[u]){
+    if (sc[u]) {
       par[u] = u;
       reach[u] = u;
       dis[u] = 0;
       pq.push(ii(0, u));
     }
   }
-  while(!pq.empty()){
+  while (!pq.empty()) {
     ii f = pq.top();
     pq.pop();
     int u = f.nd;
     int d = f.st;
-    if(d > dis[u]) continue;
+    if (d > dis[u]) { continue; }
 
     int ru = reach[u];
-    for(ii e : g[u]){
+    for (ii e : g[u]) {
       int v = e.st;
       int w = e.nd;
       int &rv = reach[v];
 
-      if(d + w < dis[v] && d + w <= P){
+      if (d + w < dis[v] && d + w <= P) {
         dis[v] = d + w;
         par[v] = u;
         rv = ru;
         pq.push(ii(dis[v], v));
-      }
-      else if(dis[v] != inf && d + w + dis[v] <= P && find(u) != find(v)){
+      } else if (dis[v] != inf && d + w + dis[v] <= P && find(u) != find(v)) {
         unite(u, v);
         g2[ru].push_back(rv);
         g2[rv].push_back(ru);
@@ -75,17 +74,17 @@ bool dijkstra(){
   return find(1) == find(N);
 }
 
-void bfs(){
+void bfs() {
   memset(parb, 0, sizeof parb);
   queue<int> q;
   q.push(1);
   par[1] = 1;
-  while(!q.empty()){
+  while (!q.empty()) {
     int u = q.front();
     // cerr << " >> " << u << ' ' << par[u] << endl;
     q.pop();
-    for(int v : g2[u]){
-      if(!parb[v]){
+    for (int v : g2[u]) {
+      if (!parb[v]) {
         parb[v] = u;
         q.push(v);
       }
@@ -93,8 +92,8 @@ void bfs(){
   }
 }
 
-vi rec(int v = N){
-  if(v == 1) return vi();
+vi rec(int v = N) {
+  if (v == 1) { return vi(); }
   int u = parb[v];
   ii t = path[u][v];
   vi ans = rec(u), p = buildPath(t.st, t.nd);
@@ -102,22 +101,22 @@ vi rec(int v = N){
   return move(ans);
 }
 
-Int main(){
+Int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
   cin >> N >> M >> K >> P;
-  while(K--){
+  while (K--) {
     int x;
     cin >> x;
     sc[x] = 1;
   }
-  while(M--){
+  while (M--) {
     int a, b, c;
     cin >> a >> b >> c;
     g[a].push_back(ii(b, c));
     g[b].push_back(ii(a, c));
   }
-  if(!dijkstra()){
+  if (!dijkstra()) {
     cout << "-1\n";
     return 0;
   }
@@ -125,8 +124,8 @@ Int main(){
   vi ans = rec();
   ans.push_back(N);
   cout << ans.size() << '\n';
-  for(int i = 0; i < (int)ans.size(); ++i){
-    if(i) cout << ' ';
+  for (int i = 0; i < (int)ans.size(); ++i) {
+    if (i) { cout << ' '; }
     cout << ans[i];
   }
   cout << '\n';

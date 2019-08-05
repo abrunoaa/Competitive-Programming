@@ -25,97 +25,85 @@
 bool see[105][105], gr[105][105];
 uint r, c, m, n, ans[105][105];
 
-void dfs(uint x, uint y)
-{
-  if (see[x][y])
+void dfs(uint x, uint y) {
+  if (see[x][y]) {
     return;
+  }
   see[x][y] = 1;
 
   uint m1, n1;
 
   m1 = x + m;
   n1 = y + n;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x - m;
   n1 = y + n;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x + m;
   n1 = y - n;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x - m;
   n1 = y - n;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x + n;
   n1 = y + m;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x - n;
   n1 = y + m;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x + n;
   n1 = y - m;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 
   m1 = x - n;
   n1 = y - m;
-  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1])
-  {
+  if (m1 >= 0 && m1 < r && n1 >= 0 && n1 < c && !gr[m1][n1]) {
     ans[m1][n1]++;
     dfs(m1, n1);
   }
 }
 
-int main()
-{
+int main() {
   register uint i, j, teste;
   uint par, imp, count = 0, w, x, y;
   scanf("%d", &teste);
-  while (teste--)
-  {
+  while (teste--) {
     scanf("%d%d%d%d%d", &r, &c, &m, &n, &w);
 
     for (i = r; i--; )
-      for (j = c; j--; )
-      {
+      for (j = c; j--; ) {
         gr[i][j] = 0;
         see[i][j] = 0;
         ans[i][j] = 0;
       }
-    while (w--)
-    {
+    while (w--) {
       scanf("%d%d", &x, &y);
       gr[x][y] = 1;
     }
@@ -124,21 +112,23 @@ int main()
 
     if (!m || !n || m == n)
       for (i = r; i--; )
-        for (j = c; j--; )
+        for (j = c; j--; ) {
           ans[i][j] /= 2;
+        }
 
     par = 0;
     imp = 0;
-    if (!ans[0][0]) // bug?
+    if (!ans[0][0]) { // bug?
       par++;
+    }
     for (i = r; i--; )
       for (j = c; j--; )
-        if (ans[i][j])
-        {
-          if (ans[i][j] % 2)
+        if (ans[i][j]) {
+          if (ans[i][j] % 2) {
             imp++;
-          else
+          } else {
             par++;
+          }
         }
     printf("Case %d: %d %d\n", ++count, par, imp);
   }

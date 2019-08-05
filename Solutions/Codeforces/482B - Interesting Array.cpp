@@ -18,17 +18,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -53,49 +53,49 @@ __attribute__((destructor)) static void destroy()
 
 int n, m, l[maxn], r[maxn], q[maxn], st[4 * maxn], ans[maxn], s[maxn];
 
-int build(int k = 1, int l = 1, int r = n){
-  if(l == r) return st[k] = ans[l];
-  return st[k] = build(L, l, M) & build(R, M+1, r);
+int build(int k = 1, int l = 1, int r = n) {
+  if (l == r) { return st[k] = ans[l]; }
+  return st[k] = build(L, l, M) & build(R, M + 1, r);
 }
 
-int qry(int i, int j, int k = 1, int l = 1, int r = n){
-  if(r < i || j < l) return (1 << 30) - 1;
-  if(i <= l && r <= j) return st[k];
-  return qry(i, j, L, l, M) & qry(i, j, R, M+1, r);
+int qry(int i, int j, int k = 1, int l = 1, int r = n) {
+  if (r < i || j < l) { return (1 << 30) - 1; }
+  if (i <= l && r <= j) { return st[k]; }
+  return qry(i, j, L, l, M) & qry(i, j, R, M + 1, r);
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> m;
-  for(int i = 1; i <= m; ++i){
+  for (int i = 1; i <= m; ++i) {
     cin >> l[i] >> r[i] >> q[i];
   }
-  for(int bit = 0; bit < 30; ++bit){
+  for (int bit = 0; bit < 30; ++bit) {
     memset(s, 0, sizeof s);
-    for(int i = 1; i <= m; ++i){
-      if((1 << bit) & q[i]){
+    for (int i = 1; i <= m; ++i) {
+      if ((1 << bit) & q[i]) {
         ++s[l[i]];
         --s[r[i] + 1];
       }
     }
-    for(int i = 1; i <= n; ++i){
+    for (int i = 1; i <= n; ++i) {
       s[i] += s[i - 1];
-      if(s[i]){
+      if (s[i]) {
         ans[i] |= 1 << bit;
       }
     }
   }
   build();
-  for(int i = 1; i <= m; ++i){
-    if(qry(l[i], r[i]) != q[i]){
+  for (int i = 1; i <= m; ++i) {
+    if (qry(l[i], r[i]) != q[i]) {
       cout << "NO\n";
       return 0;
     }
   }
   cout << "YES\n";
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cout << ans[i] << ' ';
   }
   cout << endl;

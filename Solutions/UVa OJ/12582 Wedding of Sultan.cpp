@@ -23,29 +23,26 @@
 #include <stack>
 using namespace std;
 
-int main()
-{
+int main() {
   char l, topo;
   register unsigned int i, count = 0;
   unsigned int teste, qtd[30];
   stack<char> p;
 
   scanf("%d%*c", &teste);
-  while (teste--)
-  {
+  while (teste--) {
     i = -1;
-    while (++i < 30)
+    while (++i < 30) {
       qtd[i] = 0;
+    }
 
     scanf("%c", &l);
-    p.push(l -65);
-    while (scanf("%1[\nA-Z]s", &l), l != '\n')
-    {
+    p.push(l - 65);
+    while (scanf("%1[\nA-Z]s", &l), l != '\n') {
       l -= 65;
-      if (!p.empty() && l == (topo = p.top()))
+      if (!p.empty() && l == (topo = p.top())) {
         p.pop();
-      else
-      {
+      } else {
         qtd[(int)l]++;
         qtd[(int)topo]++;
         p.push(l);
@@ -54,8 +51,9 @@ int main()
 
     printf("Case %d\n", ++count);
     for (i = -1; ++i < 26; )
-      if (qtd[i])
-        printf("%c = %u\n", i +65, qtd[i]);
+      if (qtd[i]) {
+        printf("%c = %u\n", i + 65, qtd[i]);
+      }
   }
 
   return 0;

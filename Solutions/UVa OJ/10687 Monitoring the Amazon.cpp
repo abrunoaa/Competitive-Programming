@@ -36,74 +36,60 @@ int i, j, n, mep1, mep2;
 
 int x[1005], y[1005];
 
-void dfs (int u)
-{
+void dfs (int u) {
   see[u] = 1;
   for (int i = 0, size = adj[u].size(); i < size; i++)
-    if (!see[adj[u][i]])
+    if (!see[adj[u][i]]) {
       dfs(adj[u][i]);
+    }
 }
 
-int main()
-{
+int main() {
   ull dis, me1, me2;
-  while (scanf("%d", &n), n)
-  {
+  while (scanf("%d", &n), n) {
     i = -1;
-    while (++i < n)
+    while (++i < n) {
       scanf("%d%d", &x[i], &y[i]);
+    }
 
-    for (i = 0; i < n; i++)
-    {
+    for (i = 0; i < n; i++) {
       me1 = me2 = UINT64_MAX;
       mep1 = mep2 = 0;
       for (j = 0; j < n; j++)
-        if (i != j)
-        {
+        if (i != j) {
           dis = dist(x[i], x[j], y[i], y[j]) * 10000;
-          if (dis < me1)
-          {
+          if (dis < me1) {
             me2 = me1;
             mep2 = mep1;
             me1 = dis;
             mep1 = j;
             continue;
           }
-          if (dis < me2)
-          {
+          if (dis < me2) {
             me2 = dis;
             mep2 = j;
             continue;
           }
-          if (dis == me1)
-          {
-            if (me1 == me2)
-            {
-              if (x[mep1] < x[mep2] || (x[mep1] == x[mep2] && y[mep1] < y[mep2]))
-              {
-                if (x[i] < x[mep2] || (x[i] == x[mep2] && y[i] < y[mep2]))
-                {
+          if (dis == me1) {
+            if (me1 == me2) {
+              if (x[mep1] < x[mep2] || (x[mep1] == x[mep2] && y[mep1] < y[mep2])) {
+                if (x[i] < x[mep2] || (x[i] == x[mep2] && y[i] < y[mep2])) {
                   me2 = dis;
                   mep2 = j;
                 }
+              } else if (x[i] < x[mep1] || (x[i] == x[mep1] && y[i] < y[mep1])) {
+                me1 = dis;
+                mep1 = j;
               }
-              else
-                if (x[i] < x[mep1] || (x[i] == x[mep1] && y[i] < y[mep1]))
-                {
-                  me1 = dis;
-                  mep1 = j;
-                }
               continue;
             }
-            if (x[i] < x[mep1] || (x[i] == x[mep1] && y[i] < y[mep1]))
-            {
+            if (x[i] < x[mep1] || (x[i] == x[mep1] && y[i] < y[mep1])) {
               me1 = dis;
               mep1 = j;
               continue;
             }
           }
-          if (dis == me2 && (x[i] < x[mep2] || (x[i] == x[mep2] && y[i] < y[mep2])))
-          {
+          if (dis == me2 && (x[i] < x[mep2] || (x[i] == x[mep2] && y[i] < y[mep2]))) {
             me2 = dis;
             mep2 = j;
           }
@@ -117,19 +103,20 @@ int main()
     for (i = 0; i < n; i++)
       for (j = 0; (unsigned)j < adj[i].size(); j++)
         printf("%d -> %d\n", i, adj[i][j]);
-//*/
+    //*/
     dfs(0);
     for (i = 0; i < n; i++)
-      if (!see[i])
-      {
+      if (!see[i]) {
         printf("There are stations that are unreachable.\n");
         break;
       }
-    if (i == n)
+    if (i == n) {
       printf("All stations are reachable.\n");
+    }
 
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i++) {
       adj[i].clear();
+    }
   }
 
   return 0;

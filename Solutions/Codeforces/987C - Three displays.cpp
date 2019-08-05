@@ -15,15 +15,15 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -33,7 +33,7 @@ void db(t x, u... y)
 
 #ifdef LOCAL
 __attribute__((destructor))
-static void destroy(){
+static void destroy() {
   cerr << "\nTime elapsed: " << (lf)clock() / CLOCKS_PER_SEC << "s.\n";
 }
 
@@ -44,54 +44,54 @@ static void destroy(){
 #endif
 
 int n, s[maxn], c[maxn], ft[maxn];
-map<int,int> mp;
+map<int, int> mp;
 
-int getmin(int p){
+int getmin(int p) {
   int m = inf;
-  for(; p < maxn; p += p & -p){
+  for (; p < maxn; p += p & -p) {
     m = min(m, ft[p]);
   }
   return m;
 }
 
-void upd(int p, int c){
-  for(; p; p -= p & -p){
+void upd(int p, int c) {
+  for (; p; p -= p & -p) {
     ft[p] = min(ft[p], c);
   }
 }
 
-int main(){
+int main() {
   memset(ft, inf, sizeof ft);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> s[i];
     mp[s[i]] = -1;
   }
   int cnt = 0;
-  for(auto& it : mp){
-    if(it.nd == -1){
+  for (auto &it : mp) {
+    if (it.nd == -1) {
       it.nd = ++cnt;
     }
   }
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     db(s[i], mp[s[i]]);
     s[i] = mp[s[i]];
   }
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> c[i];
   }
 
   int ans = inf;
-  for(int j = n - 1; j > 0; --j){
+  for (int j = n - 1; j > 0; --j) {
     upd(s[j], c[j]);
     int k = getmin(s[j] + 1);
-    if(k == inf){
+    if (k == inf) {
       continue;
     }
-    for(int i = 0; i < j; ++i){
-      if(s[i] < s[j]){
+    for (int i = 0; i < j; ++i) {
+      if (s[i] < s[j]) {
         ans = min(ans, c[i] + c[j] + k);
       }
     }

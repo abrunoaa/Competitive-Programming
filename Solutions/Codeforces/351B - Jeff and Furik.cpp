@@ -5,18 +5,18 @@ using namespace std;
 
 int n, p[maxn];
 
-int main(){
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 0; i < n; ++i){
+  for (int i = 0; i < n; ++i) {
     cin >> p[i];
   }
 
   int k = 0;
-  for(int i = 0; i < n - 1; ++i)
-    for(int j = 0; j < n - i - 1; ++j)
-      if(p[j] > p[j + 1]){
+  for (int i = 0; i < n - 1; ++i)
+    for (int j = 0; j < n - i - 1; ++j)
+      if (p[j] > p[j + 1]) {
         ++k;
         swap(p[j], p[j + 1]);
       }

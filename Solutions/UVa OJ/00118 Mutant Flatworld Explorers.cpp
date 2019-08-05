@@ -35,91 +35,74 @@ using namespace std;
     break; \
   }
 
-int main()
-{
+int main() {
   char face, com[105];
   register int i, f = 0, j; // f == length out
   int mx, my, x, y;
   unsigned int p, out[205];
 
   scanf("%d%d", &mx, &my);
-  while (scanf("%d%d %c", &x, &y, &face) != EOF)
-  {
-    if (face == 'N')
+  while (scanf("%d%d %c", &x, &y, &face) != EOF) {
+    if (face == 'N') {
       face = 0;
-    else
-      if (face == 'E')
-        face = 1;
-      else
-        if (face == 'S')
-          face = 2;
-        else
-          face = 3;
+    } else if (face == 'E') {
+      face = 1;
+    } else if (face == 'S') {
+      face = 2;
+    } else {
+      face = 3;
+    }
 
     scanf(" %s", com);
     i = -1;
 #ifdef T
     printf(" +++ %d %d %d %d %d - %s\n", mx, my, x, y, face, com);
 #endif
-    while (com[++i])
-    {
+    while (com[++i]) {
 #ifdef T
       printf(" >>> %d %d %d %c\n", x, y, face, com[i]);
 #endif
       if (com[i] == 'F')
-        if (face == 0)
-        {
-          if (++y > my)
-          {
+        if (face == 0) {
+          if (++y > my) {
             p = x * 100 + --y;
             VER
           }
-        }
-        else
-          if (face == 1)
-          {
-            if (++x > mx)
-            {
-              p = --x * 100 + y;
-              VER
-            }
+        } else if (face == 1) {
+          if (++x > mx) {
+            p = --x * 100 + y;
+            VER
           }
-          else
-            if (face == 2)
-            {
-              if (--y < 0)
-              {
-                p = x * 100 + ++y;
-                VER
-              }
-            }
-            else
-            {
-              if (--x < 0)
-              {
-                p = ++x * 100 + y;
-                VER
-              }
-            }
-      else
-        if (com[i] == 'R')
-          if (face == 3)
-            face = 0;
-          else
-            face++;
-        else
-          if (face)
-            face--;
-          else
-            face = 3;
+        } else if (face == 2) {
+          if (--y < 0) {
+            p = x * 100 + ++y;
+            VER
+          }
+        } else {
+          if (--x < 0) {
+            p = ++x * 100 + y;
+            VER
+          }
+        } else if (com[i] == 'R')
+        if (face == 3) {
+          face = 0;
+        } else {
+          face++;
+        } else if (face) {
+        face--;
+      } else {
+        face = 3;
+      }
     }
 
     printf("%d %d %c%s\n", x, y, (face == 0 ? 'N' : face == 1 ? 'E' : face == 2 ? 'S' : 'W'), (com[i] ? " LOST" : ""));
 #ifdef T
-    if (com[i])
+    if (com[i]) {
       printf(" > %d\n", p);
-    for (j = 0; j < f; j++)
+    }
+    for (j = 0; j < f; j++) {
       printf(" ! %d %d\n", j, out[j]);
+    }
 #endif
   }
   return 0;

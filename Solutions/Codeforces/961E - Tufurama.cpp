@@ -19,9 +19,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -29,9 +29,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -59,35 +59,34 @@ template<class t> t sq(t x) { return x * x; }
 int n, a[maxn];
 vi st[4 * maxn];
 
-void build(int k = 1, int l = 1, int r = n){
-  if(l == r){
+void build(int k = 1, int l = 1, int r = n) {
+  if (l == r) {
     st[k] = { a[l] };
-  }
-  else{
-    build(L, l, M), build(R, M+1, r);
+  } else {
+    build(L, l, M), build(R, M + 1, r);
     merge(st[L].begin(), st[L].end(), st[R].begin(), st[R].end(), back_inserter(st[k]));
   }
 }
 
-int qry(int i, int j, int x, int k = 1, int l = 1, int r = n){
-  if(r < i || j < l) return 0;
-  if(i <= l && r <= j) return r - l + 1 - (lower_bound(st[k].begin(), st[k].end(), x) - st[k].begin());
-  return qry(i, j, x, L, l, M) + qry(i, j, x, R, M+1, r);
+int qry(int i, int j, int x, int k = 1, int l = 1, int r = n) {
+  if (r < i || j < l) { return 0; }
+  if (i <= l && r <= j) { return r - l + 1 - (lower_bound(st[k].begin(), st[k].end(), x) - st[k].begin()); }
+  return qry(i, j, x, L, l, M) + qry(i, j, x, R, M + 1, r);
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cin >> a[i];
   }
   build();
 
   ll ans = 0;
-  for(int x = n - 1; x; --x){
-    if(x < a[x]){
+  for (int x = n - 1; x; --x) {
+    if (x < a[x]) {
       ans += qry(x + 1, a[x], x);
     }
   }

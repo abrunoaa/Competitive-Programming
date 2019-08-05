@@ -23,39 +23,34 @@
 #include <iostream>
 using namespace std;
 
-int main()
-{
+int main() {
   bool st[50005], see[50005];
   register uint i, j, k, n, u, v, teste, em[50005], count = 0, mp, maior;
 
-  for (scanf("%d", &teste); teste--; )
-  {
+  for (scanf("%d", &teste); teste--; ) {
     scanf("%d", &n);
-    for (i = 0; ++i <= n; )
-    {
+    for (i = 0; ++i <= n; ) {
       scanf("%d%d", &u, &v);
       em[u] = v;
       st[i] = 0;
     }
 
-    for (mp = maior = i = 0; ++i <= n; )
-    {
-      if (!st[i])
-      {
+    for (mp = maior = i = 0; ++i <= n; ) {
+      if (!st[i]) {
         j = 0;
-        while (++j <= n)
+        while (++j <= n) {
           see[j] = 0;
-
-        for (j = i, k = 1; true; k++)
-        {
-          st[j] = see[j] = 1;
-          if (see[em[j]])
-            break;
-          else
-            j = em[j];
         }
-        if (k > maior)
-        {
+
+        for (j = i, k = 1; true; k++) {
+          st[j] = see[j] = 1;
+          if (see[em[j]]) {
+            break;
+          } else {
+            j = em[j];
+          }
+        }
+        if (k > maior) {
           maior = k;
           mp = i;
         }

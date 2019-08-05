@@ -14,12 +14,12 @@ public class Main{
   final double pi = Math.acos(-1.0);
   final long infl = 0x3f3f3f3f3f3f3f3fl;
   final int inf = 0x3f3f3f3f;
-  final boolean ONLINE_JUDGE = System.getProperty("ONLINE_JUDGE") != null;  // pode dar RTE!!!
+  final boolean ONLINE_JUDGE = System.getProperty("ONLINE_JUDGE") != null;  // RTE!!!
 
   int cmp(double x, double y){ return (Math.abs(x - y) < eps ? 0 : x < y ? -1 : 1); }
 
   PrintWriter out = new PrintWriter(System.out);
-  BufferedReader reader = new BufferedReader(new InputStreamReader(System.in), 1 << 15);
+  BufferedReader reader = new BufferedReader(new InputStreamReader(System.in),1<<15);
   StringTokenizer tokens = new StringTokenizer("");
 
   Main(){

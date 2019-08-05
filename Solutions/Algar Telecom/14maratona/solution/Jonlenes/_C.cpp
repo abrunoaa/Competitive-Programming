@@ -8,27 +8,28 @@ long long mat[N][N];
 const long long LIM = 1000000007;
 
 long long getCount(int b, int g) {
-    if (g <= 0) return 0;
-    if (b == 1) return g == 1;
+  if (g <= 0) { return 0; }
+  if (b == 1) { return g == 1; }
 
-    if (mat[b][g] == -1)
-        mat[b][g] = ((g * getCount(b - 1, g)) % LIM + (g * getCount(b - 1, g - 1)) % LIM) % LIM;
+  if (mat[b][g] == -1) {
+    mat[b][g] = ((g * getCount(b - 1, g)) % LIM + (g * getCount(b - 1, g - 1)) % LIM) % LIM;
+  }
 
-    return mat[b][g];
+  return mat[b][g];
 }
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    memset(mat, -1, sizeof mat);
+  memset(mat, -1, sizeof mat);
 
-    int b, g;
+  int b, g;
 
-    while (cin >> b >> g && b && g) {
-        cout << getCount(b, g) << endl;
-    }
+  while (cin >> b >> g && b && g) {
+    cout << getCount(b, g) << endl;
+  }
 
-    return 0;
+  return 0;
 }

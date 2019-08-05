@@ -20,8 +20,8 @@ void db(t x, u... y)
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<int,ii> tri;
+typedef pair<int, int> ii;
+typedef pair<int, ii> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -31,7 +31,7 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 #ifdef LOCAL
-struct _S { _S() { assert(freopen("in","r",stdin)); } } _S;
+struct _S { _S() { assert(freopen("in", "r", stdin)); } } _S;
 #else
 struct _S { _S() { cin.sync_with_stdio(0), cin.tie(0); } } _S;
 #define db(x...)
@@ -39,19 +39,19 @@ struct _S { _S() { cin.sync_with_stdio(0), cin.tie(0); } } _S;
 
 int v[maxn];
 
-int main(){
+int main() {
   int n;
 
   cin >> n;
-  for (int i = 0; i < n; ++i) cin >> v[i];//, db(v[i]);
+  for (int i = 0; i < n; ++i) { cin >> v[i]; }//, db(v[i]);
 
   int i;
-  for (i = 0; i < n && v[i] <= 500000; ++i){
+  for (i = 0; i < n && v[i] <= 500000; ++i) {
   }
   --i;
 
   int j;
-  for (j = n - 1; j >= 0 && v[j] > 500000; --j){
+  for (j = n - 1; j >= 0 && v[j] > 500000; --j) {
   }
   ++j;
 

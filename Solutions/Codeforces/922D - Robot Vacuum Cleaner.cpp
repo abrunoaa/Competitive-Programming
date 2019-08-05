@@ -19,8 +19,8 @@ void db(t x, u... y)
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<int,ii> tri;
+typedef pair<int, int> ii;
+typedef pair<int, ii> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -37,22 +37,21 @@ string t;
 // bool cmp(ii f, ii s) { return f.nd / f.st < s.nd / s.st; }
 bool cmp(ii f, ii s) { return 1LL * f.nd * s.st < 1LL * f.st * s.nd; }
 
-int main()
-{
+int main() {
   // assert(freopen("in", "r", stdin));
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for (int i = 0; i < n; ++i)
-  {
+  for (int i = 0; i < n; ++i) {
     cin >> t;
 
     int k = 0;
     for (char c : t)
-      if (c == 'h')
+      if (c == 'h') {
         ans += k;
-      else
+      } else {
         ++k;
+      }
 
     v[i] = ii(k, t.size() - k);
   }
@@ -60,8 +59,7 @@ int main()
   sort(v, v + n, cmp);
 
   ll k = v[0].st;
-  for (int i = 1; i < n; ++i)
-  {
+  for (int i = 1; i < n; ++i) {
     ans += v[i].nd * k;
     k += v[i].st;
   }

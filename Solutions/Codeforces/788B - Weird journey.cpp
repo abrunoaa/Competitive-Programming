@@ -15,15 +15,15 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -33,7 +33,7 @@ void db(t x, u... y)
 
 #ifdef LOCAL
 __attribute__((destructor))
-static void destroy(){
+static void destroy() {
   cerr << "\nTime elapsed: " << (lf)clock() / CLOCKS_PER_SEC << "s.\n";
 }
 
@@ -47,44 +47,44 @@ bool vis[maxn], loop[maxn];
 int n, m;
 vector<int> g[maxn];
 
-int dfs(int u){
+int dfs(int u) {
   vis[u] = 1;
 
   int k = g[u].size();
-  for(int v : g[u])
-    if(!vis[v])
+  for (int v : g[u])
+    if (!vis[v]) {
       k += dfs(v);
+    }
 
   return k;
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n >> m;
-  if(m == 1){
+  if (m == 1) {
     cout << "0\n";
     return 0;
   }
 
   ll k = 0;
-  for(int i = 0, u, v; i < m; ++i){
+  for (int i = 0, u, v; i < m; ++i) {
     cin >> u >> v;
     g[u].pb(v);
 
-    if(u == v){
+    if (u == v) {
       loop[u] = 1;
-    }
-    else{
+    } else {
       g[v].pb(u);
     }
   }
 
   bool flag = 0;
-  for(int u = 1; u <= n; ++u){
-    if(!vis[u] && dfs(u) > 0){
-      if(flag){
+  for (int u = 1; u <= n; ++u) {
+    if (!vis[u] && dfs(u) > 0) {
+      if (flag) {
         cout << "0\n";
         return 0;
       }
@@ -92,7 +92,7 @@ int main(){
     }
 
     ll x = g[u].size();
-    if(loop[u]){
+    if (loop[u]) {
       k += --m;
       --x;
     }

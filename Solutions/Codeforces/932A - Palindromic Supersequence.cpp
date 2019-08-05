@@ -19,8 +19,8 @@ void db(t x, u... y)
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<int,ii> tri;
+typedef pair<int, int> ii;
+typedef pair<int, ii> tri;
 typedef vector<int> vi;
 
 #include <ext/pb_ds/assoc_container.hpp>
@@ -29,8 +29,7 @@ using namespace __gnu_pbds;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
 typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
-int main()
-{
+int main() {
   cin.sync_with_stdio(0), cin.tie(0);
 
   string s, t;

@@ -24,16 +24,16 @@ using namespace std;
 
 int main() {
 
-    //freopen("../input.txt","r", stdin);
-    //freopen("../out.txt","w", stdout);
+  //freopen("../input.txt","r", stdin);
+  //freopen("../out.txt","w", stdout);
 
-    int a, b, c, d, n;
+  int a, b, c, d, n;
 
-    cin >> n;
-    while (n--) {
-        scanf("%d %d %d %d", &a, &b, &c, &d);
-        double r = double(d - b) / (c - a);
-        cout << (unsigned long long)r << ",";
-        printf("%02d\n", int((r - (unsigned long long)r) * 100));
-    }
+  cin >> n;
+  while (n--) {
+    scanf("%d %d %d %d", &a, &b, &c, &d);
+    double r = double(d - b) / (c - a);
+    cout << (unsigned long long)r << ",";
+    printf("%02d\n", int((r - (unsigned long long)r) * 100));
+  }
 }

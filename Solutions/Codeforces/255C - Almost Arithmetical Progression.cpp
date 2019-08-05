@@ -2,10 +2,10 @@
 using namespace std;
 
 #ifdef BALLOONFIELD
-__attribute__((destructor))static void __destroy__(){cerr<<"\nElapsed: "<<(double)clock()/CLOCKS_PER_SEC<<"s.\n";}
+__attribute__((destructor))static void __destroy__() {cerr << "\nElapsed: " << (double)clock() / CLOCKS_PER_SEC << "s.\n";}
 
-void debug(){}
-template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,debug(y...);}
+void debug() {}
+template<class t, class... u> void debug(const t &x, const u &...y) {cerr << ' ' << x, debug(y...);}
 # define debug(x...) cerr<<"\x1b[91m"<<__LINE__<<" ["#x"] =",debug(x),cerr<<"\x1b[0m\n"
 # define sleep(x) this_thread::sleep_for(chrono::milliseconds(x))
 #else
@@ -15,12 +15,12 @@ template<class t,class... u> void debug(const t&x,const u&...y){cerr<<' '<<x,deb
 # define sleep(x) void(0)
 #endif
 
-template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return f<<'('<<x.first<<", "<<x.second<<')';}
+template<class A, class B>ostream &operator<<(ostream &f, const pair<A, B> &x) {return f << '(' << x.first << ", " << x.second << ')';}
 
 #define DEF1(_class...) ostream&operator<<(ostream&f,const _class&x){int b=0;f<<'[';for(auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';}
 #define DEF2(get,pop,_class...) ostream&operator<<(ostream&f,_class x){int b=0;f<<'[';while(x.size()){if(b++)f<<", ";f<<x.get();x.pop();}return f<<']';}
-template<class T> DEF1(vector<T>) template<class T,class C> DEF1(set<T,C>) template<class T,class C> DEF1(multiset<T,C>) template<class K,class T,class C> DEF1(map<K,T,C>) template<class K,class T,class C> DEF1(multimap<K,T,C>)
-template<class T> DEF2(front,pop,queue<T>) template<class T> DEF2(top,pop,stack<T>) template<class T,class V,class C> DEF2(top,pop,priority_queue<T,V,C>)
+template<class T> DEF1(vector<T>) template<class T, class C> DEF1(set<T, C>) template<class T, class C> DEF1(multiset<T, C>) template<class K, class T, class C> DEF1(map<K, T, C>) template<class K, class T, class C> DEF1(multimap<K, T, C>)
+template<class T> DEF2(front, pop, queue<T>) template<class T> DEF2(top, pop, stack<T>) template<class T, class V, class C> DEF2(top, pop, priority_queue<T, V, C>)
 
 #define null nullptr
 #define st first
@@ -36,35 +36,36 @@ uniform_int_distribution<int> uid(0, numeric_limits<int>::max());             //
 
 typedef long long ll;
 typedef double lf;
-typedef pair<int,int> ii;
+typedef pair<int, int> ii;
 
 int x[maxn];
 int memo[maxn][maxn];
 
-int main(){
-  freopen("in","r",stdin);
+int main() {
+  freopen("in", "r", stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   int n;
   cin >> n;
 
-  map<int,int> mp;
-  for(int i = 0; i < n; ++i){
+  map<int, int> mp;
+  for (int i = 0; i < n; ++i) {
     cin >> x[i];
     mp[x[i]];
   }
 
   int k = 0;
-  for(auto &x : mp) x.nd = k++;
-  for(int i = 0; i < n; ++i) x[i] = mp[x[i]];
+  for (auto &x : mp) { x.nd = k++; }
+  for (int i = 0; i < n; ++i) { x[i] = mp[x[i]]; }
 
-  for(int i = 0; i < n; ++i)
-    for(int j = 0; j < n; ++j)
+  for (int i = 0; i < n; ++i)
+    for (int j = 0; j < n; ++j) {
       memo[i][j] = 1;
+    }
 
   int ans = 1;
-  for(int i = n - 2; i >= 0; --i){
-    for(int j = i + 1; j < n; ++j){
+  for (int i = n - 2; i >= 0; --i) {
+    for (int j = i + 1; j < n; ++j) {
       int &pd = memo[i][x[j]];
       pd = max(pd, 1 + memo[j][x[i]]);
       ans = max(ans, pd);

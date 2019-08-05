@@ -19,17 +19,17 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 
-typedef tree<int,null_type,less<int>,rb_tree_tag,tree_order_statistics_node_update> Set;
-typedef tree<int,int,less<int>,rb_tree_tag,tree_order_statistics_node_update> Map;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> Set;
+typedef tree<int, int, less<int>, rb_tree_tag, tree_order_statistics_node_update> Map;
 
 void db() { cerr << endl; }
 
@@ -53,7 +53,7 @@ __attribute__((destructor)) static void destroy()
 #define R (L + 1)
 #define M ((l + r) / 2)
 
-struct no{
+struct no {
   ll ans;
   int n, lazy, bit[maxb];
 };
@@ -61,23 +61,23 @@ struct no{
 int n, a[maxn];
 no st[4 * maxn];
 
-no merge(const no& x, const no& y){
+no merge(const no &x, const no &y) {
   no z = { x.ans + y.ans, x.n + y.n, 0, {} };
-  for(int b = 0; b < maxb; ++b){
+  for (int b = 0; b < maxb; ++b) {
     z.bit[b] = x.bit[b] + y.bit[b];
   }
   return z;
 }
 
-void prop(int k){
+void prop(int k) {
   int &lazy = st[k].lazy;
-  if(lazy){
-    if(R < 4 * maxn){
+  if (lazy) {
+    if (R < 4 * maxn) {
       st[L].lazy ^= lazy;
       st[R].lazy ^= lazy;
     }
-    for(int b = 0; b < maxb; ++b){
-      if(lazy & (1 << b)){
+    for (int b = 0; b < maxb; ++b) {
+      if (lazy & (1 << b)) {
         int n1 = st[k].bit[b];
         int n2 = st[k].n - n1;
         st[k].bit[b] = n2;
@@ -88,56 +88,55 @@ void prop(int k){
   }
 }
 
-no build(int k = 1, int l = 1, int r = n){
-  if(l == r){
+no build(int k = 1, int l = 1, int r = n) {
+  if (l == r) {
     st[k].ans = a[l];
     st[k].lazy = 0;
     st[k].n = 1;
-    for(int b = 0, x = a[l]; b < maxb; ++b){
+    for (int b = 0, x = a[l]; b < maxb; ++b) {
       st[k].bit[b] = ((x >> b) & 1);
     }
     return st[k];
   }
-  return st[k] = merge(build(L, l, M), build(R, M+1, r));
+  return st[k] = merge(build(L, l, M), build(R, M + 1, r));
 }
 
-no upd(int i, int j, int x, int k = 1, int l = 1, int r = n){
+no upd(int i, int j, int x, int k = 1, int l = 1, int r = n) {
   prop(k);
-  if(j < l || r < i) return st[k];
-  if(i <= l && r <= j){
+  if (j < l || r < i) { return st[k]; }
+  if (i <= l && r <= j) {
     st[k].lazy = x;
     prop(k);
     return st[k];
   }
-  return st[k] = merge(upd(i, j, x, L, l, M), upd(i, j, x, R, M+1, r));
+  return st[k] = merge(upd(i, j, x, L, l, M), upd(i, j, x, R, M + 1, r));
 }
 
-ll qry(int i, int j, int k = 1, int l = 1, int r = n){
-  if(j < l || r < i) return 0;
+ll qry(int i, int j, int k = 1, int l = 1, int r = n) {
+  if (j < l || r < i) { return 0; }
   prop(k);
-  if(i <= l && r <= j) return st[k].ans;
-  return qry(i, j, L, l, M) + qry(i, j, R, M+1, r);
+  if (i <= l && r <= j) { return st[k].ans; }
+  return qry(i, j, L, l, M) + qry(i, j, R, M + 1, r);
 }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
   cin >> n;
-  for(int i = 1; i <= n; ++i){
+  for (int i = 1; i <= n; ++i) {
     cin >> a[i];
   }
   build();
 
   int m;
   cin >> m;
-  while(m--){
+  while (m--) {
     int t, l, r;
     cin >> t >> l >> r;
-    if(t == 1){
+    if (t == 1) {
       cout << qry(l, r) << endl;
-    }
-    else{
+    } else {
       int x;
       cin >> x;
       upd(l, r, x);

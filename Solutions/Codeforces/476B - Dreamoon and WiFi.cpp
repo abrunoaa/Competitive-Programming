@@ -6,38 +6,37 @@ using namespace std;
 int nplus, nminus, unknown, memo[maxn][maxn][maxn];
 string s1, s2;
 
-int f(int i, int plus, int minus){
+int f(int i, int plus, int minus) {
   int &pd = memo[i][plus][minus];
-  if(pd != -1){
+  if (pd != -1) {
     return pd;
   }
 
-  if(i == (int)s2.size()){
+  if (i == (int)s2.size()) {
     return pd = plus == nplus && minus == nminus;
   }
-  if(s2[i] == '?'){
+  if (s2[i] == '?') {
     return pd = f(i + 1, plus + 1, minus) + f(i + 1, plus, minus + 1);
   }
-  if(s2[i] == '+'){
+  if (s2[i] == '+') {
     return pd = f(i + 1, plus + 1, minus);
   }
   return pd = f(i + 1, plus, minus + 1);
 }
 
-int main(){
+int main() {
   memset(memo, -1, sizeof memo);
 
   cin >> s1 >> s2;
-  for(char c : s1){
-    if(c == '+'){
+  for (char c : s1) {
+    if (c == '+') {
       ++nplus;
-    }
-    else{
+    } else {
       ++nminus;
     }
   }
-  for(char c : s2){
-    if(c == '?'){
+  for (char c : s2) {
+    if (c == '?') {
       ++unknown;
     }
   }

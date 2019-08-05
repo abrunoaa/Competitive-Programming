@@ -23,9 +23,9 @@ using namespace std;
 
 typedef long long ll;
 typedef long double lf;
-typedef pair<int,int> ii;
-typedef pair<ii,int> tri;
-typedef pair<ii,ii> qua;
+typedef pair<int, int> ii;
+typedef pair<ii, int> tri;
+typedef pair<ii, ii> qua;
 typedef vector<int> vi;
 typedef vector<ii> vii;
 
@@ -33,9 +33,9 @@ typedef vector<ii> vii;
 using namespace __gnu_pbds;
 
 template<class t>
-using Set = tree<t,null_type,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
-template<class t,class u>
-using Map = tree<t,u,less<t>,rb_tree_tag,tree_order_statistics_node_update>;
+using Set = tree<t, null_type, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
+template<class t, class u>
+using Map = tree<t, u, less<t>, rb_tree_tag, tree_order_statistics_node_update>;
 
 void db() { cerr << endl; }
 
@@ -55,7 +55,7 @@ __attribute__((destructor)) static void destroy()
 
 template<class t> t sq(t x) { return x * x; }
 
-int main(){
+int main() {
   // freopen("in","r",stdin);
   cin.sync_with_stdio(0), cin.tie(0);
 
@@ -66,33 +66,33 @@ int main(){
   priority_queue<ii> q[m];
 
   int ans = 0;
-  for(int l = 0, r = 0; r < n; ++r){
-    for(int i = 0, a; i < m; ++i){
+  for (int l = 0, r = 0; r < n; ++r) {
+    for (int i = 0, a; i < m; ++i) {
       cin >> a;
       q[i].push(ii(a, r));
     }
 
-    while(l <= r){
+    while (l <= r) {
       int shots = 0;
-      for(int i = 0; i < m; ++i){
-        while(q[i].top().nd < l){
+      for (int i = 0; i < m; ++i) {
+        while (q[i].top().nd < l) {
           q[i].pop();
         }
         shots += q[i].top().st;
       }
-      if(shots <= k){
+      if (shots <= k) {
         break;
       }
       ++l;
     }
-    if(r - l + 1 > ans){
+    if (r - l + 1 > ans) {
       ans = r - l + 1;
-      for(int i = 0; i < m; ++i){
+      for (int i = 0; i < m; ++i) {
         weapon[i] = q[i].top().st;
       }
     }
   }
-  for(int i = 0; i < m; ++i){
+  for (int i = 0; i < m; ++i) {
     cout << weapon[i] << ' ';
   }
   cout << endl;

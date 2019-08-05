@@ -23,52 +23,52 @@
 using namespace std;
 
 
-inline bool isPalindromo(string s)
-{
-    if (s.empty()) return false;
+inline bool isPalindromo(string s) {
+  if (s.empty()) { return false; }
 
-    int size = s.size();
-    for (int i = 0; i < size / 2; ++i)
-        if (s[i] != s[size - i - 1])
-            return false;
+  int size = s.size();
+  for (int i = 0; i < size / 2; ++i)
+    if (s[i] != s[size - i - 1]) {
+      return false;
+    }
 
-    return true;
+  return true;
 }
 
 int main() {
 
-    freopen("../input.txt", "r", stdin);
-    freopen("../out.txt", "w", stdout);
+  freopen("../input.txt", "r", stdin);
+  freopen("../out.txt", "w", stdout);
 
-    int v1, v2, i , n ;
-    string s;
-    stringstream ss;
-    long long soma, qtde;
+  int v1, v2, i, n ;
+  string s;
+  stringstream ss;
+  long long soma, qtde;
 
-    cin >> n;
-    while (n--) {
-        cin >> v1 >> v2;
+  cin >> n;
+  while (n--) {
+    cin >> v1 >> v2;
 
-        soma = qtde = 0;
-        for (i = v1; i <= v2; ++i) {
-            ss << i;
+    soma = qtde = 0;
+    for (i = v1; i <= v2; ++i) {
+      ss << i;
 
-            if (isPalindromo( ss.str() )) {
+      if (isPalindromo( ss.str() )) {
 
-                bitset<20> b(i);
-                s = b.to_string();
-                int idx = s.find_first_of('1');
+        bitset<20> b(i);
+        s = b.to_string();
+        int idx = s.find_first_of('1');
 
-                if (idx != int(string::npos) && isPalindromo(s.substr(idx, s.size() - idx))) {
-                    soma += i;
-                    qtde++;
-                }
-            }
-            ss.str("");
+        if (idx != int(string::npos) && isPalindromo(s.substr(idx, s.size() - idx))) {
+          soma += i;
+          qtde++;
         }
-
-        cout << soma << " " << qtde << endl;
+      }
+      ss.str("");
     }
 
-    return 0;
+    cout << soma << " " << qtde << endl;
+  }
+
+  return 0;
 }
