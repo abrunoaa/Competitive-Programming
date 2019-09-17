@@ -1,5 +1,5 @@
-int n, m;// itens, tamanho da mochila
-int v[maxn], w[maxn];// valor, peso
+int n, m;                     // itens, tamanho da mochila
+int v[maxn], w[maxn];         // valor, peso
 int dp[maxm];
 
 void knapsack() {
@@ -17,7 +17,7 @@ void knapsack() {
 
 void weigthOnly_and_remove() {
   memset(dp, 0, sizeof dp);
-  dp[0] = 1;// dp[j] ≠ 0 -> o peso é possível
+  dp[0] = 1;                              // dp[j] != 0 -> o peso é possível
   for (int i = 0; i < n; ++i) {
     int w = ::w[i];
     for (int j = m; j >= w; --j) {

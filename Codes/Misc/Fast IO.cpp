@@ -2,7 +2,7 @@
 
 struct IO {
   char cur, buf[100];
-  IO() : cur(' ') {}
+  IO() : cur(' '), buf{} {}
 
   inline operator bool() { return cur; }
 
@@ -33,9 +33,9 @@ struct IO {
   template<class intType> inline IO &operator >> (intType &n) {
     skipBlanks();
     int sign = +1;
-    if (cur == '-') { sign = -1, readc(); }
+    if (cur == '-') sign = -1, readc();
     n = cur - '0';
-    while (isdigit(readc())) { n = (n << 1) + (n << 3) + cur - '0'; }
+    while (isdigit(readc())) n = (n << 1) + (n << 3) + cur - '0';
     n *= sign;
     return *this;
   }
@@ -51,21 +51,18 @@ struct IO {
 
   template<class intType> inline char* toString(intType n) {
     char* p = buf + sizeof(buf) - 1;
+    bool neg;
+    if ((neg = (n < 0))) n = -n;
     *p = 0;
-    if (!n) { *--p = '0'; }
-    else {
-      bool neg;
-      if ((neg = n < 0)) { n = -n; }
-      while (n) { *--p = (char)(n % 10 + '0'), n /= 10; }
-      if (neg) { *--p = '-'; }
-    }
+    while (*--p = (char)(n % 10 + '0'), n /= 10);
+    if (neg) *--p = '-';
     return p;
   }
 
   template<class T> inline IO &operator << (T x) { return *this << toString(x); }
 
-  inline void sync_with_stdio(bool) {}
-  inline void tie(void*) {}
+  void sync_with_stdio(bool) {}
+  void tie(void*) {}
 };
 
 static IO __io__;

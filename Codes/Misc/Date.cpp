@@ -32,8 +32,8 @@ struct date {
     d = m = 1;
     y = n / 366 + 1;
     n -= count();
-    while (n >= ydays()) { n -= ydays(), ++y; }
-    while (n >= mdays()) { n -= mdays(), ++m; }
+    while (n >= ydays()) n -= ydays(), ++y;
+    while (n >= mdays()) n -= mdays(), ++m;
     d += n;
   }
 };

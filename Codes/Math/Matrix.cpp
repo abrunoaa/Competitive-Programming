@@ -9,9 +9,8 @@ matrix operator * (const matrix &a, const matrix &b) {
   for (int i = 0; i < n; ++i) {
     c[i].assign(p, 0);
     for (int j = 0; j < p; ++j)
-      for (int k = 0; k < m; ++k) {
+      for (int k = 0; k < m; ++k)
         c[i][j] += a[i][k] * b[k][j];  // tirar mod aqui!
-      }
   }
   return c;
 }
@@ -24,8 +23,8 @@ matrix pow(matrix b, int e) {
     x[i][i] = 1;
   }
   while (1) {                 // fastExp normal
-    if (e % 2) { x = x * b; }
-    if (!(e /= 2)) { return x; }
+    if (e % 2) x = x * b;
+    if (!(e /= 2)) return x;
     b = b * b;
   }
 }
@@ -37,24 +36,21 @@ matrix transpose(const matrix &a) {
   matrix t(n);
   for (int i = 0; i < n; ++i) {
     t[i].resize(m);
-    for (int j = 0; j < m; ++j) {
-      t[i][j] = a[j][i];
-    }
+    for (int j = 0; j < m; ++j) t[i][j] = a[j][i];
   }
   return t;
 }
 
 // retorna fib(n) ==> fib(0) = 0 (i.e. começa a partir do zero)
 int nthFib(int n) {
-  if (n == 0) { return 0; }
+  if (n == 0) return 0;
   return pow(matrix{{1, 1}, {1, 0}}, n - 1)[0][0];
 }
 
 void print(const matrix &a) {
   for (auto &u : a) {
-    for (auto v : u) {
+    for (auto v : u)
       cout << v << ' ';
-    }
     cout << '\n';
   }
 }

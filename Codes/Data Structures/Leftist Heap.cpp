@@ -1,4 +1,4 @@
-#define maxa 10000003  // máximo de nós alocados antes de um init
+const int maxa = 10000003;    // máximo de nós alocados antes de um init
 
 /************************ Key é sempre passado por cópia! ************************/
 template<class Key> struct Node {

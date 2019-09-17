@@ -1,3 +1,5 @@
+// Raio da Terra: Polar = 6357km, Equatorial = 6378km, Média = 6371km
+
 typedef long double lf;
 
 inline lf sq(lf x) { return x * x; }

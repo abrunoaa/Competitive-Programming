@@ -1,5 +1,5 @@
-#define maxn 100003
-#define maxr maxn   // nº de revisões
+const int maxn = 100003;
+const int maxr = maxn;        // nº de revisões
 
 template<class T> struct Array { // vetor em uma treap, modifica apenas o valor
   struct Node {
@@ -17,13 +17,13 @@ template<class T> struct Array { // vetor em uma treap, modifica apenas o valor
     vector<int> v(n, 0);
     iota(v.begin(), v.end(), 0);
     random_shuffle(v.begin(), v.end());
-    for (int i : v) { insert(root[0], i, a[i]); }
+    for (int i : v) insert(root[0], i, a[i]);
   }
 
   void insert(Node* &t, int i, const T &x) { // usa apenas na hora de criar
-    if (!t) { t = new Node(i, x, 0, 0); }
-    else if (i < t->i) { insert(t->left, i, x); }
-    else { insert(t->right, i, x); }
+    if (!t) t = new Node(i, x, 0, 0);
+    else if (i < t->i) insert(t->left, i, x);
+    else insert(t->right, i, x);
   }
 
   Node* copy(Node* &t) {
@@ -35,12 +35,12 @@ template<class T> struct Array { // vetor em uma treap, modifica apenas o valor
   void upd(int v, int i, const T &x) {
     Node* &t = root[++nv] = root[v];
     copy(t);
-    while (i != t->i) { t = i < t->i ? copy(t->left) : copy(t->right); }
+    while (i != t->i) t = i < t->i ? copy(t->left) : copy(t->right);
     t->x = x;
   }
 
   const T &get(Node* t, int i) {
-    while (i != t->i) { t = i < t->i ? t->left : t->right; }
+    while (i != t->i) t = i < t->i ? t->left : t->right;
     return t->x;
   }
 };

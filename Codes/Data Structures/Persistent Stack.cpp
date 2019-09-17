@@ -1,5 +1,5 @@
-#define maxn 100003
-#define maxr maxn   // nº de versões
+const int maxn = 100003;
+const int maxr = 100003;      // nº de versões
 
 template<class T> struct Stack {
   struct Node {
@@ -9,8 +9,8 @@ template<class T> struct Stack {
     Node(const T &x, Node* next) : x(x), next(next) {}
   };
 
-  int nv;           // nº de versões (versão 0 é flag)
-  Node* root[maxr]; // raízes de cada versão
+  int nv;                     // nº de versões (versão 0 é flag)
+  Node* root[maxr];           // raíz de cada versão
 
   Stack() : nv(0) { root[0] = 0; }
 

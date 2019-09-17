@@ -4,11 +4,9 @@ using namespace std;
 int n, n2, n4, ans, bml[10], bmc[10], bmb[10][10], mat[10][10];
 
 bool solve(int pos) {
-  if (pos == n4) { return 1; }
-
+  if (pos == n4) return 1;
   int l = pos / n2, c = pos % n2;
-  if (mat[l][c] != 0) { return solve(pos + 1); }      // já tá preenchido
-
+  if (mat[l][c] != 0) return solve(pos + 1);      // já tá preenchido
   int bm = bml[l] | bmc[c] | bmb[l / n][c / n];   // quem pode colocar?
   for (int k = 0; k < n2; ++k)
     if (!(bm & (1 << k))) {             // pode usar o nº k
@@ -23,7 +21,6 @@ bool solve(int pos) {
       bmc[c] ^= 1 << k;
       bmb[l / n][c / n] ^= 1 << k;
     }
-
   return 0;
 }
 
@@ -32,7 +29,6 @@ int main() {
     n2 = n * n;
     n4 = n2 * n2;
     ans = (1 << n2) - 1;
-
     memset(bml, 0, sizeof bml);
     memset(bmc, 0, sizeof bmc);
     memset(bmb, 0, sizeof bmb);
@@ -47,18 +43,16 @@ int main() {
           bmb[i / n][j / n] |= k;       // bloqueia no bloco
         }
       }
-
-    if (!solve(0)) {
+    if (!solve(0))
       cout << "NO SOLUTION\n";
-    } else
+    else
       for (int i = 0; i < n2; ++i) {
         for (int j = 0; j < n2; ++j) {
-          if (j) { cout << ' '; }
+          if (j) cout << ' ';
           cout << mat[i][j];
         }
         cout << '\n';
       }
   }
-
   return 0;
 }

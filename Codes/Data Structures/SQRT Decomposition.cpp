@@ -1,37 +1,37 @@
-#define maxn 100010
+const int maxn = 100003;
 
 int v[maxn];
+
+int brute(int l, int r) {
+  // calcula resposta com força bruta entre l e r
+}
+
+int get(int bl, int br) {
+  // calcula apenas a resposta dos blocos de bl até br
+}
 
 int main() {
   int n, q;
   cin >> n >> q;
-
-  int bs = sqrt(n);
+  const int bs = sqrt(n);
   for (int i = 0; i * bs < n; ++i) {
     int m = min(n, (i + 1) * bs);
-    for (int j = i * bs; j < m; ++j) {
-      cin >> v[j];
-    }
+    for (int j = i * bs; j < m; ++j) cin >> v[j];
     // calcula resposta do bloco i
   }
-
   while (q--) {
     int l, r;
     cin >> l >> r, --l, --r;
 
     int bl = l / bs, br = r / bs;       // bloco de l e de r
+    int ans = 0;
     if (bl == br) {
-      for (int i = l; i <= r; ++i)
-        // calcula resposta com força bruta entre l e r
-      } else {
-      for (int i = bl + 1; i < br; ++i)
-        // pega resposta dos blocos entre (exclusivo) l e r
-        for (int i = l, up = (bl + 1) * bs; i < up; ++i)
-          // calcula resposta do bloco da esquerda com força bruta
-          for (int i = (br - 1) * bs; i <= r; ++i)
-            // calcula resposta do bloco da direita com força bruta
-          }
+      ans = brute(l, r);
+    } else {
+      ans = get(bl + 1, br - 1);
+      ans += brute(l, (bl + 1) * bs - 1);
+      ans += brute((br - 1) * bs, r);
+    }
   }
-
   return 0;
 }

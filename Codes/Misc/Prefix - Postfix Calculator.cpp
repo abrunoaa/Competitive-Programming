@@ -14,18 +14,18 @@ string postfix(string s) {
   string r, op;
   for (char c : s) {
     if (isop(c)) {
-      for (; !op.empty() && prec[(int)op.back()] >= prec[(int)c]; op.pop_back()) {
+      for (; !op.empty() && prec[(int)op.back()] >= prec[(int)c]; op.pop_back())
         r.push_back(op.back());
-      }
       op.push_back(c);
-    } else if (isdigit(c)) { r.push_back(c); }
-    else if (c == '(') { op.push_back('('); }
+    }
+    else if (isdigit(c)) r.push_back(c);
+    else if (c == '(') op.push_back('(');
     else if (c == ')') {
-      for (; op.back() != '('; op.pop_back()) { r.push_back(op.back()); }
+      for (; op.back() != '('; op.pop_back()) r.push_back(op.back());
       op.pop_back();
     }
   }
-  for (; !op.empty(); op.pop_back()) { r.push_back(op.back()); }
+  for (; !op.empty(); op.pop_back()) r.push_back(op.back());
   return r;
 }
 
@@ -34,18 +34,18 @@ string prefix(string s) {
   for (int i = s.size() - 1; i >= 0; --i) {
     char c = s[i];
     if (isop(c)) {
-      for (; !op.empty() && prec[(int)op.back()] >= prec[(int)c]; op.pop_back()) {
+      for (; !op.empty() && prec[(int)op.back()] >= prec[(int)c]; op.pop_back())
         r.push_back(op.back());
-      }
       op.push_back(c);
-    } else if (isdigit(c)) { r.push_back(c); }
-    else if (c == ')') { op.push_back(')'); }
+    }
+    else if (isdigit(c)) r.push_back(c);
+    else if (c == ')') op.push_back(')');
     else if (c == '(') {
-      for (; op.back() != ')'; op.pop_back()) { r.push_back(op.back()); }
+      for (; op.back() != ')'; op.pop_back()) r.push_back(op.back());
       op.pop_back();
     }
   }
-  for (; !op.empty(); op.pop_back()) { r.push_back(op.back()); }
+  for (; !op.empty(); op.pop_back()) r.push_back(op.back());
   reverse(r.begin(), r.end());
   return r;
 }
@@ -54,12 +54,10 @@ string prefix(string s) {
 int eval(string s) {
   vector<int> r;
   for (char c : s) {
-    if (isdigit(c)) { r.push_back(c - '0'); }
+    if (isdigit(c)) r.push_back(c - '0');
     else {
-      int x = r.back();
-      r.pop_back();
-      int y = r.back();
-      r.pop_back();
+      int x = r.back(); r.pop_back();
+      int y = r.back(); r.pop_back();
       int ans = c == '+' ? x + y : c == '-' ? x - y : c == '*' ? x * y : x / y;
       r.push_back(ans);
     }

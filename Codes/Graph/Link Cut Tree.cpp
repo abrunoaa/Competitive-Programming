@@ -1,26 +1,22 @@
-/// Link Cut Tree
-
-#define null nullptr
-
 struct LinkCutTree {
   struct Node {
     Node* left, *right, *parent, *pathParent;
     int size, label;
-    bool flip;  // por algum motivo fica mais rápido
+    bool flip;        // por algum motivo fica mais rápido
     Node() : left(0), right(0), parent(0), pathParent(0), size(0), label(-1), flip(0) {}
 
     void update() {
       size = 1;
-      if (left) { size += left->size; }
-      if (right) { size += right->size; }
+      if (left) size += left->size;
+      if (right) size += right->size;
     }
 
     void prop() {
       if (flip) {
         flip = 0;
         swap(left, right);
-        if (left) { left->flip ^= 1; }
-        if (right) { right->flip ^= 1; }
+        if (left) left->flip ^= 1;
+        if (right) right->flip ^= 1;
       }
     }
   };
@@ -35,7 +31,7 @@ struct LinkCutTree {
   x->parent = z;                                                                    \
   if(z) y == z->left ? z->left = x : z->right = x;                                  \
   x->pathParent = y->pathParent;                                                    \
-  y->pathParent = null;                                                             \
+  y->pathParent = nullptr;                                                          \
   y->update();                                                                      \
   x->update();
 
@@ -49,7 +45,7 @@ struct LinkCutTree {
     while (x->parent) {
       Node* y = x->parent;
       Node* z = y->parent;
-      if (z) { z->prop(); }
+      if (z) z->prop();
       y->prop();
       x->prop();
       if (!z) { x == y->left ? rotr(x) : rotl(x); }
@@ -62,8 +58,8 @@ struct LinkCutTree {
     splay(x);
     if (x->right) {
       x->right->pathParent = x;
-      x->right->parent = null;
-      x->right = null;
+      x->right->parent = nullptr;
+      x->right = nullptr;
       x->update();
     }
     Node* y = x;
@@ -72,11 +68,11 @@ struct LinkCutTree {
       splay(y);
       if (y->right) {
         y->right->pathParent = y;
-        y->right->parent = null;
+        y->right->parent = nullptr;
       }
       y->right = x;
       x->parent = y;
-      x->pathParent = null;
+      x->pathParent = nullptr;
       y->update();
       rotl(x);
     }
@@ -88,9 +84,9 @@ struct LinkCutTree {
     splay(x);
     if (x->left) {
       x->left->flip ^= 1;
-      x->left->parent = null;
+      x->left->parent = nullptr;
       x->left->pathParent = x;
-      x->left = null;
+      x->left = nullptr;
       x->size = 1;
     }
   }
@@ -106,7 +102,7 @@ struct LinkCutTree {
   ~LinkCutTree() { delete[] root; }
 
   inline void link(int u, int v) {
-    Node* x = root + u; // root + u == &root[u]
+    Node* x = root + u;                 // root + u == &root[u]
     Node* y = root + v;
     makeRoot(y);
     y->pathParent = x;
@@ -115,8 +111,8 @@ struct LinkCutTree {
   inline void cut(int u) {
     Node* x = root + u;
     access(x);
-    x->left->parent = null;
-    x->left = null;
+    x->left->parent = nullptr;
+    x->left = nullptr;
     x->size = 1;
   }
 
@@ -126,10 +122,10 @@ struct LinkCutTree {
     makeRoot(x);
     splay(y);
     if (y->pathParent) {
-      y->pathParent = null;
+      y->pathParent = nullptr;
     } else {
-      y->left->parent = null;
-      y->left = null;
+      y->left->parent = nullptr;
+      y->left = nullptr;
       y->update();
     }
   }
@@ -137,7 +133,7 @@ struct LinkCutTree {
   inline int findRoot(int u) {
     Node* x = root + u;
     access(x);
-    while (x->left) { x = x->left; }
+    while (x->left) x = x->left;
     splay(x);
     return x->label;
   }

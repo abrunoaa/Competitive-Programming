@@ -5,9 +5,8 @@ void dfs(int u = 1, int p = 0) {        // vetoriza a árvore (na entrada e na s
   order[cnt] = u;                       /// lembrar de declarar com 2*n posições!
   ++cnt;
   for (int v : g[u])
-    if (v != p) {
+    if (v != p)
       dfs(v, u);
-    }
   out[u] = cnt;
   order[cnt] = u;
   ++cnt;
@@ -18,9 +17,9 @@ void update(int u) {
   used[u] ^= 1;     // insere/remove
   if (used[u])
     // insere u na resposta
-    else
-      // remove u da resposta
-    }
+  else
+    // remove u da resposta
+}
 
 void mo() {
   int bs = (int)sqrt(2 * n);
@@ -36,14 +35,14 @@ void mo() {
     int w = q[k].w;
     int id = q[k].id;
 
-    while (r < j) { update(++r); }
-    while (r > j) { update(r--); }
-    while (l < i) { update(l++); }
-    while (l > i) { update(--l); }
+    while (r < j) update(++r);
+    while (r > j) update(r--);
+    while (l < i) update(l++);
+    while (l > i) update(--l);
 
-    if (w != -1) { update(w); }
+    if (w != -1) update(w);
     ans[id] = cur;
-    if (w != -1) { update(w); }
+    if (w != -1) update(w);
   }
 }
 
@@ -53,12 +52,11 @@ int main() {
     int u, v;
     cin >> u >> v;
     int w = lca(u, v);
-    if (in[u] > in[v]) { swap(u, v); }
+    if (in[u] > in[v]) swap(u, v);
     if (w == u) q[i] = { in[u], in[v], -1, i };   // caso especial
     else q[i] = { out[u], in[v], in[w], i };
   }
-
   mo();
-  for (int i = 0; i < m; ++i) { cout << ans[i] << '\n'; }
+  for (int i = 0; i < m; ++i) cout << ans[i] << '\n';
   return 0;
 }

@@ -1,23 +1,18 @@
-/// Centroid decomposition
-
-#define maxn 100003
-
 int centroid[maxn], size[maxn];
 set<int> g[maxn];
 
 void dfs(int u, int par = 0) {
   size[u] = 1;
   for (int v : g[u]) if (v != par) {
-      dfs(v, u);
-      size[u] += size[v];
-    }
+    dfs(v, u);
+    size[u] += size[v];
+  }
 }
 
 int findCentroid(int u, int p, int n) {
   for (int v : g[u])
-    if (v != p && size[v] > n / 2) {
+    if (v != p && size[v] > n / 2)
       return findCentroid(v, u, n);
-    }
   return u;
 }
 
@@ -37,4 +32,4 @@ void update(int v) {
   }
 }
 
-/// query faz a mesma coisa que o update (ou não ;)
+/// query faz a mesma coisa que o update (ou não ;))

@@ -1,6 +1,7 @@
 #define clz __builtin_clzll
 #define lg(x) (63 - clz(x))
-#define maxn (2 << lg(1000000)) // 2 * (menor potência de dois >= n)
+
+const int maxn = 2 << lg(1000000);      // 2 * (menor potência de dois >= n)
 
 typedef long long ll;
 
@@ -23,7 +24,7 @@ void build() {
 }
 
 int qry(int i, int j) {
-  if (i == j) { return a[i] % mod; }
+  if (i == j) return a[i] % mod;
   int k = 63 - clz(i ^ j);
   return (int)((ll)st[k][i] * st[k][j] % mod);
 }

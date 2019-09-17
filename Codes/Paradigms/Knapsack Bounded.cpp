@@ -10,7 +10,7 @@ template<class T> struct MaxQueue {
     ++n;
     x -= lazy;
     int k = 1;
-    for (; !q.empty() && q.back().st <= x; q.pop_back()) { k += q.back().nd; }
+    for (; !q.empty() && q.back().st <= x; q.pop_back()) k += q.back().nd;
     q.push_back({x, k});
   }
   void pop() { --n; if (!--q.front().nd) q.pop_front(); }
@@ -31,7 +31,7 @@ void boundedKnapsack() {
     for (int j = 0; j < w; ++j) { q[j].clear(), q[j].push(dp[j]); }
     for (int j = w; j <= m; ++j) {
       auto &p = q[j % w];
-      if (p.size() > b) { p.pop(); }
+      if (p.size() > b) p.pop();
       p.add(v);
       p.push(dp[j]);
       dp[j] = p.front();
@@ -44,11 +44,10 @@ void boundedKnapsack_weigthOnly() {
   memset(dp, 0, sizeof dp);
   dp[0] = 1;
   for (int i = 0; i < n; ++i) {
-    int w = ::w[i], b = ::b[i];// se w repetir, soma os b's
+    int w = ::w[i], b = ::b[i];         // se w repetir, soma os b's
     for (int j = m - w; j >= 0; --j)
       if (dp[j])
-        for (int k = 1; k <= b && j + k * w <= m && !dp[j + k * w]; ++k) {
+        for (int k = 1; k <= b && j + k * w <= m && !dp[j + k * w]; ++k)
           dp[j + k * w] = 1;
-        }
   }
 }

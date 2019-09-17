@@ -1,4 +1,4 @@
-#define maxn 100010
+const int maxn = 100003;
 
 int n;        // nº de elementos
 int p[maxn];  // vetor de pais
@@ -13,11 +13,9 @@ void build() {
 }
 
 // retorna o pai de u (mais representativo)
-int find(int u) {
-  return (u == p[u] ? u : p[u] = find(p[u]));
-}
+int find(int u) { return (u == p[u] ? u : p[u] = find(p[u])); }
 
-// une os conjuntos que contem u e v
+// une os conjuntos que contém u e v
 void unite(int u, int v) {
   u = find(u);
   v = find(v);
