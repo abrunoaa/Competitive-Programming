@@ -8,7 +8,7 @@ ii center() {
   if (n <= 2) return {1, (n == 1 ? -1 : 2)};
   queue<int> q;
   for (int u = 1; u <= n; ++u) {
-    deg[u] = g[u].size();               // não vale a pena calcular antes!
+    deg[u] = (int)g[u].size();          // não vale a pena calcular antes!
     if (deg[u] == 1) {
       q.push(u);
       lv[u] = 1;

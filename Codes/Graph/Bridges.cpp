@@ -1,20 +1,21 @@
-int cnt, low[maxn], num[maxn];
+int timer, low[maxn], tin[maxn];
 vector<int> g[maxn];            // grafo não direcionado
 
-void bridges(int u, int p) {
-  low[u] = num[u] = ++cnt;
+void dfs(int u, int p) {
+  low[u] = tin[u] = ++timer;
   for (int v : g[u]) if (v != p) {
-    if (num[v] == -1) {
-      bridges(v, u);
-      if (low[v] > num[u]) cout << " >> bridge " << u << " -> " << v << '\n';
+    if (!tin[v]) {
+      dfs(v, u);
+      if (low[v] > tin[u]) cout << " >> bridge " << u << " -> " << v << '\n';
     }
     low[u] = min(low[u], low[v]);
   }
 }
 
 void findBridges() {
-  memset(num, -1, sizeof num);
+  timer = 0;
+  memset(tin, 0, sizeof tin);
   for (int u = 1; u <= n; ++u)
-    if (num[u] == -1)
-      bridges(u, -1);
+    if (!tin[u])
+      dfs(u, -1);
 }
