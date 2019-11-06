@@ -18,6 +18,13 @@ struct u256 {
   }
 };
 
+template<class tipo> class Dobra {
+};
+
+typedef Dobra<long long> Grande;
+typedef Dobra<Grande> MaisGrande;
+typedef Dobra<MaisGrande> Grandao;
+
 struct Montgomery {
   u128 n, inv, r2;
   explicit Montgomery(u128 _n) : n(_n), inv(1), r2(-n % n) {
