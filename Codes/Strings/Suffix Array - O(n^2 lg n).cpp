@@ -13,11 +13,8 @@ vector<int> build(const string& s) {
 }
 
 int main() {
-  srand(0);
   string s(50000, 'a');
-  for (char &c : s) {
-    c = (char)(rand() % 26 + 'a');
-  }
+  for (char &c : s) c = (char)(rand() % 26 + 'a');
   s += s;
   s.push_back('$');
   // cerr << " ## " << s << endl;

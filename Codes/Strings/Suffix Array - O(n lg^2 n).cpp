@@ -1,13 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-inline int fix(int x, int mod) {
-  if (x >= mod) x -= mod;
-  return x;
-}
-
 vector<int> build(const string& s) {
   const int n = (int)s.size();
+  auto fix = [n](int x) { return (x < n ? x : x - n); };
 
   vector<int> p(n);
   for (int i = 0; i < n; ++i) {
@@ -19,41 +15,38 @@ vector<int> build(const string& s) {
 
   vector<int> c(n);
   c[p[0]] = 0;
-  for (int i = 1, classes = 0; i < n; ++i) {
+  for (int i = 1, diff = 0; i < n; ++i) {
     if (s[p[i]] != s[p[i - 1]]) {
-      ++classes;
+      ++diff;
     }
-    c[p[i]] = classes;
+    c[p[i]] = diff;
   }
 
   vector<int> tmp(n);
-  for (int k = 1; (1 << k) <= n; ++k) {
+  for (int k = 1; k < n; k *= 2) {
     sort(p.begin(), p.end(), [&](int i, int j) {
       if (c[i] != c[j]) {
         return c[i] < c[j];
       }
-      return c[fix(i + (1 << (k - 1)), n)] < c[fix(j + (1 << (k - 1)), n)];
+      return c[fix(i + k)] < c[fix(j + k)];
     });
 
     tmp[p[0]] = 0;
-    for (int i = 1, classes = 0; i < n; ++i) {
-      if (c[p[i]] != c[p[i - 1]] || c[fix(p[i] + (1 << (k - 1)), n)] != c[fix(p[i - 1] + (1 << (k - 1)), n)]) {
-        ++classes;
+    for (int i = 1, diff = 0; i < n; ++i) {
+      if (c[p[i]] != c[p[i - 1]] || c[fix(p[i] + k)] != c[fix(p[i - 1] + k)]) {
+        ++diff;
       }
-      tmp[p[i]] = classes;
+      tmp[p[i]] = diff;
     }
-    c = tmp;
+    c.swap(tmp);
   }
 
   return p;
 }
 
 int main() {
-  srand(0);
   string s(50000, 'a');
-  for (char &c : s) {
-    c = (char)(rand() % 26 + 'a');
-  }
+  for (char &c : s) c = (char)(rand() % 26 + 'a');
   s += s;
   s.push_back('$');
   // cerr << " ## " << s << endl;
