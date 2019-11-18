@@ -1,46 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> build(const string& s) {
+typedef vector<int> vi;
+
+vi build(const string& s) {
   const int n = (int)s.size();
+  vi p(n), c(n), tmp(n);
+  for (int i = 0; i < n; ++i) { p[i] = i; c[i] = s[i]; }
   auto fix = [n](int x) { return (x < n ? x : x - n); };
-
-  vector<int> p(n);
-  for (int i = 0; i < n; ++i) {
-    p[i] = i;
-  }
-  sort(p.begin(), p.end(), [&s](int i, int j) {
-    return s[i] < s[j];
-  });
-
-  vector<int> c(n);
-  c[p[0]] = 0;
-  for (int i = 1, diff = 0; i < n; ++i) {
-    if (s[p[i]] != s[p[i - 1]]) {
-      ++diff;
-    }
-    c[p[i]] = diff;
-  }
-
-  vector<int> tmp(n);
-  for (int k = 1; k < n; k *= 2) {
+  for (int k = 0; k < n; k ? k *= 2 : ++k) {
     sort(p.begin(), p.end(), [&](int i, int j) {
-      if (c[i] != c[j]) {
-        return c[i] < c[j];
-      }
+      if (c[i] != c[j]) return c[i] < c[j];
       return c[fix(i + k)] < c[fix(j + k)];
     });
-
     tmp[p[0]] = 0;
-    for (int i = 1, diff = 0; i < n; ++i) {
-      if (c[p[i]] != c[p[i - 1]] || c[fix(p[i] + k)] != c[fix(p[i - 1] + k)]) {
-        ++diff;
-      }
-      tmp[p[i]] = diff;
+    for (int i = 1, d = 0; i < n; ++i) {
+      if (c[p[i]] != c[p[i - 1]] || c[fix(p[i] + k)] != c[fix(p[i - 1] + k)]) ++d;
+      tmp[p[i]] = d;
     }
     c.swap(tmp);
   }
-
   return p;
 }
 
