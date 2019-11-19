@@ -45,14 +45,22 @@ vi buildLcp(const string& s, const vi& p) {
 }
 
 int main() {
-  string s(500000, 'a');
-  for (char &c : s) c = (char)(rand() % 26 + 'a');
-  s += s;
-  s.push_back('$');
-  // cerr << " ## " << s << endl;
-  auto p = build(s);
-  // for (int i = 1; i < (int)s.size(); ++i) {
-    // assert(s.substr(p[i - 1]) < s.substr(p[i]));
+  // for (int t = 0; t < 1000; ++t) {
+    string s(1000000, 'a');
+    for (char &c : s) c = (char)(rand() % 26 + 'a');
+    s += s;
+    s.push_back('$');
+    // cerr << " ## " << s << endl;
+    vi p = build(s);
+    // for (int i = 1; i < (int)s.size(); ++i) {
+      // assert(s.substr(p[i - 1]) < s.substr(p[i]));
+    // }
+    // vi lcp = buildLcp(s, p);
+    // for (int i = 0; i < (int)s.size() - 1; ++i) {
+      // int k = 0;
+      // while (s[p[i] + k] == s[p[i + 1] + k]) ++k;
+      // assert(lcp[i] == k);
+    // }
   // }
   return 0;
 }
