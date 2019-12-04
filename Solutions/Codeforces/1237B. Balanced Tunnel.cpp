@@ -41,10 +41,35 @@ typedef pair<int, int> ii;
 const int inf = 0x3f3f3f3f;
 const ll infl = 0x3f3f3f3f3f3f3f3f;
 const int mod = 1000000007;
-const int maxn = ;
+const int maxn = (int)1e5 + 3;
+
+int a[maxn];
+int b[maxn];
+int mp[maxn];
 
 int main() {
-  assert(freopen("in", "r", stdin));
+  // assert(freopen("in", "r", stdin));
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; ++i) {
+    cin >> a[i];
+    mp[a[i]] = i + 1;
+  }
+  for (int i = 0; i < n; ++i) {
+    cin >> b[i];
+    b[i] = mp[b[i]];
+  }
+  int m = n + 1;
+  int ans = 0;
+  for (int i = n - 1; i >= 0; --i) {
+    if (b[i] > m) {
+      ++ans;
+    } else {
+      m = b[i];
+    }
+  }
+  cout << ans << '\n';
   return 0;
 }
+

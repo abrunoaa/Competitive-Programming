@@ -41,10 +41,77 @@ typedef pair<int, int> ii;
 const int inf = 0x3f3f3f3f;
 const ll infl = 0x3f3f3f3f3f3f3f3f;
 const int mod = 1000000007;
-const int maxn = ;
+const int maxn = (int)5e4 + 3;
+
+struct pt {
+  int x, y, z, id;
+  bool operator<(const pt& p) const {
+    if (x != p.x) return x < p.x;
+    if (y != p.y) return y < p.y;
+    return z < p.z;
+  }
+};
+
+bool used[maxn];
+pt p[maxn];
+vector<int> blk[maxn];
+
+void process(vector<int> &b) {
+  for (int i = 1; i < (int)b.size(); ++i) {
+    int u = b[i - 1];
+    int v = b[i];
+    if (!used[u] && p[u].y == p[v].y) {
+      cout << p[u].id << ' ' << p[v].id << '\n';
+      used[u] = used[v] = 1;
+    }
+  }
+  int v = -1;
+  for (int i = 0; i < (int)b.size(); ++i) {
+    int u = b[i];
+    if (!used[u]) {
+      if (v == -1) {
+        v = u;
+      } else {
+        cout << p[u].id << ' ' << p[v].id << '\n';
+        used[u] = used[v] = 1;
+        v = -1;
+      }
+    }
+  }
+}
 
 int main() {
-  assert(freopen("in", "r", stdin));
+  // assert(freopen("in", "r", stdin));
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; ++i) {
+    cin >> p[i].x >> p[i].y >> p[i].z;
+    p[i].id = i + 1;
+  }
+  sort(p, p + n);
+  int cnt = 1;
+  blk[cnt - 1].push_back(0);
+  for (int i = 1; i < n; ++i) {
+    if (p[i].x != p[i - 1].x) {
+      ++cnt;
+    }
+    blk[cnt - 1].push_back(i);
+  }
+  for (int i = 0; i < cnt; ++i) {
+    process(blk[i]);
+  }
+  int k = -1;
+  for (int i = 0; i < n; ++i) {
+    if (!used[i]) {
+      if (k == -1) {
+        k = i;
+      } else {
+        cout << p[k].id << ' ' << p[i].id << '\n';
+        used[k] = used[i] = 1;
+        k = -1;
+      }
+    }
+  }
   return 0;
 }

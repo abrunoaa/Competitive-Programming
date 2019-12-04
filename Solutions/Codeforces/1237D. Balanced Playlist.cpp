@@ -41,10 +41,56 @@ typedef pair<int, int> ii;
 const int inf = 0x3f3f3f3f;
 const ll infl = 0x3f3f3f3f3f3f3f3f;
 const int mod = 1000000007;
-const int maxn = ;
+const int maxn = (int)3e5 + 10;
+
+int a[maxn];
+
+struct MaxQueue {
+  deque<pair<int, int>> q;
+
+  void push(int x) {
+    int k = 1;
+    for (; !q.empty() && x >= q.back().st; q.pop_back()) {
+      k += q.back().nd;
+    }
+    q.emplace_back(x, k);
+  }
+
+  int get() const {
+    assert(!q.empty());
+    return q.front().first;
+  }
+
+  void pop() {
+    assert(!q.empty());
+    if (!--q.front().second) {
+      q.pop_front();
+    }
+  }
+};
 
 int main() {
-  assert(freopen("in", "r", stdin));
+  // assert(freopen("in", "r", stdin));
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; ++i) {
+    cin >> a[i];
+    a[i + n] = a[i];
+    a[i + 2 * n] = a[i];
+  }
+  MaxQueue q;
+  for (int i = 0, j = 0; i < n; ++i) {
+    for (; j < 3 * n && (i == j || a[j] >= (q.get() + 1) / 2); ++j) {
+      q.push(a[j]);
+    }
+    q.pop();
+    if (j == 3 * n) {
+      cout << "-1 ";
+    } else {
+      cout << j - i << ' ';
+    }
+  }
+  cout << '\n';
   return 0;
 }
