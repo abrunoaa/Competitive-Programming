@@ -1,4 +1,9 @@
-# códigos para ver depois
+# ignore binaries
+*       # all
+!*.*    # except with extension
+!*/     # or folder
+
+# see later
 Analisar/
 
 Books/
