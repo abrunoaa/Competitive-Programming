@@ -20,7 +20,7 @@ int extGcd(int a, int b, int &x, int &y) {
 // para a n-ésima solução: xn = x0 + b / d * n, yn = y0 - a / d * n
 bool diophantine(int a, int b, int c, int &x, int &y) {
   int d = extGcd(a, b, x, y);
-  if (c % d) { return 0; }        // não tem solução inteira
+  if (c % d) return 0;        // não tem solução inteira
   x *= c / d;
   y *= c / d;
   return 1;
@@ -29,10 +29,9 @@ bool diophantine(int a, int b, int c, int &x, int &y) {
 // x * y % m (evitando overflow)
 ll mul(ll x, ll y, ll m) {
   // return (__int128)x * y % m;        // gnu c++ em máquina 64bit
-
   ll k = 0;
   while (y) {
-    if (y % 2) { k = (k + x) % m; }
+    if (y % 2) k = (k + x) % m;
     y /= 2;
     x = 2 * x % m;
   }
@@ -40,11 +39,12 @@ ll mul(ll x, ll y, ll m) {
 }
 
 // retorna b ** e % m
-int mpow(int b, int e, int m) {
-  int x = 1;
+int mpow(ll b, int e, int m) {
+  b %= m;
+  ll x = 1;
   while (e) {
-    if (e % 2) { x = (ll)x * b % m; }       // *** se estourar usar mul! ***
-    b = (ll)b * b % m;
+    if (e % 2) x = (int)(x * b % m);    // *** se estourar usar mul! ***
+    b = b * b % m;
     e /= 2;
   }
   return x;
