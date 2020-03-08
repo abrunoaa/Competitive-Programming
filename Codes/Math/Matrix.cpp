@@ -17,6 +17,7 @@ matrix operator * (const matrix &a, const matrix &b) {
 
 // retorna b[n,n] ** e
 matrix pow(matrix b, int e) {
+  int n = (int)b.size();
   matrix x(n);
   for (int i = 0; i < n; ++i) {
     x[i].assign(n, 0);
