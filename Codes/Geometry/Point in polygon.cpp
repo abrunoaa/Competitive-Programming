@@ -12,6 +12,11 @@ inline bool onLine(const Point &a, const Point &b, const Point &p) {
          && cmp(min(a.y, b.y), p.y) <= 0 && cmp(p.y, max(a.y, b.y)) <= 0;
 }
 
+// retorna o valor de x na reta a->b para um dado y
+inline lf getx(const Point &a, const Point &b, lf y) {
+  return a.x - (a.y - y) / (a.y - b.y) * (a.x - b.x); // dy nunca é 0
+}
+
 // sentido horário ou anti-horário, convexo ou não
 bool inPolygon(Point p) {          // O(n)
   assert(poly[0] == poly[n]);
@@ -22,9 +27,7 @@ bool inPolygon(Point p) {          // O(n)
       if (onLine(poly[i], poly[i + 1], p)) { // o ponto está na borda
         return 1;
       }
-      auto dx = poly[i].x - poly[i + 1].x;
-      auto dy = poly[i].y - poly[i + 1].y;
-      inside ^= p.x < poly[i + 1].x + (p.y - poly[i + 1].y) / dy * dx;
+      inside ^= p.x < getx(poly[i], poly[i + 1], p.y);
     }
   }
   return inside;
