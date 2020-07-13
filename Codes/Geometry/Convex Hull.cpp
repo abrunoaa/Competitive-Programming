@@ -9,37 +9,6 @@ struct pt { // using integers
   bool operator<(const pt& p) const { return x != p.x ? x < p.x : y < p.y; }
 };
 
-void prune(vector<pt> &p) { // points that certainly don't belong to convex hull
-  if (p.size() <= 4) return;
-
-  int x1 = 0, x2 = 0, y1 = 0, y2 = 0;
-  pt a, b, c, d;
-  a = b = c = d = p[0];
-
-  int m = 0;
-  for (int i = 0; i < (int)p.size(); ++i) {
-    auto &q = p[i];
-    if (!(x1 < q.x && q.x < x2 && y1 < q.y && q.y < y2)) {
-      p[m++] = q;
-      if (q.x - q.y > a.x - a.y) a = q;
-      if (q.x + q.y > b.x + b.y) b = q;
-      if (q.x - q.y < c.x - c.y) c = q;
-      if (q.x + q.y < d.x + d.y) d = q;
-      x1 = max(c.x, d.x);
-      x2 = min(a.x, b.x);
-      y1 = max(a.y, d.y);
-      y2 = min(b.y, c.y);
-    }
-  }
-
-  int n = 0;
-  for (int i = 0; i < m; ++i) {
-    auto &q = p[i];
-    if (!(x1 < q.x && q.x < x2 && y1 < q.y && q.y < y2)) p[n++] = q;
-  }
-  p.resize(n);
-}
-
 // area2 > 0 => cb is ccw wrt ca; = 0 => collinear; < 0 => cw
 // 2 * triangle area = (a-c)x(b-c) = axb + bxc + cxa
 ll area2(pt &c, pt &a, pt &b) {
@@ -47,7 +16,6 @@ ll area2(pt &c, pt &a, pt &b) {
 }
 
 void monotoneChain(vector<pt> &p) {     // returns p[0] != p[n]
-  prune(p);                             // optimizes (or not!)
   sort(p.begin(), p.end());
   p.erase(unique(p.begin(), p.end()), p.end());
   if (p.size() <= 2) return;
