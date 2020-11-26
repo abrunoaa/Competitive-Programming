@@ -76,16 +76,16 @@ vi build(const string& str) {
 }
 
 int main() {
-  // for (int t = 0; t < 1000; ++t) {
-    string s(1000000, 'a');
+  for (int t = 0; t < 1000; ++t) {
+    string s(1000, 'a');
     for (char &c : s) c = (char)(rand() % 26 + 'a');
     s += s;
     s.push_back('$');
     // cerr << " ## " << s << endl;
     vi p = build(s);
-    // for (int i = 1; i < (int)s.size(); ++i) {
-      // assert(s.substr(p[i - 1]) < s.substr(p[i]));
-    // }
-  // }
+    for (int i = 1; i < (int)s.size(); ++i) {
+      assert(s.substr(p[i - 1]) < s.substr(p[i]));
+    }
+  }
   return 0;
 }

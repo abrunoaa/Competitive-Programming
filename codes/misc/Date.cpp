@@ -1,40 +1,36 @@
 struct date {
   int d, m, y;
-  static int ms[];  // soma de prefixo na qtde de dias no mês
+  static int ms[];  // prefix sum of days by month
 
-  // checa se o ano atual é bissexto
-  bool leap() { return (y % 4 == 0 && y % 100) || y % 400 == 0; }
+  inline bool leap() { return (y % 4 == 0 && y % 100) || y % 400 == 0; }
 
-  // qtde de dias no mês atual
-  int mdays() { return ms[m] - ms[m - 1] + (m == 2 && leap()); }
+  inline int count() { return ysum() + msum() + d - 1; }
 
-  // qtde de dias no ano atual
-  int ydays() { return 365 + leap(); }
+  // 0 = Sunday
+  inline int weekday() { return (count() + 1) % 7; }
 
-  // qtde de dias do início do ano até o mês anterior (ou 0, se mês = 1)
-  int msum() { return ms[m - 1] + (m > 2) * leap(); }
-
-  // qtde de dias do ano 1 até o ano anterior
-  int ysum() {
-    int k = y - 1;
-    return 365 * k + k / 4 - k / 100 + k / 400;
+  void advance(int ndays) {
+    if (ndays == 0) return;
+    ndays += count();
+    d = m = 1;
+    y = ndays / 366 + 1;
+    ndays -= count();
+    for (; ndays >= ydays(); ndays -= ydays()) ++y;
+    for (; ndays >= mdays(); ndays -= mdays()) ++m;
+    d += ndays;
   }
 
-  // diff de dias de 01/01/0001 até o dia atual
-  int count() { return ysum() + msum() + d - 1; }
+private:
 
-  // retorna 0 = dom, 1 = seg, ..., 6 = sáb
-  int weekday() { return (count() + 1) % 7; }
+  inline int mdays() { return ms[m] - ms[m - 1] + (m == 2 && leap()); }
 
-  // avança n dias a partir do atual
-  void advance(int n) {
-    n += count();
-    d = m = 1;
-    y = n / 366 + 1;
-    n -= count();
-    while (n >= ydays()) n -= ydays(), ++y;
-    while (n >= mdays()) n -= mdays(), ++m;
-    d += n;
+  inline int ydays() { return 365 + leap(); }
+
+  inline int msum() { return ms[m - 1] + (m > 2) * leap(); }
+
+  inline int ysum() {
+    int k = y - 1;
+    return 365 * k + k / 4 - k / 100 + k / 400;
   }
 };
 int date::ms[13] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365};

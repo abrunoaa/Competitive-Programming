@@ -1,8 +1,8 @@
 #define putc(c) putc((c), stdout)
 
-struct IO {
+struct __IO__ {
   char cur, buf[100];
-  IO() : cur(' '), buf{} {}
+  __IO__() : cur(' '), buf{} {}
 
   inline operator bool() { return cur; }
 
@@ -11,26 +11,26 @@ struct IO {
   inline char readc() { return cur = (char)getc(stdin); }
   inline void skipBlanks() { while (isblank(cur)) readc(); }
 
-  inline IO &operator >> (char &c) { skipBlanks(); c = cur; readc(); return *this; }
+  inline __IO__ &operator >> (char &c) { skipBlanks(); c = cur; readc(); return *this; }
 
-  inline IO &operator >> (char* s) {
+  inline __IO__ &operator >> (char* s) {
     skipBlanks();
     while (*s++ = cur, !isblank(readc()));
     *s = 0;
     return *this;
   }
 
-  inline IO &operator >> (string &s) {
+  inline __IO__ &operator >> (string &s) {
     s.clear();
     skipBlanks();
     while (s.push_back(cur), !isblank(readc()));
     return *this;
   }
 
-  inline IO &operator >> (double &d) { *this >> buf; sscanf(buf, "%lf", &d); return *this; }
-  inline IO &operator >> (long double &d) { *this >> buf; sscanf(buf, "%Lf", &d); return *this; }
+  inline __IO__ &operator >> (double &d) { *this >> buf; sscanf(buf, "%lf", &d); return *this; }
+  inline __IO__ &operator >> (long double &d) { *this >> buf; sscanf(buf, "%Lf", &d); return *this; }
 
-  template<class intType> inline IO &operator >> (intType &n) {
+  template<class intType> inline __IO__ &operator >> (intType &n) {
     skipBlanks();
     int sign = +1;
     if (cur == '-') sign = -1, readc();
@@ -40,11 +40,11 @@ struct IO {
     return *this;
   }
 
-  inline IO &operator << (bool x) { putc((x ? '1' : '0')); return *this; }
-  inline IO &operator << (char c) { putc(c); return *this; }
-  inline IO &operator << (char* s) { while (*s) putc(*s++); return *this; }
-  inline IO &operator << (const char* s) { while (*s) putc(*s++); return *this; }
-  inline IO &operator << (const string &s) { return *this << s.data(); }
+  inline __IO__ &operator << (bool x) { putc((x ? '1' : '0')); return *this; }
+  inline __IO__ &operator << (char c) { putc(c); return *this; }
+  inline __IO__ &operator << (char* s) { return *this << (const char*)s; }
+  inline __IO__ &operator << (const char* s) { while (*s) putc(*s++); return *this; }
+  inline __IO__ &operator << (const string &s) { return *this << s.data(); }
 
   inline char* toString(double d) { sprintf(buf, "%.9lf%c", d, '\0'); return buf; }
   inline char* toString(long double d) { sprintf(buf, "%.9Lf%c", d, '\0'); return buf; }
@@ -59,14 +59,14 @@ struct IO {
     return p;
   }
 
-  template<class T> inline IO &operator << (T x) { return *this << toString(x); }
+  template<class T> inline __IO__ &operator << (T x) { return *this << toString(x); }
 
-  void sync_with_stdio(bool) {}
-  void tie(void*) {}
+  inline void sync_with_stdio(bool) {}
+  inline void tie(void*) {}
 };
 
-static IO __io__;
+static __IO__ __io__;
 
 #define endl '\n'
-#define cout __io__
 #define cin __io__
+#define cout __io__

@@ -4,12 +4,12 @@ using namespace std;
 /** begin *********************************************************************/
 #define hsz (int)heap.size()
 
-template <class T> struct OrderedHeap {
+template <class T> struct IndexedHeap {
   vector<T> val; // any value is never removed
   vector<int> idx; // idx[i] = index of val[i] in heap; any value is never removed
   vector<int> heap; // val[heap[i]] has priority i (0 is the highest)
 
-  OrderedHeap(int n = 16) {
+  IndexedHeap(int n = 16) {
     val.reserve(n);
     heap.reserve(n);
     idx.reserve(n);
@@ -69,7 +69,7 @@ template <class T> struct OrderedHeap {
 #define cerr if (0) cerr
 
 template <class T>
-void validate(const OrderedHeap<T>& h) {
+void validate(const IndexedHeap<T>& h) {
   cerr << "> val:";
   if (h.empty()) cerr << " (empty)";
   for (int x : h.val) cerr << ' ' << x;
@@ -115,7 +115,7 @@ void test(int n, int up, int seed, bool callValidate = 1) {
 
   int headDel = 0;
 
-  OrderedHeap<int> h(n);
+  IndexedHeap<int> h(n);
   for (int i = 0; i < n; ++i) {
     int op = rand() % 10;
     if (op < 1 && !h.empty()) {
@@ -160,6 +160,21 @@ void test(int n, int up, int seed, bool callValidate = 1) {
 }
 
 int main() {
+  cout << "Template test.\n";
+  IndexedHeap<string> h;
+  h.push("test");
+  assert(h.top() == "test");
+  h.push("all");
+  assert(h.top() == "all");
+  h.push("zebra");
+  assert(h.top() == "all");
+  h.pop();
+  assert(h.top() == "test");
+  h.pop();
+  assert(h.top() == "zebra");
+  h.pop();
+  assert(h.empty());
+
   cout << "Small tests.\n";
   for (int n = 2; n <= 10; ++n)
     for (int s = 0; s < 10000; ++s)

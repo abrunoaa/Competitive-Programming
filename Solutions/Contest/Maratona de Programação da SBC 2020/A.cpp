@@ -57,10 +57,39 @@ const int inf = 0x3f3f3f3f;
 const ll infl = 0x3f3f3f3f3f3f3f3f;
 const lf eps = 1e-9;
 const int mod = 1000000007;
-// const int maxn = ;
+const int maxn = (int)1e6 + 3;
+
+lf dp[maxn];
+
+lf f(int n, int a, int b) {
+  dp[0] = 0;
+  lf sum = 0;
+  lf p = 1.0 / (b - a + 1);
+  lf p2 = (a == 0 ? 1 / (1 - p) : 1.0);
+  a = max(a, 1);
+  queue<lf> q;
+  q.push(dp[0]);
+  forr(i, 1, n + 1) {
+    if (i - a >= 0) {
+      sum += dp[i - a];
+    }
+    dp[i] = p2 * (1 + p * sum);
+    if ((int)q.size() == b) {
+      sum -= q.front();
+      q.pop();
+    }
+    q.push(dp[i]);
+  }
+  return dp[n];
+}
 
 int main() {
-  // assert(freopen("in", "r", stdin));
+  assert(freopen("in", "r", stdin));
   ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+  cout << setprecision(12) << fixed;
+  cerr << setprecision(12) << fixed;
+  int n, a, b;
+  cin >> n >> a >> b;
+  cout << f(n, a, b) << '\n';
   return 0;
 }
