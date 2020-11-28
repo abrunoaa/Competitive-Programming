@@ -1,60 +1,126 @@
-const int maxa = 10000003;    // máximo de nós alocados antes de um init
+#include <bits/stdc++.h>
+using namespace std;
 
-/************************ Key é sempre passado por cópia! ************************/
-template<class Key> struct Node {
-  Node* left, *right;
-  Key key;
-  int s;  // rank do nó
-  Node() {}
-  Node(Key k) : left(0), right(0), key(k), s(1) {}
+template <class T> struct Buffer {
+  vector<T*> buf;
 
-  static Node* pnew, buf[];
-  inline static void* operator new (size_t) { return pnew++; }
-  inline static void operator delete (void*) {}
-  inline static void init() { pnew = buf; }
-};
+  ~Buffer() { for (auto ptr : buf) delete ptr; }
 
-template<class Key> Node<Key>* Node<Key>::pnew;
-template<class Key> Node<Key> Node<Key>::buf[maxa];
-
-template<class Key> struct LeftistHeap {
-  typedef ::Node<Key> Node;
-
-  static Node* merge(Node* a, Node* b) {
-    if (!a) { return b; }
-    if (!b) { return a; }
-    if (a->key > b->key) { swap(a, b); }
-    a->right = merge(a->right, b);
-    if (!a->left) {                     // o rank 's' de a com certeza é 1
-      a->left = a->right;
-      a->right = 0;
-    } else {
-      if (a->left->s < a->right->s) { swap(a->left, a->right); }
-      a->s = 1 + a->right->s;           // a->right tem o menor rank
-    }
-    return a;
+  template <class... Args>
+  T* get(Args... args) {
+    if (buf.empty()) return new T(args...);
+    T* p = buf.back();
+    buf.pop_back();
+    *p = T(args...);
+    return p;
   }
 
-  Node* root;
-  LeftistHeap() : root(0) { Node::init(); } // não vale apena construir em O(n)
+  void free(T* ptr) { buf.push_back(ptr); }
+};
 
-  inline void clear() { root = 0; }
+/** begin *********************************************************************/
+template<class Key> struct LeftistHeap {
+  struct Node {
+    Node* left;
+    Node* right;
+    Key key;
+    int s;  // rank
+
+    Node() {}
+    Node(Key k) : left(0), right(0), key(k), s(1) {}
+  };
+
+  inline static Buffer<Node> buf;
+  Node* root;
+
+  LeftistHeap() : root(0) {}  // it's not worth building in O(n)
+  ~LeftistHeap() { clear(); } // slow!
+
+  inline void clear() { clear(root); root = 0; }
   inline bool empty() { return !root; }
   inline Key top() { return root->key; }
 
-  // Todas operações em O(lg n)
-  inline void push(Key key) { root = merge(root, new Node(key)); }
-  inline void pop() { root = merge(root->left, root->right); }
-  inline void merge(LeftistHeap &h) {
-    root = merge(root, h.root);
-    h.root = 0;
+  inline void push(Key key) { root = merge(root, buf.get(key)); }
+  inline void pop() { buf.free(root); root = merge(root->left, root->right); }
+  inline void merge(LeftistHeap &h) { root = merge(root, h.root); h.root = 0; }
+
+private:
+
+  static void clear(Node* t) {
+    if (t) {
+      clear(t->left);
+      buf.free(t);
+      clear(t->right);
+    }
   }
 
-  static void print(Node* r) {
-    if (!r) { return; }
-    print(r->left);
-    cerr << ' ' << r->key;
-    print(r->right);
+  static Node* merge(Node* a, Node* b) {  // O(lg n)
+    if (!a) return b;
+    if (!b) return a;
+    if (a->key > b->key) swap(a, b);
+    a->right = merge(a->right, b);
+    if (!a->left) {                     // the rank of a is 1
+      a->left = a->right;
+      a->right = 0;
+    } else {
+      if (a->left->s < a->right->s) swap(a->left, a->right);
+      a->s = 1 + a->right->s;           // a->right has the lowest rank
+    }
+    return a;
   }
-  void print() { cerr << " > T ="; print(root); cerr << endl; }
 };
+/** end ***********************************************************************/
+
+#define cerr if (0) cerr
+
+typedef LeftistHeap<int>::Node Node;
+
+void validateTree(Node* t) {
+  if (!t) return;
+  validateTree(t->left);
+  validateTree(t->right);
+  assert(!t->left || t->key <= t->left->key);
+  assert(!t->right || t->key <= t->right->key);
+  if (t->left && t->right) {
+    assert(t->left->s >= t->right->s);
+  }
+}
+
+void test(int n, int s, bool validate = 1) {
+  cout << "Test n = " << n << ", s = " << s << '\n';
+  srand(s);
+
+  LeftistHeap<int> h;
+  priority_queue<int,vector<int>,greater<int>> pq;
+
+  for (int i = 0; i < n; ++i) {
+    cerr << " > operation " << i << '\n';
+
+    int r = rand() % 2;
+    if (r < 1 && !pq.empty()) {
+      pq.pop();
+      cerr << " > pop\n";
+      h.pop();
+    } else if (r < 2) {
+      int x = rand() % 100 + 1;
+      pq.push(x);
+      cerr << " > push " << x << '\n';
+      h.push(x);
+    }
+
+    cerr << " > validate\n";
+    assert(h.empty() == pq.empty());
+    assert(h.empty() || h.top() == pq.top());
+    if (validate) validateTree(h.root);
+  }
+}
+
+int main() {
+  for (int s = 0; s < 1000; ++s)
+    test(10, s);
+  for (int n = 1; n <= 1000; ++n)
+    test(n, 0);
+  for (int s = 0; s < 5; ++s)
+    test(100000, s, 0);
+  return 0;
+}

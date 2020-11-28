@@ -96,7 +96,7 @@ void validate(const IndexedHeap<T>& h) {
 
   for (int i = 0; i < (int)h.heap.size(); ++i) assert(h.idx[h.heap[i]] == i);
 
-  for (int i = 1; i < (int)h.heap.size(); ++i) cerr << h.parent(i) << ' ' << i << endl, assert(!h.higher(i, h.parent(i)));
+  for (int i = 1; i < (int)h.heap.size(); ++i) assert(!h.higher(i, h.parent(i)));
   cerr << "done.\n";
 }
 
