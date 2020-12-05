@@ -8,7 +8,7 @@ template <class T> struct Buffer {
   ~Buffer() { for (auto ptr : buf) delete ptr; }  // slow!
 
   template <class... Args>
-  T* get(Args... args) {
+  [[nodiscard]] T* get(Args... args) {
     if (buf.empty()) return new T(args...);
     T* p = buf.back();
     buf.pop_back();

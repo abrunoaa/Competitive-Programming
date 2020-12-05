@@ -7,7 +7,7 @@ template <class T> struct Buffer {
   ~Buffer() { for (auto ptr : buf) delete ptr; }
 
   template <class... Args>
-  T* get(Args... args) {
+  [[nodiscard]] T* get(Args... args) {
     if (buf.empty()) return new T(args...);
     T* p = buf.back();
     buf.pop_back();
@@ -37,8 +37,8 @@ template<class Key> struct LeftistHeap {
   ~LeftistHeap() { clear(); } // slow!
 
   inline void clear() { clear(root); root = 0; }
-  inline bool empty() { return !root; }
-  inline Key top() { return root->key; }
+  [[nodiscard]] inline bool empty() { return !root; }
+  [[nodiscard]] inline Key top() { return root->key; }
 
   inline void push(Key key) { root = merge(root, buf.get(key)); }
   inline void pop() { buf.free(root); root = merge(root->left, root->right); }
@@ -54,7 +54,7 @@ private:
     }
   }
 
-  static Node* merge(Node* a, Node* b) {  // O(lg n)
+  [[nodiscard]] static Node* merge(Node* a, Node* b) {  // O(lg n)
     if (!a) return b;
     if (!b) return a;
     if (a->key > b->key) swap(a, b);

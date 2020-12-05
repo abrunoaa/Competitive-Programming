@@ -48,9 +48,9 @@ struct LinkCutTree {
       if (z) z->prop();
       y->prop();
       x->prop();
-      if (!z) { x == y->left ? rotr(x) : rotl(x); }
-      else if (y == z->left) { x == y->left ? (rotr(y), rotr(x)) : (rotl(x), rotr(x)); }
-      else { x == y->right ? (rotl(y), rotl(x)) : (rotr(x), rotl(x)); }
+      if (!z)                 x == y->left ? rotr(x)            : rotl(x);
+      else if (y == z->left)  x == y->left ? (rotr(y), rotr(x)) : (rotl(x), rotr(x));
+      else                   x == y->right ? (rotl(y), rotl(x)) : (rotr(x), rotl(x));
     }
   }
 
