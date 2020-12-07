@@ -1,7 +1,10 @@
-# ignore binaries
-*       # all
-!*.*    # except with extension
-!*/     # or folder
+# ignore gcc executables
+*
+!**/*.*
+
+# other binaries
+*.o
+*.class
 
 # see later
 Analisar/
