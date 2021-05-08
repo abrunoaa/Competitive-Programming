@@ -22,7 +22,7 @@ template<class T>inline int ub(const T*v,int n,const T&x,int l=0,int r=-1){retur
 
 template<class A,class B>ostream&operator<<(ostream&f,const pair<A,B>&x){return f<<'('<<x.first<<", "<<x.second<<')';}
 
-#define DEF1(_class...) ostream&operator<<(ostream&f,const _class&x){int b=0;f<<'[';for(auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';}
+#define DEF1(_class...) ostream&operator<<(ostream&f,const _class&x){int b=0;f<<'[';for(const auto&y:x){if(b++)f<<", ";f<<y;}return f<<']';}
 #define DEF2(get,_class...) ostream&operator<<(ostream&f,_class x){int b=0;f<<'[';while(x.size()){if(b++)f<<", ";f<<x.get();x.pop();}return f<<']';}
 template<class T>DEF1(vector<T>) template<class T,class C>DEF1(set<T,C>) template<class T,class C>DEF1(multiset<T,C>) template<class K,class T,class C>DEF1(map<K,T,C>) template<class K,class T,class C>DEF1(multimap<K,T,C>)
 template<class T>DEF2(front,queue<T>) template<class T>DEF2(top,stack<T>) template<class T,class V,class C>DEF2(top,priority_queue<T,V,C>)
@@ -58,6 +58,9 @@ const ll infl = 0x3f3f3f3f3f3f3f3f;
 const lf eps = 1e-9;
 const int mod = 1000000007;
 // const int maxn = ;
+
+inline bool eq(lf x, lf y = 0) { return abs(x - y) < eps; }
+inline int cmp(lf x, lf y = 0) { return eq(x, y) ? 0 : x < y ? -1 : 1; }
 
 int main() {
   // assert(freopen("in", "r", stdin));

@@ -6,8 +6,12 @@
 *.o
 *.class
 
+# other files
+CMakeLists.txt
+
 # see later
 Analisar/
 
+book/
 Books/
 GitHub - Outros/

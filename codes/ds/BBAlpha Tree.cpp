@@ -3,7 +3,7 @@ using namespace std;
 
 /** begin *********************************************************************/
 template<class Key, class Value, int beta = 10> struct BBAlpha {
-  static_assert(beta > 2);
+  static_assert(beta > 2, "Alpha must be less than 1/2");
 
   struct Node {
     inline static Node* const nil = new Node(0);

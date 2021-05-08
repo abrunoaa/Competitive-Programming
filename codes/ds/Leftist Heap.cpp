@@ -25,7 +25,6 @@ template<class Key> struct LeftistHeap {
     Node* right;
     Key key;
     int s;  // rank
-
     Node() {}
     Node(Key k) : left(0), right(0), key(k), s(1) {}
   };
@@ -38,9 +37,8 @@ template<class Key> struct LeftistHeap {
 
   inline void clear() { clear(root); root = 0; }
   [[nodiscard]] inline bool empty() { return !root; }
-  [[nodiscard]] inline Key top() { return root->key; }
-
-  inline void push(Key key) { root = merge(root, buf.get(key)); }
+  [[nodiscard]] inline const Key& top() { return root->key; }
+  inline void push(const Key& key) { root = merge(root, buf.get(key)); }
   inline void pop() { buf.free(root); root = merge(root->left, root->right); }
   inline void merge(LeftistHeap &h) { root = merge(root, h.root); h.root = 0; }
 
@@ -59,7 +57,8 @@ private:
     if (!b) return a;
     if (a->key > b->key) swap(a, b);
     a->right = merge(a->right, b);
-    if (!a->left) {                     // the rank of a is 1
+    if (!a->left) {
+      assert(a->s == 1);
       a->left = a->right;
       a->right = 0;
     } else {
